@@ -1,27 +1,15 @@
 {
-  "name": "banksy-finder",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "Note": "This is a dummy package.json file to prevent accidental installation or running of packages in the wrong location",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "dev": "echo 'You are in the wrong directory. cd to api or frontend folder to run this command'",
+    "start": "echo 'You are in the wrong directory. cd to api or frontend folder to run this command'",
+    "build": "echo 'You are in the wrong directory. cd to api or frontend folder to run this command'",
+    "lint": "echo 'You are in the wrong directory. cd to api or frontend folder to run this command'",
+    "preview": "echo 'You are in the wrong directory. cd to api or frontend folder to run this command'",
+    "test": "echo 'You are in the wrong directory. cd to api or frontend folder to run this command'",
+    "preinstall": "echo \"You are in the wrong directory. cd to api or frontend folder to run this command\" && exit 1"
   },
-  "dependencies": {
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.25.0",
-    "@types/react": "^19.1.2",
-    "@types/react-dom": "^19.1.2",
-    "@vitejs/plugin-react": "^4.4.1",
-    "eslint": "^9.25.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "^16.0.0",
-    "vite": "^6.3.5"
+  "engines": {
+    "npm": "YOU ARE IN THE WRONG DIRECTORY! cd to api or frontend folder to run this command"
   }
 }
