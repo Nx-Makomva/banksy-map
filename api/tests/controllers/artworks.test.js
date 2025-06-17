@@ -26,7 +26,7 @@ describe('/artworks', () => {
         const newArtwork = {
             title: 'Migrant child',
             location: 'Venice',
-            created: '2019'
+            year: '2019'
         };
         const response = await testApp.post('/artworks').send(newArtwork);
 
@@ -34,13 +34,13 @@ describe('/artworks', () => {
         expect(response.body).toHaveProperty('id');
         expect(response.body.title).toBe('Migrant child');
         expect(response.body.location).toBe('Venice');
-        expect(response.body.created).toBe('2019');
+        expect(response.body.year).toBe('2019');
     });
     test('GET, return list of art pieces after adding one', async () => {
         await new Artwork({
             title: 'I Want to Be What You Saw In Me',
             location: 'Marseille',
-            created: '2025'
+            year: '2025'
         }).save();
 
         const testApp = supertest(app);
