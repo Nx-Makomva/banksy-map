@@ -4,7 +4,7 @@ const cors = require("cors");
 
 
 
-// const usersUnprotectedRouter = require("./routes/usersUnprotected");
+const usersUnprotectedRouter = require("./routes/users");
 // const usersProtectedRouter = require("./routes/usersProtected");
 // const postsRouter = require("./routes/posts");
 // const authenticationRouter = require("./routes/authentication");
@@ -21,7 +21,7 @@ app.use(cors());
 // app.use(bodyParser.json());
 
 // API Routes
-// app.use("/users", express.json(), usersUnprotectedRouter); // Only JSON here
+app.use("/users", express.json(), usersUnprotectedRouter); // Only JSON here
 // app.use("/users", express.json(), tokenChecker, usersProtectedRouter); // Only JSON here
 // app.use("/posts", tokenChecker, postsRouter); // File uploads handled in routes
 // app.use("/tokens", express.json(), authenticationRouter); // Only JSON here
