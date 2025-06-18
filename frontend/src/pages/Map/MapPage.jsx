@@ -1,10 +1,10 @@
 import React from "react";
-import Navbar from "../components/Navbar";
-import Sidebar from "../components/Sidebar";
-import MainBar from "../components/MainBar";
+import Navbar from "../../components/Navbar";
+import Sidebar from "../../components/Sidebar";
+import MainBar from "../../components/MainBar";
 import "./MapPage.css";
 
-function HomePage() {
+function MapPage() {
     return (
         <>
         <Navbar />
@@ -16,4 +16,4 @@ function HomePage() {
     );
 }
 
-export default HomePage;
+export default MapPage;
