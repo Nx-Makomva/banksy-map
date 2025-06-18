@@ -1,0 +1,61 @@
+body {
+    background-image: url('/background.webp');
+    background-size: cover;
+    background-position: center 5px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: sans-serif;
+}
+
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Main page layout container */
+.pageColumnsContainer {
+    margin-top: 62px;
+    display: flex;
+    height: calc(100vh - 62px);
+    padding: 1rem;
+    gap: 1rem;
+    box-sizing: border-box;
+}
+
+/* Sidebar styling */
+.sidebar {
+    flex: 0 0 25%;
+    background-color: rgba(218, 214, 214, 0.793); /* semi-transparent black */
+    border-radius: 16px;
+    padding: 1rem;
+    color: white;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+/* Main content styling */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f0f0;
+    border-radius: 16px;
+    padding: 1rem;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Map container inside main content */
+.map-container {
+    flex: 1;
+    border-radius: 12px;
+    min-height: 0;
+    overflow: hidden;
+}

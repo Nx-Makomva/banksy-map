@@ -1,11 +1,13 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { HomePage } from "./pages/Home/HomePage";
 import { LoginPage } from "./pages/Login/LoginPage";
+import MapPage from "./pages/Map/MapPage";
 import { SignupPage } from "./pages/Signup/SignupPage";
 import { getMe } from "./services/user";
 import { UserContext } from './contexts/UserContext';
 import './App.css'
+
 
 // docs: https://reactrouter.com/en/main/start/overview
 
@@ -22,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <SignupPage />,
+  },
+  {
+    path: "/map",
+    element: <MapPage />,
   }
 ]);
 
@@ -83,7 +89,8 @@ function App() {
     <UserContext.Provider value={{ user, setUser, getCurrentUser, refreshUser, logout }}>
       <RouterProvider router={router} />
     </UserContext.Provider>
+
   );
 }
 
-export default App
+export default App;
