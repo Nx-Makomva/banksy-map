@@ -1,12 +1,14 @@
 import React, { useEffect, useRef } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
 
+const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
 const Map = () => {
     const mapRef = useRef(null);
 
     useEffect(() => {
         const loader = new Loader({
-        apiKey: "", // 🔁 Replace with your actual key
+        apiKey: API_KEY, // 🔁 Replace with your actual key
         version: "weekly",
         });
 

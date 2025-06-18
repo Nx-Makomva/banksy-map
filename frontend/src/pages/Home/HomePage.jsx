@@ -1,6 +1,11 @@
 //import User from "../../../../api/models/user";
 import { useUser } from "../../contexts/UserContext";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react"
+import { useNavigate } from "react-router-dom";
+import Navbar from "../../components/Navbar";
+import Sidebar from "../../components/Sidebar";
+import MainBar from "../../components/MainBar";
+import "../../assets/styles/HomePage.css";
 
 
 export function HomePage() {
@@ -10,28 +15,40 @@ export function HomePage() {
     const loggedIn = user?.isLoggedIn;
     console.log(user)
 
+    // Use single state to manage which view is active - clicks are made in navbar
+    const [activeView, setActiveView] = useState('map'); // 'map' or 'account'
+
     const handleLogout = async () => {
         await logout();
         navigate("/")
     }
 
+    const handleAccountClick = (event) => {
+        event.preventDefault();
+        setActiveView('account');
+    }
+
+    const handleMapClick = (event) => {
+        event.preventDefault();
+        setActiveView('map');
+    }
+
     return (
         <>
-            <div className="home">
-                <h1>Welcome to the Banksy Map!</h1>
-                {loggedIn ? (
-                    <button onClick={handleLogout} className="logout-button">
-                        Logout
-                    </button>
-                ) : (
-                    <div className="auth-links">
-                        <Link to="/signup">Sign Up</Link>
-                        <br />
-                        <Link to="/login">Log In</Link>
-                    </div>
-                )}
-
-            </div>
+        <Navbar 
+            onLogOut={handleLogout} 
+            loggedIn={loggedIn} 
+            onAccountClick={handleAccountClick}
+            onMapClick={handleMapClick}
+        />
+        <div className="pageColumnsContainer">
+            <Sidebar 
+                activeView={activeView}
+            />
+            <MainBar 
+                activeView={activeView}
+            />
+        </div>
         </>
-    )
+    );
 }
