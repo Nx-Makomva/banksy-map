@@ -4,9 +4,13 @@ import { MdAccountBox } from "react-icons/md";
 import { PiSignOutBold } from "react-icons/pi";
 import { FiLogIn } from "react-icons/fi";
 import { SiGnuprivacyguard } from "react-icons/si";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function Navbar({ loggedIn, onLogOut, onMapClick, onAccountClick }) {
+    //check if we are on homepage for map button
+    const location = useLocation();
+    const isHomePage = location.pathname === '/';
+
 
     return (
         <header>
@@ -15,7 +19,7 @@ function Navbar({ loggedIn, onLogOut, onMapClick, onAccountClick }) {
             <img src="/banksymap.png" alt="Logo" />
             </a>
             <nav className="navbar">
-            <a href="#" onClick={onMapClick} title="Map"><FaMapMarkedAlt /></a>
+            <a href={isHomePage ? "#" : "/"}  onClick={onMapClick} title="Map"><FaMapMarkedAlt /></a>
 
             {loggedIn ? (
                 <>
