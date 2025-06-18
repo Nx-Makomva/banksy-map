@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import { signup } from "../../services/authentication";
 import "../../assets/styles/SignupPage.css"
@@ -59,6 +60,9 @@ export function SignupPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 />
                 <input role="submit-button" id="submit" type="submit" value="Submit" />
+                <p className="signup-link">
+                Already have an account? <Link to="/login">Log In!</Link>
+                </p>
             </form>
         </>
     );
