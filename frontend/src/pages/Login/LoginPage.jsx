@@ -4,7 +4,7 @@ import { useUser } from "../../contexts/UserContext";
 import { login } from "../../services/authentication";
 
 export function LoginPage() {
-    const { refreshUser } = useUser();
+    const { refreshUser} = useUser();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -14,7 +14,6 @@ export function LoginPage() {
         try {
         const token = await login(email, password);
         localStorage.setItem("token", token);
-
         await refreshUser();
         navigate("/");
         } catch (err) {

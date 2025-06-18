@@ -40,12 +40,13 @@ function App() {
     
     try {
       const userData = await getMe(token);
+      console.log("getMe returned:", userData);
       setUser(userData);
       return userData;
     } catch (error) {
       console.error('Error fetching user:', error);
       localStorage.removeItem('token');
-      setUser(null);
+      setUser({ isLoggedIn: false, id: null });
     } finally {
       setLoading(false);
     }
@@ -59,6 +60,13 @@ function App() {
   // Function to refresh user data (can be called after login from other components)
   const refreshUser = async () => {
     await getCurrentUser();
+  };
+
+  // Logout function
+  const logout = async () => {
+    localStorage.removeItem('token');
+    const userData = await getMe(); // Call without token to get anonymous user
+    setUser(userData);
   };
 
   // Show loading while checking authentication
@@ -76,7 +84,7 @@ function App() {
   }
 
   return (
-    <UserContext.Provider value={{ user, setUser, getCurrentUser, refreshUser }}>
+    <UserContext.Provider value={{ user, setUser, getCurrentUser, refreshUser, logout }}>
       <RouterProvider router={router} />
     </UserContext.Provider>
   );
