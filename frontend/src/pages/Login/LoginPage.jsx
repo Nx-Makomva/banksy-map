@@ -2,9 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
 import { login } from "../../services/authentication";
+import Navbar from "../../components/Navbar";
+import "../../assets/styles/LoginPage.css"
 
 export function LoginPage() {
-    const { refreshUser} = useUser();
+    const { refreshUser } = useUser();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -37,29 +39,25 @@ export function LoginPage() {
 
     return (
         <>
-        <h2 className="login-title">Login</h2>
-        <div className="login-form-container">
-        <form className="login-form" onSubmit={handleSubmit}>
-            <label htmlFor="email">Email:</label>
-            <input
-            id="email"
-            type="text"
-            value={email}
-            onChange={handleEmailChange}
-            />
-            <label htmlFor="password">Password:</label>
-            <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-            />
-            <input role="submit-button" id="submit" type="submit" value="Submit" />
-        </form>
-        <div className="create-account">
-        <button onClick={handleClick} className="create-account-btn">Create new account</button>
-        </div>
-        </div>
+        <Navbar />
+            <form className="login-form" onSubmit={handleSubmit}>
+                <label htmlFor="email">Email:</label>
+                <input
+                id="email"
+                type="text"
+                value={email}
+                onChange={handleEmailChange}
+                />
+                <label htmlFor="password">Password:</label>
+                <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={handlePasswordChange}
+                />
+                <input role="submit-button" id="submit" type="submit" value="Submit" />
+            </form>
+        
         </>
     );
 }

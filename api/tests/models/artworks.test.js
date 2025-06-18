@@ -6,31 +6,70 @@ describe('Artwork model', () => {
         await Artwork.deleteMany({});
     });
 
-    it('has a title', () => {
+    it('has a title', async () => {
         const artwork = new Artwork({
             title: 'Migrant child',
-            location: 'Venice',
-            year: '2019'
+            discoveryYear: '2019',
+            streetName: 'Fake Street',
+            city: 'Venice',
+            location: {
+                type: 'Point',
+                coordinates: [-180, -90]
+            },
+            description: 'Test description',
+            themeTags: ['test'],
+            photos: ['fake-image.png'],
+            isAuthenticated: true
         });
-        expect(artwork.title).toEqual('Migrant child');
+
+        const savedArtwork = await artwork.save();
+        
+        expect(savedArtwork.title).toEqual('Migrant child');
     });
 
-    it('has a location', () => {
+    it('has a location', async () => {
         const artwork = new Artwork({
             title: 'Migrant child',
-            location: 'Venice',
-            year: '2019'
+            discoveryYear: '2019',
+            streetName: 'Fake Street',
+            city: 'Venice',
+            location: {
+                type: 'Point',
+                coordinates: [-180, -90]
+            },
+            description: 'Test description',
+            themeTags: ['test'],
+            photos: ['fake-image.png'],
+            isAuthenticated: true
         });
-        expect(artwork.location).toEqual('Venice');
+
+        const savedArtwork = await artwork.save();
+
+        expect(savedArtwork.location).toEqual({
+            type: 'Point',
+            coordinates: [-180, -90]
+        });
     });
 
-    it('has a year', () => {
+    it('has a discoveryYear', async () => {
         const artwork = new Artwork({
             title: 'Migrant child',
-            location: 'Venice',
-            year: '2019'
+            discoveryYear: '2019',
+            streetName: 'Fake Street',
+            city: 'Venice',
+            location: {
+                type: 'Point',
+                coordinates: [-180, -90]
+            },
+            description: 'Test description',
+            themeTags: ['test'],
+            photos: ['fake-image.png'],
+            isAuthenticated: true
         });
-        expect(artwork.year).toEqual('2019');
+
+        const savedArtwork = await artwork.save();
+        
+        expect(savedArtwork.discoveryYear).toEqual('2019');
     });
 
     it('can list all artworks', async () => {
@@ -41,15 +80,28 @@ describe('Artwork model', () => {
     it('can save an artwork', async () => {
         const artwork = new Artwork({
             title: 'I Want to Be What You Saw In Me',
-            location: 'Marseille',
-            year: '2025'
+            discoveryYear: '2016',
+            streetName: 'Fake Street',
+            city: 'Venice',
+            location: {
+                type: 'Point',
+                coordinates: [169, -45]
+            },
+            description: 'Test description',
+            themeTags: ['test'],
+            photos: ['fake-image.png'],
+            isAuthenticated: true
         });
+        
         await artwork.save();
         const artworks = await Artwork.find();
 
         expect(artworks.length).toBe(1);
         expect(artworks[0].title).toEqual('I Want to Be What You Saw In Me');
-        expect(artworks[0].location).toEqual('Marseille');
-        expect(artworks[0].year).toEqual('2025');
+        expect(artworks[0].location).toEqual({
+            type: 'Point',
+            coordinates: [169, -45]
+        });
+        expect(artworks[0].discoveryYear).toEqual('2016');
     });
 });
