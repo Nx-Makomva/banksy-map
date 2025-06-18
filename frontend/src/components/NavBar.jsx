@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import './Navbar.css';
+import '../assets/styles/Navbar.css';
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { MdAccountBox } from "react-icons/md";
 import { PiSignOutBold } from "react-icons/pi";
 import { FiLogIn } from "react-icons/fi";
 import { SiGnuprivacyguard } from "react-icons/si";
+import { Link } from "react-router-dom";
 
-function Navbar() {
+function Navbar({ loggedIn, onLogOut }) {
     // Replace this with your real auth state
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    
 
     return (
         <header>
@@ -19,15 +20,15 @@ function Navbar() {
             <nav className="navbar">
             <a href="/" title="Map"><FaMapMarkedAlt /></a>
 
-            {isLoggedIn ? (
+            {loggedIn ? (
                 <>
                 <a href="/account" title="My Account"><MdAccountBox /></a>
-                <a href="/logout" title="Logout"><PiSignOutBold /></a>
+                <a href="/logout" onClick={onLogOut} title="Logout"><PiSignOutBold /></a>
                 </>
             ) : (
                 <>
-                <a href="/login" title="Login"><FiLogIn /></a>
-                <a href="/signup" title="Sign Up"><SiGnuprivacyguard /></a>
+                <Link to="/login" title="Login"><FiLogIn /></Link>
+                <Link to="/signup" title="Sign Up"><SiGnuprivacyguard /></Link>
                 </>
             )}
             </nav>

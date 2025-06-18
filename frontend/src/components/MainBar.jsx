@@ -1,9 +1,9 @@
-import React from "react";
+import Map from "./map";
 
 function MainBar() {
     return (
         <div className="main-content">
-      {/* Main content goes here */}
+          <Map />
         </div>
     );
 }
