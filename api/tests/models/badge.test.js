@@ -14,7 +14,7 @@ describe('Badge model', () => {
             // icon: 'login-icon.png', // optional
             criteria: {
                 type: 'signup',
-                count: 0
+                count: 1
             }
         });
         const savedBadge = await badge.save();
@@ -27,7 +27,7 @@ describe('Badge model', () => {
             description: 'Welcome on board',
             criteria: {
                 type: 'signup',
-                count: 0
+                count: 1
             }
         });
         const savedBadge = await badge.save();
@@ -50,7 +50,7 @@ describe('Badge model', () => {
 
     it('is missing criteria count', async () => {
         const badge = new Badge({
-            namme: 'Wannabe explorer',
+            name: 'Wannabe explorer',
             description: 'You have visited 3 art pieces',
             criteria: {
                 type: 'visits'
@@ -61,7 +61,7 @@ describe('Badge model', () => {
 
     it('has invalid criteria type', async () => {
         const badge = new Badge({
-            namme: 'Wannabe explorer',
+            name: 'Wannabe explorer',
             description: 'You have visited 3 art pieces',
             criteria: {
                 type: 'wrong',
@@ -74,5 +74,41 @@ describe('Badge model', () => {
     it('can list all badges', async () => {
         const badges = await Badge.find();
         expect(badges).toEqual([]);
+    });
+
+    it('can list multiple badges when they exist', async () => {
+        const badge1 = new Badge({
+            name: '1st LogIn',
+            description: 'Welcome on board',
+            criteria: {
+                type: 'signup',
+                count: 1
+            }
+        });
+        const badge2 = new Badge({
+            name: 'Wannabe explorer',
+            description: 'You have visited 3 art pieces',
+            criteria: {
+                type: 'visits',
+                count: 3
+            }
+        });
+        const badge3 = new Badge({
+            name: 'Hoarder',
+            description: 'Saved 10 art pieces',
+            criteria: {
+                type: 'bookmarks',
+                count: 10
+            }
+        });
+        await badge1.save();
+        await badge2.save();
+        await badge3.save();
+        const badges = await Badge.find();
+
+        expect(badges.length).toBe(3);
+        expect(badges[0].name).toEqual('1st LogIn');
+        expect(badges[1].name).toEqual('Wannabe explorer');
+        expect(badges[2].name).toEqual('Hoarder');
     });
 });
