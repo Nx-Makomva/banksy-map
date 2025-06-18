@@ -13,6 +13,7 @@ async function createToken(req, res) {
     if (!user) {
         console.log("Auth Error: User not found");
         return res.status(401).json({ message: "User not found" });
+
     }
 
     const match = await bcrypt.compare(password, user.password);
@@ -39,3 +40,4 @@ const AuthenticationController = {
 };
 
 module.exports = AuthenticationController;
+
