@@ -28,6 +28,7 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #fff;
+    color: #000;
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
@@ -41,7 +42,7 @@
 .signup-form input[type="submit"] {
     padding: 0.75rem;
     font-size: 1rem;
-    background-color: #18e283;
+    background-color: #12d479;
     color: white;
     border: none;
     border-radius: 8px;
@@ -64,4 +65,22 @@ input::placeholder {
 
 .signup-form input {
     text-align: center;
+}
+
+.signup-link {
+    text-align: center;
+    font-size: 0.95rem;
+    margin-top: 1rem;
+    font-family: 'Permanent Marker', cursive;
+}
+
+.signup-link a {
+    color: red;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.signup-link a:hover {
+    color: darkred;
 }
