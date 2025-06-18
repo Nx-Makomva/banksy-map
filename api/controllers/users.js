@@ -1,13 +1,43 @@
 const User = require("../models/user");
 const Artwork = require("../models/artwork");
+const bcrypt = require('bcrypt')
+const saltRounds = 10;
 
-function create(req, res) {
+async function getCurrentUser(req, res) {
+    // default response if no logged-in user - for use in main page rendering
+    const anonymousResponse = { isLoggedIn: false, id: null };
+
+    try {
+        if (!req.user_id) {
+        return res.json(anonymousResponse);
+        }
+        
+        // Get details of logged in user from db
+        const user = await User.findById(req.user_id);
+        
+        if (user) {
+        res.json({
+            isLoggedIn: true,
+            id: req.user_id,
+            // decide what user info we want to return to front end
+            email: user.email // placeholder for now
+        });
+        } else {
+        // user_id exists but user not found in db 
+        res.json(anonymousResponse);
+        }
+    } catch (error) {
+        console.error('Error getting current user:', error);
+        res.json(anonymousResponse);
+    }
+}
+async function create(req, res) {
   const email = req.body.email;
   const password = req.body.password;
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
-
-  const user = new User({ email, password, firstName, lastName });
+  const hash = await bcrypt.hash(password, saltRounds);
+  const user = new User({ email, password:hash, firstName, lastName });
   user
     .save()
     .then((user) => {
@@ -38,6 +68,7 @@ async function getById(req,res) {
 }
 
 const UsersController = {
+  getCurrentUser: getCurrentUser,
   create: create,
   getById: getById,
 };
