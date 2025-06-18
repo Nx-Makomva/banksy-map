@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import Navbar from "../../components/Navbar";
 import { signup } from "../../services/authentication";
+import "../../assets/styles/SignupPage.css"
 
 export function SignupPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const navigate = useNavigate();
 
     async function handleSubmit(event) {
         event.preventDefault();
         try {
-        await signup(email, password);
+        await signup(email, password, firstName, lastName);
         navigate("/login");
         } catch (err) {
         console.error(err);
@@ -19,35 +22,44 @@ export function SignupPage() {
         }
     }
 
-    function handleEmailChange(event) {
-        setEmail(event.target.value);
-    }
-
-    function handlePasswordChange(event) {
-        setPassword(event.target.value);
-    }
-
     return (
         <>
-        <h2>Signup</h2>
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="email">Email:</label>
-            <input
-            id="email"
-            type="text"
-            value={email}
-            onChange={handleEmailChange}
-            />
-            <label htmlFor="password">Password:</label>
-            <input
-            placeholder="Password"
-            id="password"
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-            />
-            <input role="submit-button" id="submit" type="submit" value="Submit" />
-        </form>
+        <Navbar />
+            <form onSubmit={handleSubmit} className="signup-form">
+                <label htmlFor="firstname">First Name:</label>
+                <input
+                placeholder="Enter your first name..."
+                id="firstname"
+                type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                />
+                <label htmlFor="lastname">Last Name:</label>
+                <input
+                placeholder="Enter your last name..."
+                id="lastname"
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                />
+                <label htmlFor="email">Email:</label>
+                <input
+                placeholder="Enter your email address..."
+                id="email"
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                />
+                <label htmlFor="password">Password:</label>
+                <input
+                placeholder="Choose a password..."
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                />
+                <input role="submit-button" id="submit" type="submit" value="Submit" />
+            </form>
         </>
     );
 }
