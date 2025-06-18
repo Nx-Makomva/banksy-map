@@ -33,10 +33,6 @@ function App() {
     // Function to get current user from backend
   const getCurrentUser = async () => {
     const token = localStorage.getItem('token');
-    if (!token) {
-      setLoading(false);
-      return null;
-    }
     
     try {
       const userData = await getMe(token);
