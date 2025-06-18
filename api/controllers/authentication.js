@@ -7,12 +7,13 @@ async function createToken(req, res) {
     const email = req.body.email;
     const password = req.body.password;
 
-try {
+    try {
     const user = await User.findOne({ email: email });
 
     if (!user) {
         console.log("Auth Error: User not found");
-        res.status(401).json({ message: "User not found" });
+        return res.status(401).json({ message: "User not found" });
+
     }
 
     const match = await bcrypt.compare(password, user.password);
@@ -30,8 +31,8 @@ try {
     console.error("Login error:", err);
     res.status(500).json({ message: "Internal server error" })
     }
-    }
-    
+}
+
 
 
 const AuthenticationController = {
@@ -39,3 +40,4 @@ const AuthenticationController = {
 };
 
 module.exports = AuthenticationController;
+
