@@ -1,7 +1,74 @@
 const request = require("supertest");
 const app = require("../../app");
+const jwt = require("jsonwebtoken")
 const User = require("../../models/user");
+const Artwork = require("../../models/artwork"); // assuming this is your path
+
 require("../mongodb_helper");
+
+
+describe("GET /users/current with JWT", () => {
+  beforeEach(async () => {
+    await User.deleteMany({});
+  });
+
+  it("returns anonymous if no token", async () => {
+    const response = await request(app).get("/users/current");
+
+    expect(response.body).toEqual({
+      isLoggedIn: false,
+      id: null,
+    });
+  });
+
+  it("returns user info for valid token", async () => {
+    const newUser = await User.create({
+      email: "jane@example.com",
+      password: "hashedpass",
+      firstName: "Jane",
+      lastName: "Doe"
+    });
+
+    const token = jwt.sign(
+      { sub: newUser._id.toString() },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    const response = await request(app)
+      .get("/users/current")
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.body).toEqual({
+      isLoggedIn: true,
+      id: newUser._id.toString(),
+      email: newUser.email,
+    });
+  });
+
+  it("returns anonymous if token is valid but user not found", async () => {
+    const fakeUserId = new User()._id;
+    const token = jwt.sign({ sub: fakeUserId.toString() }, process.env.JWT_SECRET);
+
+    const response = await request(app)
+      .get("/users/current")
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.body).toEqual({
+      isLoggedIn: false,
+      id: null,
+    });
+  });
+
+  it("returns 401 if token is invalid", async () => {
+    const response = await request(app)
+      .get("/users/current")
+      .set("Authorization", `Bearer notavalidtoken`);
+
+    expect(response.statusCode).toBe(401);
+    expect(response.body).toEqual({ message: "auth error" });
+  });
+});
 
 
 describe("POST /users", () => {
@@ -37,7 +104,7 @@ describe("POST /users", () => {
       });
 
     expect(response.statusCode).toBe(400);
-    expect(response.body.message).toBe("Something went wrong");
+    expect(response.body.message).toBe("Missing required fields");
 
     const users = await User.find();
     expect(users.length).toBe(0);
@@ -61,8 +128,8 @@ describe("GET /users/:id", () => {
     const response = await request(app).get(`/users/${createdUser._id}`);
 
     expect(response.statusCode).toBe(200);
-    expect(response.body.user.email).toBe("jane@example.com");
     expect(response.body.user.firstName).toBe("Jane");
+    expect(response.body.user.lastName).toBe("Doe");
   });
 
   it("returns 404 if user is not found", async () => {
@@ -78,5 +145,86 @@ describe("GET /users/:id", () => {
 
     expect(response.statusCode).toBe(500);
     expect(response.body.message).toBe("Server error");
+  });
+});
+
+
+describe("PATCH /users/:id/bookmark/:artworkId", () => {
+  let user;
+
+  beforeEach(async () => {
+    await User.deleteMany({});
+    await Artwork.deleteMany({});
+    user = await User.create({
+      email: "john@example.com",
+      password: "hashedpass",
+      firstName: "John",
+      lastName: "Smith",
+      bookmarkedArtworks: [],
+    });
+  });
+
+  const createValidArtwork = async () => {
+    return await Artwork.create({
+      title: "Test Artwork",
+      description: "A beautiful mural on a building",
+      isAuthenticated: true,
+      location: {
+        type: "Point",
+        coordinates: [40.7128, -74.0060],
+      },
+      city: "New York",
+      streetName: "5th Avenue",
+      discoveryYear: 2021,
+    });
+  };
+
+  it("adds a new artworkId to user's bookmarkedArtworks", async () => {
+    const artwork = await createValidArtwork();
+
+    const response = await request(app).patch(
+      `/users/${user._id}/bookmark/${artwork._id}`
+    );
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.message).toBe("Bookmarks added successfully");
+    expect(response.body.user.bookmarkedArtworks).toContain(artwork._id.toString());
+
+    const updatedUser = await User.findById(user._id);
+    expect(updatedUser.bookmarkedArtworks).toContainEqual(artwork._id);
+  });
+
+  it("does not add duplicate artworkId", async () => {
+    const artwork = await createValidArtwork();
+
+    user.bookmarkedArtworks.push(artwork._id);
+    await user.save();
+
+    const response = await request(app).patch(
+      `/users/${user._id}/bookmark/${artwork._id}`
+    );
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.user.bookmarkedArtworks.length).toBe(1);
+  });
+
+  it("returns 404 if user is not found", async () => {
+    const artwork = await createValidArtwork();
+    const tempUser = await User.create({
+      email: "temp@example.com",
+      password: "temp123",
+      firstName: "Vasya",
+      lastName: "Petrov"
+    });
+
+    const nonExistentUserId = tempUser._id;
+    await User.findByIdAndDelete(nonExistentUserId);
+
+    const response = await request(app).patch(
+      `/users/${nonExistentUserId}/bookmark/${artwork._id}`
+    );
+
+    expect(response.statusCode).toBe(404);
+    expect(response.body.message).toBe("User not found");
   });
 });
