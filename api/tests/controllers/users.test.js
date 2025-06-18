@@ -1,66 +1,82 @@
 const request = require("supertest");
-
 const app = require("../../app");
 const User = require("../../models/user");
-
 require("../mongodb_helper");
 
-describe("/users", () => {
-    beforeEach(async () => {
-        await User.deleteMany({});
-    });
 
-    describe("POST, when email and password are provided", () => {
-        test("the response code is 201", async () => {
-            const response = await request(app)
-            .post("/users")
-            .send({ email: "poppy@email.com", password: "1234" });
+describe("POST /users", () => {
+  beforeEach(async () => {
+    await User.deleteMany({});
+  });
 
-        expect(response.statusCode).toBe(201);
-    });
+  it("creates a new user and returns 201", async () => {
+    const response = await request(app)
+      .post("/users")
+      .send({
+        email: "test@example.com",
+        password: "supersecurepassword",
+        firstName: "Test",
+        lastName: "Tester"
+      });
 
-    test("a user is created", async () => {
-        await request(app)
-            .post("/users")
-            .send({ email: "scarconstt@email.com", password: "1234" });
+    expect(response.statusCode).toBe(201);
+    expect(response.body.message).toBe("OK");
 
-        const users = await User.find();
-        const newUser = users[users.length - 1];
-        expect(newUser.email).toEqual("scarconstt@email.com");
-    });
+    const users = await User.find();
+    expect(users.length).toBe(1);
+    expect(users[0].email).toBe("test@example.com");
+    expect(users[0].firstName).toBe("Test");
+  });
+
+  it("returns 400 if required fields are missing", async () => {
+    const response = await request(app)
+      .post("/users")
+      .send({
+        email: "missingpassword@example.com",
+        firstName: "NoPass"
+      });
+
+    expect(response.statusCode).toBe(400);
+    expect(response.body.message).toBe("Something went wrong");
+
+    const users = await User.find();
+    expect(users.length).toBe(0);
+  });
 });
 
-    describe("POST, when password is missing", () => {
-        test("response code is 400", async () => {
-        const response = await request(app)
-            .post("/users")
-            .send({ email: "skye@email.com" });
+describe("GET /users/:id", () => {
+  let createdUser;
 
-        expect(response.statusCode).toBe(400);
+  beforeEach(async () => {
+    await User.deleteMany({});
+    createdUser = await User.create({
+      firstName: "Jane",
+      lastName: "Doe",
+      email: "jane@example.com",
+      password: "password123",
     });
+  });
 
-    test("does not create a user", async () => {
-        await request(app).post("/users").send({ email: "skye@email.com" });
+  it("returns a user by ID with status 200", async () => {
+    const response = await request(app).get(`/users/${createdUser._id}`);
 
-        const users = await User.find();
-        expect(users.length).toEqual(0);
-    });
-});
+    expect(response.statusCode).toBe(200);
+    expect(response.body.user.email).toBe("jane@example.com");
+    expect(response.body.user.firstName).toBe("Jane");
+  });
 
-describe("POST, when email is missing", () => {
-    test("response code is 400", async () => {
-        const response = await request(app)
-            .post("/users")
-            .send({ password: "1234" });
+  it("returns 404 if user is not found", async () => {
+    const fakeId = "649a3607bcf86cd799439011"; // valid ObjectId but not in DB
+    const response = await request(app).get(`/users/${fakeId}`);
 
-        expect(response.statusCode).toBe(400);
-    });
+    expect(response.statusCode).toBe(404);
+    expect(response.body.message).toBe("User not found");
+  });
 
-    test("does not create a user", async () => {
-        await request(app).post("/users").send({ password: "1234" });
+  it("returns 500 if invalid ID format", async () => {
+    const response = await request(app).get(`/users/notanid`);
 
-        const users = await User.find();
-        expect(users.length).toEqual(0);
-    });
-    });
+    expect(response.statusCode).toBe(500);
+    expect(response.body.message).toBe("Server error");
+  });
 });
