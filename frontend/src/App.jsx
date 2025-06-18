@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider, Routes, Route } from "react-router
 import { useState, useEffect } from 'react';
 import { HomePage } from "./pages/Home/HomePage";
 import { LoginPage } from "./pages/Login/LoginPage";
+import MapPage from "./pages/Map/MapPage";
 import { SignupPage } from "./pages/Signup/SignupPage";
 import { getMe } from "./services/user";
 import { UserContext } from './contexts/UserContext';
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <SignupPage />,
+  },
+  {
+    path: "/map",
+    element: <MapPage />,
   }
 ]);
 
