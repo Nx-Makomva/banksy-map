@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 
 async function connectToDatabase() {
   const mongoDbUrl = process.env.MONGODB_URL;
+  console.log("The url you are connected to is:", mongoDbUrl)
+
 
   if (!mongoDbUrl) {
     console.error(
@@ -14,6 +16,8 @@ async function connectToDatabase() {
 
   if (process.env.NODE_ENV !== "test") {
     console.log("Successfully connected to MongoDB");
+    console.log("Connected to:", mongoose.connection.name);
+
   }
 }
 
