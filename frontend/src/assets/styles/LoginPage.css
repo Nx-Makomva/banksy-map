@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+.login-form {
+    max-width: 420px;
+    margin: 120px auto; /* spacing from top */
+    padding: 2rem;
+    background: transparent;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    font-family: 'Permanent Marker', cursive;
+    text-align: center;
+}
+
+.login-form label {
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: #333;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    padding: 0.7rem 0.9rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    text-align: center; /* center user input */
+}
+
+.login-form input[type="text"]::placeholder,
+.login-form input[type="password"]::placeholder {
+    text-align: center; /* center placeholder text */
+}
+
+.login-form input[type="text"]:focus,
+.login-form input[type="password"]:focus {
+    border-color: #18e283;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+    outline: none;
+}
+
+.login-form input[type="submit"] {
+    padding: 0.75rem;
+    font-size: 1rem;
+    background-color: #18e283;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.login-form input[type="submit"]:hover {
+    background-color: #2fb962;
+    transform: translateY(-1px);
+}
+
+.login-form input[type="submit"]:active {
+    transform: translateY(0);
+}
