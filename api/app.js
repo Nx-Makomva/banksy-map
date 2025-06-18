@@ -2,16 +2,28 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
+
+
+const usersUnprotectedRouter = require("./routes/usersUnprotected");
+const usersProtectedRouter = require("./routes/usersProtected");
+// const postsRouter = require("./routes/posts");
+const authenticationRouter = require("./routes/authentication");
+const tokenChecker = require("./middleware/tokenChecker");
+
 const app = express();
 
 app.use(cors());
 
 // Parse JSON request bodies, made available on `req.body`
 app.use(bodyParser.json());
+app.use('/uploads', express.static('uploads'));
 
 // API Routes
-// app.use("/users", express.json(), usersUnprotectedRouter); // Only JSON here
-// app.use("/posts", tokenChecker, postsRouter); // File uploads handled in routes
+app.use("/users", express.json(), usersUnprotectedRouter); // Only JSON here
+app.use("/users", express.json(), tokenChecker, usersProtectedRouter); // Only JSON here
+//app.use("/posts", tokenChecker, postsRouter); // File uploads handled in routes
+app.use("/tokens", express.json(), authenticationRouter); // Only JSON here
+
 
 // 404 Handler
 app.use((_req, res) => {
