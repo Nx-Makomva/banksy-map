@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
 
-const API_KEY = import.meta.env.GOOGLE_API_KEY;
+const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 const Map = () => {
     const mapRef = useRef(null);
