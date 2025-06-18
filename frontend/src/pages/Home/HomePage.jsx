@@ -1,6 +1,10 @@
 //import User from "../../../../api/models/user";
 import { useUser } from "../../contexts/UserContext";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Navbar from "../../components/Navbar";
+import Sidebar from "../../components/Sidebar";
+import MainBar from "../../components/MainBar";
+import "../../assets/styles/HomePage.css";
 
 
 export function HomePage() {
@@ -17,21 +21,11 @@ export function HomePage() {
 
     return (
         <>
-            <div className="home">
-                <h1>Welcome to the Banksy Map!</h1>
-                {loggedIn ? (
-                    <button onClick={handleLogout} className="logout-button">
-                        Logout
-                    </button>
-                ) : (
-                    <div className="auth-links">
-                        <Link to="/signup">Sign Up</Link>
-                        <br />
-                        <Link to="/login">Log In</Link>
-                    </div>
-                )}
-
-            </div>
+        <Navbar onLogOut={handleLogout} loggedIn={loggedIn}/>
+        <div className="pageColumnsContainer">
+            <Sidebar />
+            <MainBar />
+        </div>
         </>
-    )
+    );
 }
