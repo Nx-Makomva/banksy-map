@@ -35,7 +35,7 @@ html, body, #root {
     background-color: rgba(218, 214, 214, 0.793); /* semi-transparent black */
     border-radius: 16px;
     padding: 1rem;
-    color: white;
+    color: black;
     overflow-y: auto;
     box-sizing: border-box;
 }
@@ -45,6 +45,7 @@ html, body, #root {
     flex: 1;
     display: flex;
     flex-direction: column;
+    color: black;
     background-color: #f0f0f0;
     border-radius: 16px;
     padding: 1rem;

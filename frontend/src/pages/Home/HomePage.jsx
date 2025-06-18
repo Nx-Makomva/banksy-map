@@ -1,5 +1,6 @@
 //import User from "../../../../api/models/user";
 import { useUser } from "../../contexts/UserContext";
+import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
@@ -14,17 +15,39 @@ export function HomePage() {
     const loggedIn = user?.isLoggedIn;
     console.log(user)
 
+    // Use single state to manage which view is active - clicks are made in navbar
+    const [activeView, setActiveView] = useState('map'); // 'map' or 'account'
+
     const handleLogout = async () => {
         await logout();
         navigate("/")
     }
 
+    const handleAccountClick = (event) => {
+        event.preventDefault();
+        setActiveView('account');
+    }
+
+    const handleMapClick = (event) => {
+        event.preventDefault();
+        setActiveView('map');
+    }
+
     return (
         <>
-        <Navbar onLogOut={handleLogout} loggedIn={loggedIn}/>
+        <Navbar 
+            onLogOut={handleLogout} 
+            loggedIn={loggedIn} 
+            onAccountClick={handleAccountClick}
+            onMapClick={handleMapClick}
+        />
         <div className="pageColumnsContainer">
-            <Sidebar />
-            <MainBar />
+            <Sidebar 
+                activeView={activeView}
+            />
+            <MainBar 
+                activeView={activeView}
+            />
         </div>
         </>
     );
