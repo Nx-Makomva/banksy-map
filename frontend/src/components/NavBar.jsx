@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './Navbar.css';
+import { useState } from 'react';
+import '../assets/styles/Navbar.css';
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { MdAccountBox } from "react-icons/md";
 import { PiSignOutBold } from "react-icons/pi";

@@ -6,7 +6,7 @@ import MapPage from "./pages/Map/MapPage";
 import { SignupPage } from "./pages/Signup/SignupPage";
 import { getMe } from "./services/user";
 import { UserContext } from './contexts/UserContext';
-import './App.css'
+import '../src/assets/styles/App.css'
 
 
 // docs: https://reactrouter.com/en/main/start/overview
