@@ -27,5 +27,52 @@ describe("Comments model constructs correctly", () => {
     expect(comment.text).toBe('I have fake ids');
     expect(comment.createdAt).toBeDefined()
   })
-  // END OF DESCRIBE //
+});
+
+describe("Comments construct correctly with real user and artwork objects", () => {
+  let testUser;
+  let testArtwork;
+
+  beforeEach(async () => {
+    await User.deleteMany({});
+    await Artwork.deleteMany({});
+
+    testUser = await User.create({
+      firstName: 'Johnny',
+      lastName: 'Bravo',
+      email: 'john@email.com',
+      password: 'Johnsecure!'
+    });
+
+    testArtwork = await Artwork.create({
+      title: 'Millenial child',
+      discoveryYear: '2004',
+      streetName: 'Fake Ville',
+      city: 'London',
+      location: {
+          type: 'Point',
+          coordinates: [-165, 40]
+      },
+      description: 'Test description',
+      themeTags: ['test', 'person'],
+      photos: ['fake-image.png'],
+      isAuthenticated: true
+    });
+  });
+
+  it("populates comment with correct ids", async () => {
+      const comment = await Comment.create({
+        user_id: testUser._id,
+        artwork_id: testArtwork._id,
+        text: 'I am a real comment, with real info'
+      })
+
+      const populatedComment = await Comment.findById(comment._id)
+      .populate('user_id')
+      .populate('artwork_id');
+
+      expect(populatedComment.user_id.firstName).toBe('Johnny');
+      expect(populatedComment.artwork_id.title).toBe('Millenial child');
+    });
+
 })
