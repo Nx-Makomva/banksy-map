@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
 import { login } from "../../services/authentication";
+import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import "../../assets/styles/LoginPage.css"
 
@@ -25,9 +26,9 @@ export function LoginPage() {
         }
     }
 
-    const handleClick = () =>{
-        navigate("/signup")
-    } 
+    // const handleClick = () =>{
+    //     navigate("/signup")
+    // } 
 
     function handleEmailChange(event) {
         setEmail(event.target.value);
@@ -56,6 +57,9 @@ export function LoginPage() {
                 onChange={handlePasswordChange}
                 />
                 <input role="submit-button" id="submit" type="submit" value="Submit" />
+                <p className="signup-link">
+                Need an account? <Link to="/signup">Sign Up!</Link>
+                </p>
             </form>
         
         </>

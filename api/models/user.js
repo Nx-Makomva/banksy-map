@@ -8,7 +8,10 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true },
   bookmarkedArtworks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Artwork', required: false}],
   visitedArtworks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Artwork', required: false}],
-  badges: [{type: mongoose.Schema.Types.ObjectId, ref: 'Badge', required: false}]
+  badges: [{
+    badge: {type: mongoose.Schema.Types.ObjectId, ref: 'Badge', required: false},
+    achievedAt: {type: Date, default: Date.now}
+    }]
 
 });
 
