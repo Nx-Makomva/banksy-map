@@ -2,13 +2,14 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-
+// Mount it with a base path
 
 const usersUnprotectedRouter = require("./routes/usersUnprotected");
 const usersProtectedRouter = require("./routes/usersProtected");
 // const postsRouter = require("./routes/posts");
 const authenticationRouter = require("./routes/authentication");
 const tokenChecker = require("./middleware/tokenChecker");
+const artworksRouter = require("./routes/artworks"); // adjust path if needed
 
 const app = express();
 
@@ -23,7 +24,7 @@ app.use("/users", express.json(), usersUnprotectedRouter); // Only JSON here
 app.use("/users", express.json(), tokenChecker, usersProtectedRouter); // Only JSON here
 //app.use("/posts", tokenChecker, postsRouter); // File uploads handled in routes
 app.use("/tokens", express.json(), authenticationRouter); // Only JSON here
-
+app.use("/artworks", express.json(), artworksRouter);
 
 // 404 Handler
 app.use((_req, res) => {
