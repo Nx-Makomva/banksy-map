@@ -54,7 +54,8 @@ async function create(req, res) {
 
 async function getById(req,res) {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.id)
+      .select(' -password -email') // I have added this so we don't leak user passwords or email
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -67,10 +68,60 @@ async function getById(req,res) {
   }  
 }
 
+async function getUserBookmarkedArtworks(req, res) {
+  try {
+    const user = await User.findById(req.user_id)
+      .populate('bookmarkedArtworks')
+      .select('bookmarkedArtworks')
+
+    if (!user) {
+      return res.status(404).json({
+        error: 'User not found'
+      })
+    }
+
+    res.status(200).json({
+      bookmarkedArtworks: user.bookmarkedArtworks
+    });
+
+  } catch (error) {
+    console.error('Error retrieving bookmarked artwork:', error);
+    res.status(500).json({
+      error: error.message
+    });
+  }
+};
+
+async function getUserVisitedArtworks(req, res) {
+  try {
+    const user = await User.findById(req.user_id)
+      .populate('visitedArtworks')
+      .select('visitedArtworks')
+
+    if (!user) {
+      return res.status(404).json({
+        error: 'User not found'
+      });
+    }
+
+    res.status(200).json({
+      visitedArtworks: user.visitedArtworks
+    });
+
+  } catch (error) {
+    console.error('Error retrieving visited artwork:', error);
+    res.status(500).json({
+      error: error.message
+    })
+  }
+}
+
 const UsersController = {
   getCurrentUser: getCurrentUser,
   create: create,
   getById: getById,
+  getUserBookmarkedArtworks: getUserBookmarkedArtworks,
+  getUserVisitedArtworks: getUserVisitedArtworks
 };
 
 module.exports = UsersController;
