@@ -1,4 +1,6 @@
+const { default: mongoose } = require("mongoose");
 const Artwork = require("../models/artwork");
+const Comment = require("../models/comments");
 
 async function create(req, res) {
   try {
@@ -42,10 +44,7 @@ async function create(req, res) {
   }
 };
 
-// updateById
-// deleteById
-
-async function getById(req, res) {
+async function getSingleArtwork(req, res) {
   try {
     const artwork = await Artwork.findById(req.params.id)
 
@@ -68,8 +67,7 @@ async function getById(req, res) {
   }
 }
 
-
-async function getAll(req, res) {
+async function getAllArtworks(req, res) {
   // This will return all artworks as a default, IF NO FILTER is present
 // Otherwise it will return artworks according to filter
   try {
@@ -133,10 +131,91 @@ async function getAll(req, res) {
   }
 }
 
+async function updateArtwork(req, res) {
+  try {
+    const updatedArtwork = await Artwork.findByIdAndUpdate(
+      req.params.id, 
+      { $set: req.body },
+      { 
+        new: true,
+        runValidators: true, // There's a validation field in artwork schema. Ensures location coords are valid
+        omitUndefined: true
+      }
+  );
+
+  if (!updatedArtwork) {
+    return res.status(404).json({ 
+      message: 'Artwork not found'
+    })
+  }
+
+  res.status(200).json({ updatedArtwork })
+
+  } catch (error) {
+    console.error('Error updating artwork:', error)
+    res.status(400).json({
+      error: error.message
+    })
+  }
+}
+
+async function deleteArtwork(req, res) {
+
+  const { id } = req.params.id
+  const session = await mongoose.startSession(); 
+  // ^^ This allows consistency and sychonicity so if one part of this operation fails then it aborts the delete
+  let deletedArtwork;
+
+  try {
+
+    await session.withTransaction(async () => {
+      const artworkToDelete = await Artwork.findById(id, null, { session }); 
+                                            // ^^ The 2nd param for this method is 'projection' (select which fields to return)
+                                            // it's 'null' because we want all fields returned
+
+      if (!artworkToDelete) {
+        throw new Error('Artwork not found');
+      }
+
+      if (artworkToDelete.comments && artworkToDelete.comments.length > 0) {
+        await Comment.deleteMany({_id: { $in: artworkToDelete.comments }}, {session} );
+      }
+
+      deletedArtwork = await Artwork.findByIdAndDelete(id, { session });
+
+      console.log('Transaction completed successfully and artwork + comments were deleted');
+
+    });
+    
+    res.status(200).json({
+      message: 'Artwork and associated comments successfully deleted',
+      deletedArtwork: deletedArtwork
+    })
+
+  } catch (error) {
+    console.error('Error deleting artwork. Transaction failed:', error);
+
+    if (error.message === 'Artwork not found') {
+      res.status(404).json({
+        message: 'Artwork not found'
+      })
+    } else {
+    res.status(500).json({
+      error: error.message
+    });
+    }
+  } finally {
+
+    await session.endSession();
+  }
+}
+
 const ArtworksController = {
   create: create,
-  getById: getById,
-  getAll: getAll
+  getSingleArtwork: getSingleArtwork,
+  getAllArtworks: getAllArtworks,
+  updateArtwork: updateArtwork,
+  deleteArtwork: deleteArtwork
 };
 
 module.exports = ArtworksController;
