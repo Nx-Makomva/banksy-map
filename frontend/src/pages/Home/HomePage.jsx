@@ -12,7 +12,8 @@ export function HomePage() {
     // this gets the user who is logged in
     const { user, logout } = useUser()
     const navigate = useNavigate();
-    const loggedIn = user?.isLoggedIn;
+    const loggedIn = user?._id;
+    console.log(loggedIn)
     console.log(user)
 
     // Use single state to manage which view is active - clicks are made in navbar

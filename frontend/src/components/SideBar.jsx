@@ -1,4 +1,4 @@
-import { MapSideBar } from "./map/MapSideBar";
+import MapSideBar from "./map/MapSideBar";
 import { ProfileSideBar } from "./profile/ProfileSideBar";
 
 function Sidebar({activeView}) {

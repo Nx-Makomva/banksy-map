@@ -30,6 +30,7 @@ const router = createBrowserRouter([
 function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const loggedoutUser = { _id: null }
 
     // Function to get current user from backend
   const getCurrentUser = async () => {
@@ -37,13 +38,12 @@ function App() {
     
     try {
       const userData = await getMe(token);
-      console.log("getMe returned:", userData);
       setUser(userData);
       return userData;
     } catch (error) {
       console.error('Error fetching user:', error);
       localStorage.removeItem('token');
-      setUser({ isLoggedIn: false, id: null });
+      setUser(loggedoutUser);
     } finally {
       setLoading(false);
     }
@@ -62,8 +62,7 @@ function App() {
   // Logout function
   const logout = async () => {
     localStorage.removeItem('token');
-    const userData = await getMe(); // Call without token to get anonymous user
-    setUser(userData);
+    setUser(loggedoutUser);
   };
 
   // Show loading while checking authentication

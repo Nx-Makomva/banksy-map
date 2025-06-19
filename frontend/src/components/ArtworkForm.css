@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+.artwork-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(2px);
+    background-color: rgba(0, 0, 0, 0.291);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.artwork-modal {
+    max-width: 420px;
+    width: 80%;
+    margin: 120px auto;
+    padding: 1rem;
+    background: transparent;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-family: 'Permanent Marker', cursive;
+    text-align: center;
+    position: relative;
+}
+
+.artwork-modal h2 {
+    margin-bottom: 1rem;
+}
+
+.artwork-modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.artwork-modal input[type="text"],
+.artwork-modal input[type="file"] {
+    padding: 0.7rem 0.9rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #000;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    text-align: center;
+    font-family: 'Permanent Marker', cursive;
+}
+
+.artwork-modal input[type="text"]::placeholder {
+    color: #888;
+    text-align: center;
+}
+
+.artwork-modal input[type="text"]:focus,
+.artwork-modal input[type="file"]:focus {
+    border-color: #18e283;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+    outline: none;
+}
+
+.artwork-modal button[type="submit"] {
+    padding: 0.75rem;
+    font-size: 1rem;
+    background-color: #12d479;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: 'Permanent Marker', cursive;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.artwork-modal button[type="submit"]:hover {
+    background-color: #2fb962;
+    transform: translateY(-1px);
+}
+
+.artwork-modal button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+.close-button {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    font-family: 'Permanent Marker', cursive;
+}
+.file-upload-icon {
+    font-size: 2.5rem;    
+    color: #000000;     
+    cursor: pointer;
+    user-select: none;
+    display: inline-flex; 
+    align-items: center;  
+    transition: color 0.3s ease;
+    margin: 0 auto; 
+    width: max-content;
+}
+
+.file-upload-icon:hover {
+    color: #12d479;
+}
+
+.file-upload-icon span {
+    margin-left: 8px;   
+    font-size: 1rem;       
+    color: inherit;         
+    vertical-align: middle; 
+    font-family: 'Permanent Marker', cursive; 
+    transition: color 0.3s ease;
+}
