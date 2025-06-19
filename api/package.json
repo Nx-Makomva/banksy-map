@@ -10,7 +10,9 @@
   "scripts": {
     "start": "node index.js",
     "dev": "node --watch index.js",
-    "test": "NODE_ENV=test jest"
+    "test": "NODE_ENV=test jest",
+    "data:import": "node seeds/userSeeds.js",
+    "data:destroy": "node seeds/userSeeds.js -d"
   },
   "keywords": [],
   "author": "",
