@@ -5,7 +5,7 @@ const User = require("../models/user");
 async function addComment(req, res) {
   try {
     const user_id = req.user_id;
-    const artwork_id = req.params.id;
+    const artwork_id = req.params.artwork_id;
     const { text } = req.body;
 
     const user = await User.findById(user_id).select('firstName');
