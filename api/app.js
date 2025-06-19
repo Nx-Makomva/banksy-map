@@ -16,13 +16,14 @@ app.use(cors());
 
 // Parse JSON request bodies, made available on `req.body`
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 
 // API Routes
-app.use("/users", usersUnprotectedRouter);
-app.use("/users", tokenChecker, usersProtectedRouter); 
+app.use("/users", express.json(), usersUnprotectedRouter);
+app.use("/users", express.json(), tokenChecker, usersProtectedRouter);
 app.use("/artworks", artworksRouter);
-app.use("/tokens", authenticationRouter); 
-app.use('/uploads', express.static('uploads'));
+app.use("/tokens", express.json(), authenticationRouter);
+
 
 // 404 Handler
 app.use((_req, res) => {

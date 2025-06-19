@@ -1,4 +1,4 @@
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 const Artwork = require("../models/artwork");
 const Comment = require("../models/comments");
 
@@ -47,6 +47,13 @@ async function create(req, res) {
 async function getSingleArtwork(req, res) {
   try {
     const artwork = await Artwork.findById(req.params.id)
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'user_id',
+          select: 'firstName'
+        }
+      })
 
     if (!artwork) {
       return res.status(404).json({
@@ -115,12 +122,12 @@ async function getAllArtworks(req, res) {
       }
     }
     
-    const allArtwork = await query;
+    const allArtworks = await query;
     
     res.status(200).json({ 
-      allArtwork,
+      allArtworks,
       isGeospatialQuery,
-      count: allArtwork.length 
+      count: allArtworks.length 
     });
     
   } catch (error) {
@@ -149,7 +156,10 @@ async function updateArtwork(req, res) {
     })
   }
 
-  res.status(200).json({ updatedArtwork })
+  res.status(200).json({ 
+    updatedArtwork,
+    message: 'Artwork updated successfully'
+  })
 
   } catch (error) {
     console.error('Error updating artwork:', error)
@@ -161,7 +171,7 @@ async function updateArtwork(req, res) {
 
 async function deleteArtwork(req, res) {
 
-  const { id } = req.params.id
+  const id = req.params.id
   const session = await mongoose.startSession(); 
   // ^^ This allows consistency and sychonicity so if one part of this operation fails then it aborts the delete
   let deletedArtwork;
@@ -189,7 +199,7 @@ async function deleteArtwork(req, res) {
     
     res.status(200).json({
       message: 'Artwork and associated comments successfully deleted',
-      deletedArtwork: deletedArtwork
+      deletedArtwork
     })
 
   } catch (error) {
