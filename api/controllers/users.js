@@ -1,6 +1,10 @@
+
 const User = require("../models/user");
 const bcrypt = require('bcrypt')
 const saltRounds = 10;
+
+const Artwork = require("../models/artwork");
+const Badge = require("../models/badge");
 
 async function getCurrentUser(req, res) {
     // default response if no logged-in user - for use in main page rendering

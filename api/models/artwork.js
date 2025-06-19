@@ -29,7 +29,7 @@ const ArtworkSchema = new mongoose.Schema({
   photos: { type: [String], required: true }, // May need adjusting dependng on how we're handling images
   isAuthenticated: {type: Boolean, required: true },
   comments: [{ type: mongoose.Schema.ObjectId, ref: 'Comment' }],
-  createdAt: new Date() // Adding timestamp incase we want to filter by date created 
+  createdAt: { type: Date, default: Date.now } // Adding timestamp incase we want to filter by date created 
 });
 
 ArtworkSchema.index({ location: '2dsphere' }); 
