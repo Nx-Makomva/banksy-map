@@ -31,7 +31,7 @@ const Map = () => {
         ref={mapRef}
         style={{
             width: "100%",
-            height: "800px", // 💡 Must be set!
+            height: "1200px", // 💡 Must be set!
             borderRadius: "8px",
         }}
         />

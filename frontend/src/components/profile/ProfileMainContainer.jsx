@@ -11,7 +11,7 @@ export function ProfileMainContainer() {
 
     return (
         <>
-        <div className="profileSideBar">
+        <div className="profile-main-container">
         <TabBar setActiveTab={setActiveTab}/>
         {activeTab === 'collected' && <CollectedContainer/>}
         {activeTab === 'bookmarks' && <BookmarksContainer/>}
