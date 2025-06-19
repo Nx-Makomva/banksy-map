@@ -1,0 +1,25 @@
+.report-button {
+    background: transparent;   /* no background */
+    border: none;              /* no border */
+    padding: 0;                /* no padding */
+    cursor: pointer;
+    display: inline-flex;      /* inline and flex for centering */
+    align-items: center;       /* center icon vertically */
+    justify-content: center;   /* center icon horizontally */
+    font-size: 1.5rem;         /* control icon size, adjust as needed */
+    color: #12d479;            /* your green or any color */
+    outline: none; 
+}
+
+.report-button:hover {
+    color: #0fa66a;            /* hover color */
+    transform: scale(1.1);     /* slight grow on hover */
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.report-button img {
+    width: 200px;    /* or smaller */
+    height: 200px;
+    display: block; /* remove inline spacing */
+    margin: auto;
+}
