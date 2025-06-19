@@ -15,7 +15,7 @@ const app = express();
 app.use(cors());
 
 // Parse JSON request bodies, made available on `req.body`
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
 app.use('/uploads', express.static('uploads'));
 
 // API Routes

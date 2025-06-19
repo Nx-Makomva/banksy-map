@@ -18,6 +18,7 @@ const Map = () => {
         const map = new window.google.maps.Map(mapRef.current, {
             center: location,
             zoom: 13,
+            mapId: '789d31d06ebabc6f5c31282b',
             mapTypeControl: false,
             streetViewControl: false,
             fullscreenControl: false,
