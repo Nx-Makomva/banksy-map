@@ -17,7 +17,6 @@ async function createToken(req, res) {
     }
 
     const match = await bcrypt.compare(password, user.password);
-
     if (!match) {
         console.log("Auth Error: Passwords do not match");
         return res.status(401).json({ message: "Password incorrect" });
