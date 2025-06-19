@@ -5,23 +5,18 @@ const saltRounds = 10;
 
 async function getCurrentUser(req, res) {
     // default response if no logged-in user - for use in main page rendering
-    const anonymousResponse = { isLoggedIn: false, id: null };
-
+    const anonymousResponse = {_id: null};
     try {
         if (!req.user_id) {
         return res.json(anonymousResponse);
         }
         
         // Get details of logged in user from db
-        const user = await User.findById(req.user_id);
-        
+        const user = await User.findById(req.user_id)
+                    .select("id email firstName lastName bookmarkedArtworks visitedArtworks badges")
+                    .populate("bookmarkedArtworks visitedArtworks badges");
         if (user) {
-        res.json({
-            isLoggedIn: true,
-            id: req.user_id,
-            // decide what user info we want to return to front end
-            email: user.email // placeholder for now
-        });
+            res.json(user);
         } else {
         // user_id exists but user not found in db 
         res.json(anonymousResponse);
