@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken")
 const User = require("../../models/user");
 const Artwork = require("../../models/artwork"); 
 const Badge = require("../../models/badge");
-// const badge = require("../../models/badge");
+jest.mock('../../middleware/upload', () => require('../mocks/multer-s3'));
 
 require("../mongodb_helper");
 
@@ -361,7 +361,7 @@ describe("PATCH /users/:id/badges/:badgeId", () => {
   it("does not add duplicate artworkId", async () => {
     const badge = await createValidBadge();
 
-    user.badge.push(badge._id);
+    user.badges.push(badge._id);
     await user.save();
 
     const response = await request(app).patch(
