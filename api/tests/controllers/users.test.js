@@ -2,7 +2,7 @@ const request = require("supertest");
 const app = require("../../app");
 const jwt = require("jsonwebtoken")
 const User = require("../../models/user");
-const Artwork = require("../../models/artwork"); // assuming this is your path
+const Artwork = require("../../models/artwork"); 
 
 require("../mongodb_helper");
 
@@ -16,8 +16,7 @@ describe("GET /users/current with JWT", () => {
     const response = await request(app).get("/users/current");
 
     expect(response.body).toEqual({
-      isLoggedIn: false,
-      id: null,
+      _id: null,
     });
   });
 
@@ -40,9 +39,13 @@ describe("GET /users/current with JWT", () => {
       .set("Authorization", `Bearer ${token}`);
 
     expect(response.body).toEqual({
-      isLoggedIn: true,
-      id: newUser._id.toString(),
+      _id: newUser._id.toString(),
       email: newUser.email,
+      firstName: newUser.firstName,
+      lastName: newUser.lastName,
+      bookmarkedArtworks: newUser.bookmarkedArtworks,
+      visitedArtworks: newUser.visitedArtworks,
+      badges: newUser.badges
     });
   });
 
@@ -55,8 +58,7 @@ describe("GET /users/current with JWT", () => {
       .set("Authorization", `Bearer ${token}`);
 
     expect(response.body).toEqual({
-      isLoggedIn: false,
-      id: null,
+      _id: null,
     });
   });
 
