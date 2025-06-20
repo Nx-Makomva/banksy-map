@@ -64,6 +64,9 @@ html, body, #root {
 .profile-main-container {
     height: 100%;
     margin: 3px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
 .tab-bar {
@@ -75,7 +78,7 @@ html, body, #root {
     flex: 1;
     padding: 0.75rem;
     font-size: 1rem;
-    background-color: #12d479;
+    background-color: #1fd9b7;
     color: white;
     border: none;
     border-radius: 8px;
@@ -87,10 +90,28 @@ html, body, #root {
 }
 
 .tab-button:hover {
-    background-color: #2fb962;
+    background-color:  #158571;
     transform: translateY(-1px);
 }
 
 .tab-button:active {
     transform: translateY(0);
+    color: rgb(141, 138, 138);
 }
+
+
+
+.tab-content-container {
+    padding: 0.75rem;
+    font-size: 1rem;
+    background-color: #b6f6ea;
+    height: calc(100% - 6px);
+    color: rgb(60, 60, 60);
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-family: 'Permanent Marker', cursive;
+    margin: 3px;
+    text-align: center;
+}
+

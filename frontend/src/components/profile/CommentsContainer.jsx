@@ -1,7 +1,7 @@
 export function CommentsContainer() {
     return (
         <>
-        <div className="commentsContainer">
+        <div className="tab-content-container">
         <p>Comments</p>
         </div>
         </>
