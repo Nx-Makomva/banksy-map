@@ -9,6 +9,7 @@ const artworksRouter = require("./routes/artworks");
 const commentsRouter = require("./routes/comments");
 const authenticationRouter = require("./routes/authentication");
 const tokenChecker = require("./middleware/tokenChecker");
+const badgeRoutes = require("./routes/badge");
 const artworksRouter = require("./routes/artworks"); // adjust path if needed
 
 const app = express();
@@ -25,6 +26,7 @@ app.use("/users", express.json(), tokenChecker, usersProtectedRouter);
 app.use("/artworks", express.json(), artworksRouter); // This has photos on it so create method needs extra middleware
 app.use("/comments", express.json(), tokenChecker, commentsRouter);
 app.use("/tokens", express.json(), authenticationRouter);
+app.use("/badges", badgeRoutes);
 
 
 // 404 Handler
