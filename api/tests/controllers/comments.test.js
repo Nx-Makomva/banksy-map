@@ -5,6 +5,7 @@ const Comment = require("../../models/comments");
 const Artwork = require("../../models/artwork");
 const User = require("../../models/user");
 const { default: mongoose } = require("mongoose");
+jest.mock('../../middleware/upload', () => require('../mocks/multer-s3'));
 
 require("../mongodb_helper");
 

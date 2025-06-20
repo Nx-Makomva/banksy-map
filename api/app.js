@@ -12,7 +12,7 @@ const tokenChecker = require("./middleware/tokenChecker");
 const badgeRoutes = require("./routes/badge");
 
 const app = express();
-app.use(express.json());
+app.use(express.json())
 app.use(cors());
 
 // Parse JSON request bodies, made available on `req.body`

@@ -2,6 +2,7 @@ const app = require("../../app");
 const supertest = require("supertest");
 require("../mongodb_helper");
 const User = require("../../models/user");
+jest.mock('../../middleware/upload', () => require('../mocks/multer-s3'));
 
 describe("/tokens", () => {
     beforeAll(async () => {
