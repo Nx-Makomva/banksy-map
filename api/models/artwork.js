@@ -27,7 +27,7 @@ const ArtworkSchema = new mongoose.Schema({
   description: { type: String , required: true },
   themeTags: { type: [String] , required: true },
   photos: { type: [String], required: true }, // May need adjusting dependng on how we're handling images
-  isAuthenticated: {type: Boolean, required: true },
+  isAuthenticated: {type: Boolean, default: false, required: true },
   comments: [{ type: mongoose.Schema.ObjectId, ref: 'Comment' }],
   createdAt: { type: Date, default: Date.now } // Adding timestamp incase we want to filter by date created 
 });

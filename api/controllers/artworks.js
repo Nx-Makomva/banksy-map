@@ -10,8 +10,11 @@ async function create(req, res) {
       location,
       description,
       themeTags,
-      photos,
       isAuthenticated } = req.body;
+
+    // We're only storing file key which comes in req.file
+    const photoKey = req.file?.key || req.body.photo;
+
 
     const artwork = await Artwork.create({
       title,
@@ -21,7 +24,7 @@ async function create(req, res) {
       location,
       description,
       themeTags,
-      photos,
+      photos: photoKey ? [photoKey] : [], // stores an image in an array or adds an empty array if no image
       isAuthenticated,
       comments: [],
     });
