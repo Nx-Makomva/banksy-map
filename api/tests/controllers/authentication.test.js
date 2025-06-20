@@ -2,10 +2,13 @@ const app = require("../../app");
 const supertest = require("supertest");
 require("../mongodb_helper");
 const User = require("../../models/user");
+jest.mock('../../middleware/upload', () => require('../mocks/multer-s3'));
 
 describe("/tokens", () => {
     beforeAll(async () => {
         const user = new User({
+            firstName: 'Jane', 
+            lastName: 'Doe',
             email: "auth-test@test.com",
             password: "12345678",
         });
@@ -25,7 +28,10 @@ test("returns a token when credentials are valid", async () => {
     const testApp = supertest(app);
     const response = await testApp
         .post("/tokens")
-        .send({ email: "auth-test@test.com", password: "12345678" });
+        .send({ 
+            email: "auth-test@test.com", 
+            password: "12345678" 
+        });
 
     expect(response.status).toEqual(201);
     expect(response.body.token).not.toEqual(undefined);
@@ -36,7 +42,7 @@ test("doesn't return a token when the user doesn't exist", async () => {
     const testApp = supertest(app);
     const response = await testApp
         .post("/tokens")
-        .send({ email: "non-existent@test.com", password: "1234" });
+        .send({ firstName: 'Jane', lastName: 'Doe', email: "non-existent@test.com", password: "1234" });
 
     expect(response.status).toEqual(401);
     expect(response.body.token).toEqual(undefined);
@@ -47,7 +53,7 @@ test("doesn't return a token when the wrong password is given", async () => {
     let testApp = supertest(app);
     const response = await testApp
         .post("/tokens")
-        .send({ email: "auth-test@test.com", password: "1234" });
+        .send({ firstName: 'Jane', lastName: 'Doe', email: "auth-test@test.com", password: "1234" });
 
     expect(response.status).toEqual(401);
     expect(response.body.token).toEqual(undefined);

@@ -17,6 +17,14 @@ export function ProfileMainContainer() {
         {activeTab === 'bookmarks' && <BookmarksContainer/>}
         {activeTab === 'comments' && <CommentsContainer/>}
         </div>
+        <div>
+            <img
+                src={"https://banksy-artwork-bucket.s3.eu-west-2.amazonaws.com/tesco-flag.avif"}
+                alt={ "Banksy image"}
+                className="artwork-image"
+                width={500}
+              />
+        </div>
         </>
     );
 }

@@ -5,19 +5,12 @@ import "../../assets/styles/MapSideBar.css"
 
 const MapSideBar = () => {
     const [showArtworkForm, setShowArtworkForm] = useState(false);
-    const [fileName, setFileName] = useState("");
-
-    const handleFileChange = (e) => {
-    const file = e.target.files[0];
-        setFileName(file ? file.name : "");
-    };
 
     const handleOpenArtworkForm = () => {
         setShowArtworkForm(true);
     };
 
     const handleCloseArtworkForm = () => {
-        setFileName("");
         setShowArtworkForm(false);
     };
 
@@ -30,7 +23,7 @@ const MapSideBar = () => {
             />
         </div>
 
-        {showArtworkForm && <ArtworkForm onClose={handleCloseArtworkForm} handleFileChange={handleFileChange} fileName={fileName} />}
+        {showArtworkForm && <ArtworkForm onClose={handleCloseArtworkForm} />}
         </>
     );
 };
