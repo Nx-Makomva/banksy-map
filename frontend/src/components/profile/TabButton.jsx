@@ -8,7 +8,7 @@ export const TabButton = ({name, value, setActiveTab}) => {
 
     return (
         <>
-            <button name={name} value={value} onClick={handleTabClick} className="tabButton">{value}</button>
+            <button name={name} value={value} onClick={handleTabClick} className="tab-button">{value}</button>
         </>
     )
 }

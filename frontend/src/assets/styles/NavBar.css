@@ -9,7 +9,6 @@ header {
 }
 
 .navbar-container {
-    max-width: 1200px;
     margin: 0 auto;
     padding: 16px 20px 16px 8px;
     display: flex;
@@ -23,7 +22,7 @@ header {
 }
 
 .logo img {
-    width: 200px;
+    width: 270px;
     height: auto;
     display: block;
 }

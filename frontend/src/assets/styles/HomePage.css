@@ -48,7 +48,7 @@ html, body, #root {
     color: black;
     background-color: #f0f0f0;
     border-radius: 16px;
-    padding: 1rem;
+    /* padding: 1rem; */
     box-sizing: border-box;
     overflow: hidden;
 }
@@ -60,3 +60,58 @@ html, body, #root {
     min-height: 0;
     overflow: hidden;
 }
+
+.profile-main-container {
+    height: 100%;
+    margin: 3px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.tab-bar {
+    display: flex;
+    width: 100%;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 0.75rem;
+    font-size: 1rem;
+    background-color: #1fd9b7;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: 'Permanent Marker', cursive;
+    margin: 3px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.tab-button:hover {
+    background-color:  #158571;
+    transform: translateY(-1px);
+}
+
+.tab-button:active {
+    transform: translateY(0);
+    color: rgb(141, 138, 138);
+}
+
+
+
+.tab-content-container {
+    padding: 0.75rem;
+    font-size: 1rem;
+    background-color: #b6f6ea;
+    height: calc(100% - 6px);
+    color: rgb(60, 60, 60);
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-family: 'Permanent Marker', cursive;
+    margin: 3px;
+    text-align: center;
+}
+

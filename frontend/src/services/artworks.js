@@ -34,3 +34,20 @@ export async function createArtwork(formData) {
     throw error;
   }
 }
+
+
+// get all artworks
+export async function getAllArtworks() {
+    const requestOptions = {
+        method: "GET"
+    };
+
+    const response = await fetch(`${BACKEND_URL}/artworks`, requestOptions);
+    
+    if (!response.ok){
+        throw new Error('Error fetching artworks')
+    }
+
+    const artworksData = await response.json();
+    return artworksData;
+}

@@ -1,7 +1,7 @@
 export function BookmarksContainer() {
     return (
         <>
-        <div className="bookmarksContainer">
+        <div className="tab-content-container">
         <p>Bookmarks</p>
         </div>
         </>
