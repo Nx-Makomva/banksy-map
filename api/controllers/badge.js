@@ -128,7 +128,7 @@ async function updateBadge(req, res) {
         res.status(200).json({
             success: true,
             message: 'Badge updated successfully',
-            data: updatedBadge
+            data: updateBadge
         });
     } catch (error) {
         if (error.name === 'ValidationError') {
@@ -198,56 +198,6 @@ async function getByCriteria(req, res) {
         });
     }
 }
-
-// // Check if user qualifies for badges (helper function)
-// async function checkUserBadgeEligibility(req, res) {
-//     try {
-//         const { userStats } = req.body; // Expecting { visits: number, bookmarks: number, signup: boolean }
-        
-//         if (!userStats) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: 'User stats required'
-//             });
-//         }
-
-//         const allBadges = await Badge.find();
-//         const eligibleBadges = [];
-
-//         for (const badge of allBadges) {
-//             let qualifies = false;
-
-//             switch (badge.criteria.type) {
-//                 case 'visits':
-//                     qualifies = userStats.visits >= badge.criteria.count;
-//                     break;
-//                 case 'bookmarks':
-//                     qualifies = userStats.bookmarks >= badge.criteria.count;
-//                     break;
-//                 case 'signup':
-//                     qualifies = userStats.signup === true && badge.criteria.count <= 1;
-//                     break;
-//             }
-
-//             if (qualifies) {
-//                 eligibleBadges.push(badge);
-//             }
-//         }
-
-//         res.status(200).json({
-//             success: true,
-//             message: `User qualifies for ${eligibleBadges.length} badge(s)`,
-//             data: eligibleBadges
-//         });
-//     } catch (error) {
-//         res.status(500).json({
-//             success: false,
-//             message: 'Error checking badge eligibility',
-//             error: error.message
-//         });
-//     }
-// }
-
 const BadgesController = {
     getAll: getAll,
     getById: getById,
@@ -255,7 +205,6 @@ const BadgesController = {
     updateBadge: updateBadge,
     deleteBadge: deleteBadge,
     getByCriteria: getByCriteria
-    // checkUserBadgeEligibility: checkUserBadgeEligibility
 };
 
 module.exports = BadgesController;

@@ -9,6 +9,7 @@ const usersProtectedRouter = require("./routes/usersProtected");
 // const postsRouter = require("./routes/posts");
 const authenticationRouter = require("./routes/authentication");
 const tokenChecker = require("./middleware/tokenChecker");
+const badgeRoutes = require("./routes/badge");
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use("/users", express.json(), usersUnprotectedRouter); // Only JSON here
 app.use("/users", express.json(), tokenChecker, usersProtectedRouter); // Only JSON here
 //app.use("/posts", tokenChecker, postsRouter); // File uploads handled in routes
 app.use("/tokens", express.json(), authenticationRouter); // Only JSON here
+app.use("/badges", badgeRoutes);
 
 
 // 404 Handler
