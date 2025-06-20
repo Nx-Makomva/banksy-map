@@ -1,28 +1,32 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const cors = require("cors");
 
-
+// Mount it with a base path
 
 const usersUnprotectedRouter = require("./routes/usersUnprotected");
 const usersProtectedRouter = require("./routes/usersProtected");
-// const postsRouter = require("./routes/posts");
+const artworksRouter = require("./routes/artworks");
+const commentsRouter = require("./routes/comments");
 const authenticationRouter = require("./routes/authentication");
 const tokenChecker = require("./middleware/tokenChecker");
+const badgeRoutes = require("./routes/badge");
+const artworksRouter = require("./routes/artworks"); // adjust path if needed
 
 const app = express();
 
 app.use(cors());
 
 // Parse JSON request bodies, made available on `req.body`
-app.use(bodyParser.json());
-app.use('/uploads', express.static('uploads'));
+app.use("/uploads", express.static("uploads"));
 
 // API Routes
-app.use("/users", express.json(), usersUnprotectedRouter); // Only JSON here
-app.use("/users", express.json(), tokenChecker, usersProtectedRouter); // Only JSON here
-// app.use("/artworks", artworksRouter); // File uploads handled in routes
-app.use("/tokens", express.json(), authenticationRouter); // Only JSON here
+
+app.use("/users", express.json(), usersUnprotectedRouter);
+app.use("/users", express.json(), tokenChecker, usersProtectedRouter);
+app.use("/artworks", express.json(), artworksRouter); // This has photos on it so create method needs extra middleware
+app.use("/comments", express.json(), tokenChecker, commentsRouter);
+app.use("/tokens", express.json(), authenticationRouter);
+app.use("/badges", badgeRoutes);
 
 
 // 404 Handler
