@@ -21,8 +21,8 @@ const ArtworkFullPopup = ({ artwork, onClose }) => {
             <div className="artwork-full-details">
             {artwork.discoveryYear && <p><strong>Discovered:</strong> {artwork.discoveryYear}</p>}
             {artwork.description && <p>{artwork.description}</p>}
-            {artwork?.streetName && (
-                <p><strong>Location:</strong> {artwork.streetName}</p>
+            {artwork?.address && (
+                <p><strong>Location:</strong> {artwork.address}</p>
             )}
             </div>
         </div>

@@ -35,12 +35,13 @@ export function HomePage() {
         const fetchArtworks = async () => {
         try {
             const artworksData = await getAllArtworks();
-            setArtworks(artworksData.allArtwork);
+            console.log(artworksData)
+            setArtworks(artworksData.allArtworks);
+            console.log("set artworks:", artworks)
         } catch (err) {
             console.error('Error fetching artworks:', err);
         } 
         };
-
         fetchArtworks();
   }, []); // Empty dependency array - runs once on mount
 
