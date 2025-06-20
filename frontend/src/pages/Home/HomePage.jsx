@@ -45,9 +45,11 @@ export function HomePage() {
         <div className="pageColumnsContainer">
             <Sidebar 
                 activeView={activeView}
+                loggedIn={loggedIn}
             />
             <MainBar 
                 activeView={activeView}
+                loggedIn={loggedIn}
             />
         </div>
         </>

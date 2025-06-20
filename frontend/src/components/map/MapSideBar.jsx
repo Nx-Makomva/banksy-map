@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ReportButton from "../ReportButton";
 import ArtworkForm from "../ArtworkForm";
-import "./MapSideBar.css"
+import "../../assets/styles/MapSideBar.css"
 
 const MapSideBar = () => {
     const [showArtworkForm, setShowArtworkForm] = useState(false);
