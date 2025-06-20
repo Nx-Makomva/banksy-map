@@ -8,3 +8,5 @@ router.post("/:artwork_id", CommentsController.addComment);
 router.get("/me", CommentsController.getAllUserComments);
 router.patch("/:id", CommentsController.updateComment);
 router.delete("/:id", CommentsController.deleteComment);
+
+module.exports = router;

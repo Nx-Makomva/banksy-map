@@ -8,6 +8,6 @@ router.get("/", ArtworksController.getAllArtworks);
 router.post("/", ArtworksController.create); // Likely needs middleware to parse photos
 router.get("/:id", ArtworksController.getSingleArtwork);
 router.patch("/:id", ArtworksController.updateArtwork);
-router.delete("/:id", ArtworksController.deleteArtwork)
+router.delete("/:id", ArtworksController.deleteArtwork);
 
 module.exports = router;

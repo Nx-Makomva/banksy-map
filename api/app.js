@@ -1,8 +1,5 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const cors = require("cors");
-
-
 
 const usersUnprotectedRouter = require("./routes/usersUnprotected");
 const usersProtectedRouter = require("./routes/usersProtected");
@@ -16,13 +13,13 @@ const app = express();
 app.use(cors());
 
 // Parse JSON request bodies, made available on `req.body`
-app.use('/uploads', express.static('uploads'));
+app.use("/uploads", express.static("uploads"));
 
 // API Routes
 app.use("/users", express.json(), usersUnprotectedRouter);
 app.use("/users", express.json(), tokenChecker, usersProtectedRouter);
-app.use("/artworks", artworksRouter); // This has photos on it so create method needs extra middleware
-app.use("/comments", express.json(), tokenChecker, commentsRouter)
+app.use("/artworks", express.json(), artworksRouter); // This has photos on it so create method needs extra middleware
+app.use("/comments", express.json(), tokenChecker, commentsRouter);
 app.use("/tokens", express.json(), authenticationRouter);
 
 // 404 Handler
