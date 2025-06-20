@@ -11,21 +11,23 @@ async function create(req, res) {
       city,
       location,
       description,
-      themeTags,
-      photos, // possibly needs to be req.files?
-      isAuthenticated,
-    } = req.body;
+      themeTags } = req.body;
+
+    const [lat, lng] = location.split(',').map(Number);  
 
     const artwork = await Artwork.create({
       title,
       discoveryYear,
       streetName,
       city,
-      location,
+      location: {
+        type: 'Point',
+        coordinates: [lng, lat],
+      },
       description,
       themeTags,
-      photos,
-      isAuthenticated,
+      photos: [req.file?.path],
+      isAuthenticated: false,
       comments: [],
     });
 
