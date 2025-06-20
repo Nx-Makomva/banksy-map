@@ -1,9 +1,68 @@
-.profile-sidebar {
-    background: transparent;
-    margin: auto;
-    width: 100%;
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+.profileSideBar {
+    width: 280px;
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+    border-right: 1px solid #ddd;
+    border-radius: 12px;
+    font-family: system-ui, sans-serif;
+    justify-content: space-between;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 2rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    height: auto;
+}
+
+.profileImage {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    border: 2px solid #ccc;
+}
+
+.initials {
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+    color: #333;
+    font-family: 'Permanent Marker', cursive;
+}
+
+.fullName {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+    color: #222;
+    font-family: 'Permanent Marker', cursive;
+}
+
+.email {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+    word-break: break-word;
+    text-align: center;
+    font-family: 'Permanent Marker', cursive;
+}
+
+hr {
+    width: 100%;
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 1rem 0;
+}
+
+.stat {
+    font-size: 0.95rem;
+    color: #444;
+    margin-bottom: 0.4rem;
+    width: 100%;
+    text-align: center;
+    font-family: 'Permanent Marker', cursive;
+    padding-top: 1rem;
 }
