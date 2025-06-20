@@ -1,5 +1,5 @@
 import { FiUpload } from "react-icons/fi";
-import "./ArtworkForm.css";
+import "../assets/styles/ArtworkForm.css";
 import { createArtwork } from '../services/artworks';
 import { useState } from "react";
 

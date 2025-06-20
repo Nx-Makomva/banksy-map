@@ -1,4 +1,4 @@
-import "./ReportButton.css"
+import "../assets/styles/ReportButton.css"
 
 const ReportButton = ({ src, alt, onClick }) => {
     return (
