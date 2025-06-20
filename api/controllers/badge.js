@@ -6,7 +6,7 @@ async function getAll(_req, res) {
         res.status(200).json({
             success: true,
             count: badges.length,
-            data: badges
+            badge: badges
         });
     } catch (error) {
         res.status(500).json({
@@ -71,7 +71,7 @@ async function create(req, res) {
         res.status(201).json({
             success: true,
             message: 'Badge created successfully',
-            data: savedBadge
+            badge: savedBadge
         });
     } catch (error) {
         if (error.name === 'ValidationError') {
@@ -110,25 +110,25 @@ async function updateBadge(req, res) {
                 });
             }
         }
-        const updateData = {};
-        if (name) updateData.name = name;
-        if (description) updateData.description = description;
-        if (icon !== undefined) updateData.icon = icon; // Allow setting to empty
+        const updatedFields = {};
+        if (name) updatedFields.name = name;
+        if (description) updatedFields.description = description;
+        if (icon !== undefined) updatedFields.icon = icon; // Allow setting to empty
         if (criteria) {
-            updateData.criteria = {
+            updatedFields.criteria = {
                 type: criteria.type || existingBadge.criteria.type,
                 count: criteria.count !== undefined ? criteria.count : existingBadge.criteria.count
             };
         }
-        const updateBadge = await Badge.findByIdAndUpdate(
+        const updatedBadge = await Badge.findByIdAndUpdate(
             id,
-            updateData,
+            updatedFields,
             { new: true, runValidators: true }
         );
         res.status(200).json({
             success: true,
             message: 'Badge updated successfully',
-            data: updateBadge
+            badge: updatedBadge
         });
     } catch (error) {
         if (error.name === 'ValidationError') {
@@ -161,7 +161,7 @@ async function deleteBadge(req, res) {
         res.status(200).json({
             success: true,
             message: 'Badge deleted successfully',
-            data: badge
+            badge: badge
         });
     } catch (error) {
         res.status(500).json({
@@ -188,7 +188,7 @@ async function getByCriteria(req, res) {
         res.status(200).json({
             success: true,
             count: badges.length,
-            data: badges
+            badge: badges
         });
     } catch (error) {
         res.status(500).json({

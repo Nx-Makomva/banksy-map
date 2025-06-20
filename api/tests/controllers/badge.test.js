@@ -17,7 +17,7 @@ describe('Badges Controller', () => {
             expect(response.body).toEqual({
                 success: true,
                 count: 0,
-                data: []
+                badge: []
             });
         });
 
@@ -33,11 +33,11 @@ describe('Badges Controller', () => {
             expect(response.status).toBe(200);
             expect(response.body.success).toBe(true);
             expect(response.body.count).toBe(3);
-            expect(response.body.data).toHaveLength(3);
+            expect(response.body.badge).toHaveLength(3);
 
-            expect(response.body.data[0].criteria.count).toBe(1);
-            expect(response.body.data[1].criteria.count).toBe(25);
-            expect(response.body.data[2].criteria.count).toBe(100);
+            expect(response.body.badge[0].criteria.count).toBe(1);
+            expect(response.body.badge[1].criteria.count).toBe(25);
+            expect(response.body.badge[2].criteria.count).toBe(100);
         });
     });
 
@@ -55,7 +55,7 @@ describe('Badges Controller', () => {
 
             expect(response.status).toBe(201);
             expect(response.body.success).toBe(true);
-            expect(response.body.data.name).toEqual('Explorer');
+            expect(response.body.badge.name).toEqual('Explorer');
         });
 
         it('fails if name is missing', async () => {
@@ -150,8 +150,8 @@ describe('Badges Controller', () => {
         });
 
         expect(response.status).toBe(200);
-        expect(response.body.data.name).toEqual('New Name');
-        expect(response.body.data.criteria.count).toEqual(5);
+        expect(response.body.badge.name).toEqual('New Name');
+        expect(response.body.badge.criteria.count).toEqual(5);
         });
 
         it('returns 404 if that badge does not exist', async () => {
@@ -197,7 +197,7 @@ describe('Badges Controller', () => {
             expect(response.status).toBe(200);
             expect(response.body.success).toBe(true);
             expect(response.body.count).toBe(1);
-            expect(response.body.data[0].criteria.type).toBe('visits');
+            expect(response.body.badge[0].criteria.type).toBe('visits');
         });
 
         it('sorts badges by criteria count ascending', async () => {
@@ -208,8 +208,8 @@ describe('Badges Controller', () => {
 
             const response = await request(app).get('/badges/criteria/visits');
         
-            expect(response.body.data[0].criteria.count).toBe(5);
-            expect(response.body.data[1].criteria.count).toBe(100)
+            expect(response.body.badge[0].criteria.count).toBe(5);
+            expect(response.body.badge[1].criteria.count).toBe(100)
         });
 
         it('returns empty array when no matches', async () => {
@@ -217,7 +217,7 @@ describe('Badges Controller', () => {
         
             expect(response.status).toBe(200);
             expect(response.body.count).toBe(0);
-            expect(response.body.data).toEqual([]);
+            expect(response.body.badge).toEqual([]);
         });
 
         it('returns 400 for invalid criteria type', async () => {
