@@ -174,14 +174,13 @@ describe('Badges Controller', () => {
             });
 
             const response = await request(app).delete(`/badges/${badge._id}`);
-
+            
             expect(response.status).toBe(200);
             expect(response.body.message).toMatch(/deleted successfully/);
         });
-
+        
         it('returns 404 if badge is not found', async () => {
             const response = await request(app).delete('/badges/609e129a56cd3c35b8e81f11');
-            
             expect(response.status).toBe(404);
         });
     });
