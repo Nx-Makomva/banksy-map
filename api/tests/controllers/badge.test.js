@@ -1,7 +1,7 @@
 const request = require('supertest');
 const app = require('../../app');
 const Badge= require('../../models/badge');
-
+jest.mock('../../middleware/upload', () => require('../mocks/multer-s3'));
 require('../mongodb_helper');
 
 describe('Badges Controller', () => {
