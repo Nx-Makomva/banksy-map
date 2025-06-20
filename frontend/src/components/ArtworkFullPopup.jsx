@@ -24,8 +24,6 @@ const ArtworkFullPopup = ({ artwork, onClose }) => {
             {artwork?.streetName && (
                 <p><strong>Location:</strong> {artwork.streetName}</p>
             )}
-            
-            {/* Add any other artwork details you want to show */}
             </div>
         </div>
         </div>
