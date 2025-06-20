@@ -6,6 +6,7 @@ const Artwork = require("../../models/artwork");
 const Comment = require("../../models/comments");
 jest.mock('../../middleware/upload', () => require('../mocks/multer-s3'));
 
+
 require("../mongodb_helper");
 
 describe("/artworks", () => {
@@ -20,16 +21,11 @@ describe("/artworks", () => {
         .send({
           title: "little man",
           discoveryYear: "2009",
-          streetName: "Little Venice",
-          city: "London",
-          location: {
-            type: 'Point',
-            coordinates: [-0.45, 45]
-          },
+          address: "25, Little Venice, Mountain View, London",
+          locationLat: "45",
+          locationLng: "-0.45",
           description: "I am real Banksy",
           themeTags: ['animal', 'cool'],
-          photos: ['photo.jpg'],
-          isAuthenticated: false,
         })
 
         expect(response.statusCode).toBe(201);
@@ -38,17 +34,12 @@ describe("/artworks", () => {
     test("test an artwork is created", async () => {
       await request(app).post("/artworks").send({
         title: "little woman",
-          discoveryYear: "2005",
-          streetName: "Little",
-          city: "London",
-          location: {
-            type: 'Point',
-            coordinates: [-0.90, -45]
-          },
-          description: "I am real van gogh",
-          themeTags: ['happy', 'hipster'],
-          photos: ['photo.jpg'],
-          isAuthenticated: true,
+        discoveryYear: "2005",
+        address: "25, Little Venice, Mountain View, London",
+        locationLat: "-45",
+        locationLng: "-0.90",
+        description: "I am real van gogh",
+        themeTags: ['happy', 'hipster'],
       })
 
       const artworks = await Artwork.find();
@@ -56,18 +47,16 @@ describe("/artworks", () => {
 
       expect(newArtwork.title).toBe('little woman');
       expect(newArtwork.themeTags).toEqual(['happy', 'hipster']);
+      expect(newArtwork.location.coordinates).toEqual([-0.90, -45]);
     });
 
     describe("POST, when title is missing", () => {
       test("response code is 400", async () => {
         const response = await request(app).post("/artworks").send({
           discoveryYear: "2023",
-          streetName: "Street",
-          city: "London",
-          location: {
-            type: 'Point',
-            coordinates: [-0.90, -45]
-          },
+          address: "25, Little Venice, Mountain View, London",
+          locationLat: "-45",
+          locationLng: "-0.90",
           description: "I am real van gogh",
           themeTags: ['happy', 'hipster'],
           photos: ['photo.jpg'],
@@ -80,12 +69,9 @@ describe("/artworks", () => {
       test("does not create user", async () => {
         await request(app).post("/artworks").send({
           discoveryYear: "2023",
-          streetName: "Street",
-          city: "London",
-          location: {
-            type: 'Point',
-            coordinates: [-0.90, -45]
-          },
+          address: "25, Little Venice, Mountain View, London",
+          locationLat: "-45",
+          locationLng: "-0.90",
           description: "I am real van gogh",
           themeTags: ['happy', 'hipster'],
           photos: ['photo.jpg'],
@@ -103,8 +89,7 @@ describe("GET, a single artwork by id", () => {
         const artwork = await Artwork.create({
           title: "little person",
           discoveryYear: "2009",
-          streetName: "Little Venice",
-          city: "London",
+          address: "25, Little Venice, Mountain View, London",
           location: {
             type: 'Point',
             coordinates: [-0.45, 45]
@@ -130,8 +115,7 @@ describe("GET, a single artwork by id", () => {
         const artwork = await Artwork.create({
           title: "boy",
           discoveryYear: "2009",
-          streetName: "Little Venice",
-          city: "London",
+          address: "25, Little Venice, Mountain View, London",
           location: {
             type: 'Point',
             coordinates: [-0.45, 45]
@@ -156,47 +140,44 @@ describe("GET all artworks", () => {
   test("returns all artworks in the collection", async () => {
     await Artwork.create({
       title: "little boy",
-          discoveryYear: "2009",
-          streetName: "Little Venice",
-          city: "London",
-          location: {
-            type: 'Point',
-            coordinates: [-0.45, 45]
-          },
-          description: "I am real Banksy",
-          themeTags: ['animal', 'hipster'],
-          photos: ['photo.jpg'],
-          isAuthenticated: false,
+      discoveryYear: "2009",
+      address: "25, Little Venice, Mountain View, London",
+      location: {
+        type: 'Point',
+        coordinates: [-0.45, 45]
+      },
+      description: "I am real Banksy",
+      themeTags: ['animal', 'hipster'],
+      photos: ['photo.jpg'],
+      isAuthenticated: false,
     })
 
     await Artwork.create({
       title: "little girl",
-          discoveryYear: "2009",
-          streetName: "Little Italy",
-          city: "London",
-          location: {
-            type: 'Point',
-            coordinates: [-0.45, 45]
-          },
-          description: "I am real art",
-          themeTags: ['fancy', 'cool'],
-          photos: ['photo.jpg'],
-          isAuthenticated: false,
+      discoveryYear: "2009",
+      address: "25, Little Italy, Mountain View, London",
+      location: {
+        type: 'Point',
+        coordinates: [-0.45, 45]
+      },
+      description: "I am real art",
+      themeTags: ['fancy', 'cool'],
+      photos: ['photo.jpg'],
+      isAuthenticated: false,
     })
 
     await Artwork.create({
       title: "little people",
-          discoveryYear: "2009",
-          streetName: "Little Rome",
-          city: "London",
-          location: {
-            type: 'Point',
-            coordinates: [-0.45, 45]
-          },
-          description: "I am real van gogh",
-          themeTags: ['sparkle', 'yes'],
-          photos: ['photo.jpg'],
-          isAuthenticated: false,
+      discoveryYear: "2009",
+      address: "25, Little Rome, Mountain View, London",
+      location: {
+        type: 'Point',
+        coordinates: [-0.45, 45]
+      },
+      description: "I am real van gogh",
+      themeTags: ['sparkle', 'yes'],
+      photos: ['photo.jpg'],
+      isAuthenticated: false,
     })
 
     const artworksCollection = await Artwork.find();
@@ -221,8 +202,7 @@ describe("PATCH, update an artwork", () => {
     const artwork = await Artwork.create({
       title: "old title",
       discoveryYear: "2009",
-      streetName: "Old Street",
-      city: "London",
+      address: "25, Old Street, Mountain View, London",
       location: {
         type: 'Point',
         coordinates: [-0.45, 45]
@@ -260,8 +240,7 @@ describe("DELETE, remove an artwork and its comments", () => {
     const artwork = await Artwork.create({
       title: "Temporary piece",
       discoveryYear: "2010",
-      streetName: "Nowhere Road",
-      city: "London",
+      address: "25, Nowhere Road, Mountain View, London",
       location: {
         type: 'Point',
         coordinates: [-0.5, 44]

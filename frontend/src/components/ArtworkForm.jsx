@@ -53,7 +53,9 @@ const ArtworkForm = ({ onClose }) => {
         formData.append("discoveryYear", form.discoveryYear);
         formData.append("address", form.address);
         formData.append("description", form.description);
-        formData.append("themeTags", form.themeTags);
+        formData.append("themeTags", form.themeTags); 
+                        // 👆this is an array so needs a loop to get each tag separately. 
+                        // Same thing might be for photos?
 
         if (form.photos) {
         formData.append("photos", form.photos);

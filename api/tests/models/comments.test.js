@@ -1,17 +1,8 @@
-// TODO: 
-// Write test files for models
-// write controller methods
-// write test files for controller methods
-// create routes for artwork
-
 require('../mongodb_helper');
 const mongoose = require('mongoose');
 const Comment = require('../../models/comments');
 const User = require('../../models/user');
 const Artwork = require('../../models/artwork');
-
-// first check basic model construction
-// next test model relationship
 
 describe("Comments model constructs correctly", () => {
   beforeEach(async () => {
@@ -47,15 +38,14 @@ describe("Comments construct correctly with real user and artwork objects", () =
     testArtwork = await Artwork.create({
       title: 'Millenial child',
       discoveryYear: '2004',
-      streetName: 'Fake Ville',
-      city: 'London',
+      address: '12, Fake Ville, London',
       location: {
           type: 'Point',
           coordinates: [-165, 40]
       },
       description: 'Test description',
       themeTags: ['test', 'person'],
-      photos: ['fake-image.png'],
+      photos: ['photo.jpg'],
       isAuthenticated: true
     });
   });

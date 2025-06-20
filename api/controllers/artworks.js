@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const Artwork = require("../models/artwork");
 const Comment = require("../models/comments");
 
@@ -7,22 +6,21 @@ async function create(req, res) {
     const {
       title,
       discoveryYear,
-      streetName,
-      city,
-      location,
+      address,
+      locationLat, 
+      locationLng, // these coordinates come from the form data as strings
       description,
       themeTags } = req.body;
 
-    const [lat, lng] = location.split(',').map(Number);  
-
-    const artwork = await Artwork.create({
+    const artwork = await Artwork.create({ // This automatically runs validators for location (check schema)
       title,
       discoveryYear,
-      streetName,
-      city,
+      address,
       location: {
         type: 'Point',
-        coordinates: [lng, lat],
+        coordinates: [parseFloat(locationLng), parseFloat(locationLat)], 
+        // The order is then reversed and they're passed in like this for MongoDB. 
+        // Mongo expects numbers hence the parse
       },
       description,
       themeTags,
@@ -41,8 +39,15 @@ async function create(req, res) {
   } catch (error) {
     if (process.env.NODE_ENV !== 'test') {
       console.error("Error creating artwork:", error);
+  }
+
+    if (error.name === "ValidationError") {
+        return res.status(400).json({ 
+          error: error.message 
+        });
     }
-    res.status(400).json({
+
+    res.status(500).json({
       error: error.message,
     });
   }
