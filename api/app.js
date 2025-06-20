@@ -11,7 +11,6 @@ const authenticationRouter = require("./routes/authentication");
 const tokenChecker = require("./middleware/tokenChecker");
 const badgeRoutes = require("./routes/badge");
 
-
 const app = express();
 app.use(express.json())
 app.use(cors());

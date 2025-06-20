@@ -1,0 +1,25 @@
+.badges-button {
+    margin-top: 120px;
+    background: transparent;  
+    border: none;            
+    padding: 0; 
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10rem;
+    color: #12d479; 
+    outline: none; 
+}
+
+.badges-button:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.badges-button img {
+    width: 270px;
+    height: 90px;
+    display: block;
+    margin: auto;
+}
