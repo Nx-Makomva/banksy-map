@@ -1,10 +1,9 @@
 const request = require("supertest");
-const jwt = require("jsonwebtoken");
-
 const app = require("../../app");
+const { default: mongoose } = require("mongoose");
+
 const Artwork = require("../../models/artwork");
 const Comment = require("../../models/comments");
-const { default: mongoose } = require("mongoose");
 
 
 require("../mongodb_helper");
@@ -206,7 +205,6 @@ describe("GET all artworks", () => {
     const allArtworks = response.body.allArtworks;
 
     const titles = allArtworks.map(art => art.title);
-    console.log(titles);
 
     expect(titles).toContain('little girl');
     expect(titles).toContain('little boy');

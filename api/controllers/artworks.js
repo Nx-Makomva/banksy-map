@@ -37,7 +37,9 @@ async function create(req, res) {
     // ^^ Keep response object wrapped for flexibility so we can add to this
     // without ever breaking the frontend.
   } catch (error) {
-    console.error("Error creating artwork:", error);
+    if (process.env.NODE_ENV !== 'test') {
+      console.error("Error creating artwork:", error);
+    }
     res.status(400).json({
       error: error.message,
     });

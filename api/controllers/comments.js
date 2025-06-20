@@ -35,7 +35,9 @@ async function addComment(req, res) {
       timestamp: comment.createdAt,
     });
   } catch (error) {
-    console.error("Error creating comment");
+    if (process.env.NODE_ENV !== 'test') {
+      console.error("Error creating comment");
+    }
     res.status(400).json({
       error: error.message,
     });
