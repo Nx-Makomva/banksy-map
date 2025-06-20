@@ -26,8 +26,7 @@ describe("/comments", () => {
     testArtwork = await Artwork.create({
       title: "Test Artwork",
       discoveryYear: "2023",
-      streetName: "Test Street",
-      city: "London",
+      address: "25, Test Street, Mountain View, London",
       location: {
         type: 'Point',
         coordinates: [-0.45, 45]
@@ -42,8 +41,8 @@ describe("/comments", () => {
     authToken = generateToken(testUser._id);
   });
 
-  describe("POST /:artwork_id - Add comment", () => {
-    test("creates a comment when all fields are provided", async () => {
+  describe("POST /:artwork_id, when all fields are provided", () => {
+    test("the response code is 201", async () => {
       const response = await request(app)
         .post(`/comments/${testArtwork._id}`)
         .set("Authorization", `Bearer ${authToken}`)
@@ -52,6 +51,16 @@ describe("/comments", () => {
         });
 
       expect(response.statusCode).toBe(201);
+    });
+
+    test("creates a comment when all fields are provided", async () => {
+      const response = await request(app)
+        .post(`/comments/${testArtwork._id}`)
+        .set("Authorization", `Bearer ${authToken}`)
+        .send({
+          text: "This is arty!"
+        });
+
       expect(response.body.message).toBe("Comment created successfully");
       expect(response.body.comment.text).toBe("This is arty!");
       expect(response.body.comment.user_id).toBe(testUser._id.toString());
@@ -73,31 +82,57 @@ describe("/comments", () => {
       expect(updatedArtwork.comments[0].toString()).toBe(response.body.comment._id);
     });
 
-    test("returns 404 when user not found", async () => {
-      const fakeToken = generateToken(new mongoose.Types.ObjectId);
+    describe("POST /:artwork_id, when text is missing", () => {
+      test("response code is 400", async () => {
+        const response = await request(app)
+          .post(`/comments/${testArtwork._id}`)
+          .set("Authorization", `Bearer ${authToken}`)
+          .send({});
 
-      const response = await request(app)
-        .post(`/comments/${testArtwork._id}`)
-        .set("Authorization", `Bearer ${fakeToken}`)
-        .send({
-          text: "This won't work"
-        });
+        expect(response.statusCode).toBe(400);
+      });
 
-      expect(response.statusCode).toBe(404);
-      expect(response.body.message).toBe("User not found");
+      test("does not create comment", async () => {
+        await request(app)
+          .post(`/comments/${testArtwork._id}`)
+          .set("Authorization", `Bearer ${authToken}`)
+          .send({});
+
+        const comments = await Comment.find();
+        expect(comments.length).toEqual(0);
+      });
     });
 
-    test("returns 400 when text is missing", async () => {
-      const response = await request(app)
-        .post(`/comments/${testArtwork._id}`)
-        .set("Authorization", `Bearer ${authToken}`)
-        .send({});
+    describe("POST /:artwork_id, when user not found", () => {
+      test("response code is 404", async () => {
+        const fakeToken = generateToken(new mongoose.Types.ObjectId());
 
-      expect(response.statusCode).toBe(400);
+        const response = await request(app)
+          .post(`/comments/${testArtwork._id}`)
+          .set("Authorization", `Bearer ${fakeToken}`)
+          .send({
+            text: "This won't work"
+          });
+
+        expect(response.statusCode).toBe(404);
+      });
+
+      test("returns appropriate error message", async () => {
+        const fakeToken = generateToken(new mongoose.Types.ObjectId());
+
+        const response = await request(app)
+          .post(`/comments/${testArtwork._id}`)
+          .set("Authorization", `Bearer ${fakeToken}`)
+          .send({
+            text: "This won't work"
+          });
+
+        expect(response.body.message).toBe("User not found");
+      });
     });
   });
 
-  describe("GET /me - Get all user comments", () => {
+  describe("GET /me, all user comments", () => {
     beforeEach(async () => {
       await Comment.create({
         user_id: testUser._id,
@@ -169,7 +204,7 @@ describe("/comments", () => {
         password: "password123"
       });
 
-      const newToken = generateToken(newUser._id)
+      const newToken = generateToken(newUser._id);
 
       const response = await request(app)
         .get("/comments/me")
@@ -181,7 +216,7 @@ describe("/comments", () => {
     });
   });
 
-  describe("PATCH /:id - Update comment", () => {
+  describe("PATCH /:id, update comment", () => {
     let testComment;
 
     beforeEach(async () => {
@@ -206,20 +241,6 @@ describe("/comments", () => {
       expect(response.body.updatedComment._id).toBe(testComment._id.toString());
     });
 
-    test("returns 404 when comment not found", async () => {
-      const fakeId = new mongoose.Types.ObjectId();
-      
-      const response = await request(app)
-        .patch(`/comments/${fakeId}`)
-        .set("Authorization", `Bearer ${authToken}`)
-        .send({
-          text: "This won't work"
-        });
-
-      expect(response.statusCode).toBe(404);
-      expect(response.body.message).toBe("Comment not found");
-    });
-
     test("validates updated data", async () => {
       const response = await request(app)
         .patch(`/comments/${testComment._id}`)
@@ -230,13 +251,41 @@ describe("/comments", () => {
 
       expect(response.statusCode).toBe(200);
       
-      // Verify the comment was actually updated in the database
+      // Verify the comment was actually updated in database
       const updatedComment = await Comment.findById(testComment._id);
       expect(updatedComment.text).toBe("Valid update");
     });
+
+    describe("PATCH /:id, when comment not found", () => {
+      test("response code is 404", async () => {
+        const fakeId = new mongoose.Types.ObjectId();
+        
+        const response = await request(app)
+          .patch(`/comments/${fakeId}`)
+          .set("Authorization", `Bearer ${authToken}`)
+          .send({
+            text: "This won't work"
+          });
+
+        expect(response.statusCode).toBe(404);
+      });
+
+      test("returns appropriate error message", async () => {
+        const fakeId = new mongoose.Types.ObjectId();
+        
+        const response = await request(app)
+          .patch(`/comments/${fakeId}`)
+          .set("Authorization", `Bearer ${authToken}`)
+          .send({
+            text: "This won't work"
+          });
+
+        expect(response.body.message).toBe("Comment not found");
+      });
+    });
   });
 
-  describe("DELETE /:id - Delete comment", () => {
+  describe("DELETE /:id, remove comment", () => {
     let testComment;
 
     beforeEach(async () => {
@@ -267,17 +316,6 @@ describe("/comments", () => {
       expect(deletedComment).toBeNull();
     });
 
-    test("returns 404 when comment not found", async () => {
-      const fakeId = new mongoose.Types.ObjectId();
-      
-      const response = await request(app)
-        .delete(`/comments/${fakeId}`)
-        .set("Authorization", `Bearer ${authToken}`);
-
-      expect(response.statusCode).toBe(404);
-      expect(response.body.message).toBe("Comment not found");
-    });
-
     test("does not delete other comments", async () => {
       const otherComment = await Comment.create({
         user_id: testUser._id,
@@ -292,6 +330,28 @@ describe("/comments", () => {
       const remainingComment = await Comment.findById(otherComment._id);
       expect(remainingComment).not.toBeNull();
       expect(remainingComment.text).toBe("This should remain");
+    });
+
+    describe("DELETE /:id, when comment not found", () => {
+      test("response code is 404", async () => {
+        const fakeId = new mongoose.Types.ObjectId();
+        
+        const response = await request(app)
+          .delete(`/comments/${fakeId}`)
+          .set("Authorization", `Bearer ${authToken}`);
+
+        expect(response.statusCode).toBe(404);
+      });
+
+      test("returns appropriate error message", async () => {
+        const fakeId = new mongoose.Types.ObjectId();
+        
+        const response = await request(app)
+          .delete(`/comments/${fakeId}`)
+          .set("Authorization", `Bearer ${authToken}`);
+
+        expect(response.body.message).toBe("Comment not found");
+      });
     });
   });
 });

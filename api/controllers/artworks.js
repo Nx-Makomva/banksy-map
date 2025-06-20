@@ -2,7 +2,6 @@ const Artwork = require("../models/artwork");
 const Comment = require("../models/comments");
 
 async function create(req, res) {
-  
   try {
     const {
       title,

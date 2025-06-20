@@ -55,11 +55,15 @@ const ArtworkForm = ({ onClose }) => {
         const formData = new FormData();
         formData.append("title", form.title);
         formData.append("discoveryYear", form.discoveryYear);
-        formData.append("streetName", form.streetName);
-        formData.append("city", form.city);
-        formData.append("location", form.location);
+        formData.append("streetName", form.streetName); // This will change to 'address' and need to validate address 
+        formData.append("city", form.city); // to be removed
+        // formData.append("location", coords.lat); 
+        // 👆--👇 this comes from the geocoding func from service that would call the geocoding api from google
+        // formData.append("location", coords.lng);
         formData.append("description", form.description);
-        formData.append("themeTags", form.themeTags);
+        formData.append("themeTags", form.themeTags); 
+                        // 👆this is an array so needs a loop to get each tag separately. 
+                        // Same thing might be for photos?
 
         if (form.photos) {
         formData.append("photos", form.photos);
