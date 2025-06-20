@@ -1,5 +1,5 @@
 require('../mongodb_helper');
-const Badge = require('api/models/bagde.js');
+const Badge = require('../../models/badge');
 const mongoose = require('mongoose');
 
 describe('Badge model', () => {
