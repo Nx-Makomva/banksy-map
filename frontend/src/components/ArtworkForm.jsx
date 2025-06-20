@@ -9,9 +9,7 @@ const ArtworkForm = ({ onClose }) => {
     const [form, setForm] = useState({
         title: "",
         discoveryYear: "",
-        streetName: "",
-        city: "",
-        location: "",
+        address: "",
         description: "",
         themeTags: "",
         photos: null,
@@ -23,9 +21,7 @@ const ArtworkForm = ({ onClose }) => {
         setForm({
         title: "",
         discoveryYear: "",
-        streetName: "",
-        city: "",
-        location: "",
+        address: "",
         description: "",
         themeTags: "",
         photos: null,
@@ -55,9 +51,7 @@ const ArtworkForm = ({ onClose }) => {
         const formData = new FormData();
         formData.append("title", form.title);
         formData.append("discoveryYear", form.discoveryYear);
-        formData.append("streetName", form.streetName);
-        formData.append("city", form.city);
-        formData.append("location", form.location);
+        formData.append("address", form.address);
         formData.append("description", form.description);
         formData.append("themeTags", form.themeTags);
 
@@ -77,13 +71,16 @@ const ArtworkForm = ({ onClose }) => {
             <button className="close-button" onClick={handleClose} >❌</button>
             <h2>Report A Banksy!</h2>
             <form onSubmit={handleSubmit} encType="multipart/form-data">
-                <input type="text" placeholder="Title" name="title" value={form.title} onChange={handleChange}required />
-                <input type="text" placeholder="Discovery Year" name="discoveryYear" value={form.discoveryYear} onChange={handleChange}required />
-                <input type="text" placeholder="Street Name" name="streetName" value={form.streetName} onChange={handleChange}required />
-                <input type="text" placeholder="City" name="city" value={form.city} onChange={handleChange}required />
-                <input type="text" placeholder="Coordinates" name="location" value={form.location} onChange={handleChange}required />
-                <input type="text" placeholder="Description" name="description" value={form.description} onChange={handleChange}required />
-                <input type="text" placeholder="Themes" name="themeTags" value={form.themeTags} onChange={handleChange}required />
+                <label htmlFor="title">Title</label>
+                <input type="text" placeholder="'Girl with Balloon'" name="title" value={form.title} onChange={handleChange}required />
+                <label htmlFor="discoveryYear">Discovery Year</label>
+                <input type="text" placeholder="'2002'" name="discoveryYear" value={form.discoveryYear} onChange={handleChange}required />
+                <label htmlFor="address">Address</label>
+                <input type="text" placeholder="'Waterloo Bridge, South Bank, London, SE1'" name="address" value={form.address} onChange={handleChange}required />
+                <label htmlFor="description">Description</label>
+                <input type="text" placeholder="'Red heart-shaped balloon drifting away from young girl reaching out'" name="description" value={form.description} onChange={handleChange}required />
+                <label htmlFor="themeTags">Themes</label>
+                <input type="text" placeholder="'love, loss, hope, childhood, war'" name="themeTags" value={form.themeTags} onChange={handleChange}required />
                 <input id="picture" name="photos" type="file" accept="image/*" style={{ display: "none" }} onChange={handleFileInputChange}required />
                 <label htmlFor="picture" className="file-upload-icon" title="Upload file" >
                 <FiUpload />
