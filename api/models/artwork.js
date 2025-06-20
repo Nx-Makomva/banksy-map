@@ -3,8 +3,7 @@ const mongoose = require("mongoose");
 const ArtworkSchema = new mongoose.Schema({
   title: { type: String, required: true },
   discoveryYear: { type: String, required: true },
-  streetName: { type: String, required: true },
-  city: { type: String, required: true },
+  address: { type: String, required: true },
   location: {
     type: {
       type: String,

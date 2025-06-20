@@ -10,7 +10,7 @@ const commentsRouter = require("./routes/comments");
 const authenticationRouter = require("./routes/authentication");
 const tokenChecker = require("./middleware/tokenChecker");
 const badgeRoutes = require("./routes/badge");
-const artworksRouter = require("./routes/artworks"); // adjust path if needed
+
 
 const app = express();
 
