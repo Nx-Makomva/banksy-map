@@ -1,12 +1,13 @@
 // ArtworkFullPopup.jsx
 import '../assets/styles/ArtworkFullPopup.css';
 import BookmarkButton from './BookmarkButton';
+import { getImageUrl } from '../utils/s3url';
 
 const ArtworkFullPopup = ({ artwork, onClose, isBookmarked, setIsBookmarked }) => {
     
     const artworkId = artwork._id;
 
-import { getImageUrl } from '../utils/s3url';
+
 
 
     return (
