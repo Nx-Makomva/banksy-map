@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { HomePage } from "./pages/Home/HomePage";
 import { LoginPage } from "./pages/Login/LoginPage";
 import { SignupPage } from "./pages/Signup/SignupPage";
-import { ArtworkPage } from "./pages/Artwork/ArtworkPage";
 import { getMe } from "./services/user";
 import { UserContext } from './contexts/UserContext';
 import '../src/assets/styles/App.css'
@@ -24,10 +23,6 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <SignupPage />,
-  },
-  {
-    path: "/artworks",
-    element: <ArtworkPage />,
   }
 ]);
 
