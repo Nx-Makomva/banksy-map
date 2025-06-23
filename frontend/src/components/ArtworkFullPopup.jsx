@@ -1,7 +1,12 @@
 // ArtworkFullPopup.jsx
 import '../assets/styles/ArtworkFullPopup.css';
+import BookmarkButton from './BookmarkButton';
 
-const ArtworkFullPopup = ({ artwork, onClose }) => {
+
+const ArtworkFullPopup = ({ artwork, onClose, userId, isBookmarked, setIsBookmarked }) => {
+    
+    const artworkId = artwork._id || artwork.id;
+
     return (
         <div className="artwork-full-popup artwork-popup">
         <div className="full-popup-header">
@@ -25,6 +30,14 @@ const ArtworkFullPopup = ({ artwork, onClose }) => {
                 <p><strong>Location:</strong> {artwork.address}</p>
             )}
             </div>
+            {userId && artworkId && (
+                <BookmarkButton
+                artworkId={artwork._id || artwork.id}
+                userId={userId}
+                isBookmarked={isBookmarked}
+                onToggle={setIsBookmarked}
+                />
+            )}
         </div>
         </div>
     );

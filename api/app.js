@@ -10,6 +10,7 @@ const commentsRouter = require("./routes/comments");
 const authenticationRouter = require("./routes/authentication");
 const tokenChecker = require("./middleware/tokenChecker");
 const badgeRoutes = require("./routes/badge");
+const bookmarksRouter = require("./routes/bookmarks");
 
 const app = express();
 app.use(express.json())
@@ -26,6 +27,7 @@ app.use("/artworks", express.json(), artworksRouter); // This has photos on it s
 app.use("/comments", express.json(), tokenChecker, commentsRouter);
 app.use("/tokens", express.json(), authenticationRouter);
 app.use("/badges", badgeRoutes);
+app.use("/bookmarks", express.json(), tokenChecker, bookmarksRouter);
 
 
 // 404 Handler
