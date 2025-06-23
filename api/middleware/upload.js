@@ -22,7 +22,7 @@ const upload = multer({
     },
     key: function (req, file, cb) {
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-      const filename = 'uploads/' + uniqueSuffix + '-' + file.originalname;
+      const filename = uniqueSuffix + '-' + file.originalname;
       cb(null, filename);
     }
   }),
