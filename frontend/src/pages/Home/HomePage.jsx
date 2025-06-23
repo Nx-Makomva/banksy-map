@@ -25,16 +25,43 @@ export function HomePage() {
     const [activeView, setActiveView] = useState('map'); // 'map' or 'account'
     // set selected artwork - for map stuff
     const [selectedArtwork, setSelectedArtwork] = useState(null);
-    // Add artworks state
-    const [artworks, setArtworks] = useState([]);
+    // set popups
     const [showFullPopup, setShowFullPopup] = useState(false);
     const [popupPosition, setPopupPosition] = useState({ x: 20, y: 20 });
+    // Add artworks state
+    const [artworks, setArtworks] = useState([]);
+      // Filter state
+    const [filters, setFilters] = useState({
+        themeTags: [],
+        isAuthenticated: undefined,
+        location: null, // lat, long, maxDistance
+    });
+
     
   // Fetch artworks on component mount
     useEffect(() => {
         const fetchArtworks = async () => {
         try {
-            const artworksData = await getAllArtworks();
+            const queryParams = {};
+            
+            // Add theme tags if any selected
+            if (filters.themeTags.length > 0) {
+                queryParams.themeTags = filters.themeTags;
+            }
+            
+            // Add authentication filter
+            if (filters.isAuthenticated !== undefined) {
+                queryParams.isAuthenticated = filters.isAuthenticated;
+            }
+            
+            // Add location if set
+            if (filters.location) {
+                queryParams.lat = filters.location.lat;
+                queryParams.lng = filters.location.lng;
+                queryParams.maxDistance = filters.location.maxDistance || 1000;
+            }
+            
+            const artworksData = await getAllArtworks(queryParams);
             console.log(artworksData)
             setArtworks(artworksData.allArtworks);
             console.log("set artworks:", artworks)
@@ -43,7 +70,7 @@ export function HomePage() {
         } 
         };
         fetchArtworks();
-  }, []); // Empty dependency array - runs once on mount
+  }, [filters]); // Empty dependency array - runs once on mount
 
     console.log('artworks:', artworks, 'type:', typeof artworks, 'isArray:', Array.isArray(artworks));
 
@@ -54,11 +81,13 @@ export function HomePage() {
 
     const handleAccountClick = (event) => {
         event.preventDefault();
+        setSelectedArtwork(null);
         setActiveView('account');
     }
 
     const handleMapClick = (event) => {
         event.preventDefault();
+        setSelectedArtwork(null);
         setActiveView('map');
     }
 
