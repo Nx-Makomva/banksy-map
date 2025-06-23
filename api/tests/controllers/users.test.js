@@ -173,6 +173,7 @@ describe("PATCH /users/:id/bookmark/:artworkId", () => {
       title: "Test Artwork",
       description: "A beautiful mural on a building",
       isAuthenticated: true,
+      address: '5th Avenue, New York',
       location: {
         type: "Point",
         coordinates: [40.7128, -74.0060],
@@ -183,7 +184,13 @@ describe("PATCH /users/:id/bookmark/:artworkId", () => {
     });
   };
 
-  it("adds a new artworkId to user's bookmarkedArtworks", async () => {
+  it("adds a new artworkId to user's bookmarkedArtworks and awards badge if earned", async () => {
+    const badge = await Badge.create({
+      name: 'New collector',
+      description: 'Bookmark 1 artwork',
+      criteria: {type: 'bookmarks', count: 1}
+    });
+
     const artwork = await createValidArtwork();
 
     const response = await request(app).patch(
@@ -191,11 +198,15 @@ describe("PATCH /users/:id/bookmark/:artworkId", () => {
     );
 
     expect(response.statusCode).toBe(200);
-    expect(response.body.message).toBe("Bookmarks added successfully");
+    expect(response.body.message).toBe("Bookmark added and badges updated");
     expect(response.body.user.bookmarkedArtworks).toContain(artwork._id.toString());
+
+    expect(Array.isArray(response.body.user.badges)).toBe(true);
+    expect(response.body.user.badges).toContain(badge._id.toString());
 
     const updatedUser = await User.findById(user._id);
     expect(updatedUser.bookmarkedArtworks).toContainEqual(artwork._id);
+    expect(updatedUser.badges).toContainEqual(badge._id);
   });
 
   it("does not add duplicate artworkId", async () => {
@@ -253,6 +264,7 @@ describe("PATCH /users/:id/collected/:artworkId", () => {
       title: "Test Artwork",
       description: "A beautiful mural on a building",
       isAuthenticated: true,
+      address: '5th Avenu, New York',
       location: {
         type: "Point",
         coordinates: [40.7128, -74.0060],
@@ -263,7 +275,14 @@ describe("PATCH /users/:id/collected/:artworkId", () => {
     });
   };
 
-  it("adds a new artworkId to user's visitedArtworks", async () => {
+  it("adds a new artworkId to user's visitedArtworks and awards badge if earned", async () => {
+
+    const badge = await Badge.create({
+      name: 'Baby explorer',
+      description: "Visit 1 artwork",
+      criteria: { type: "visits", count: 1 }
+    });
+
     const artwork = await createValidArtwork();
 
     const response = await request(app).patch(
@@ -271,11 +290,15 @@ describe("PATCH /users/:id/collected/:artworkId", () => {
     );
 
     expect(response.statusCode).toBe(200);
-    expect(response.body.message).toBe("Visited artwork added successfully");
+    expect(response.body.message).toBe("Visited artwork added and badges updated");
     expect(response.body.user.visitedArtworks).toContain(artwork._id.toString());
+
+    expect(Array.isArray(response.body.user.badges)).toBe(true);
+    expect(response.body.user.badges).toContain(badge._id.toString())
 
     const updatedUser = await User.findById(user._id);
     expect(updatedUser.visitedArtworks).toContainEqual(artwork._id);
+    expect(updatedUser.badges).toContainEqual(badge._id);
   });
 
   it("does not add duplicate artworkId", async () => {

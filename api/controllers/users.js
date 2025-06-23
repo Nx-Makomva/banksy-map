@@ -43,6 +43,21 @@ async function create(req, res) {
   const hash = await bcrypt.hash(password, saltRounds);
   const user = new User({ email, password:hash, firstName, lastName });
 
+  //Look up the signup badge
+  try {
+    const signUpBadge = await Badge.findOne({
+      'criteria.type': 'signup',
+      'criteria.count': 1
+    });
+
+    if (signUpBadge) {
+      user.badges.push(signUpBadge._id);
+    }
+  }catch (badgeErr) {
+      console.error('Error finding signup badge:', badgeErr.message);
+    }
+  
+
   // save user and return the id
   user
     .save()
@@ -79,63 +94,91 @@ async function getById(req, res) {
 }
 
 async function addBookmarked(req, res) {
-    try {
-      //ids come from the params
-      const { id, artworkId } = req.params;
+  try {
+    const { id, artworkId } = req.params;
 
-      //update user bookmarkedArtworks field with new art id
-      const userWithUpdatedBookmarks = await User.findByIdAndUpdate(id,
-        { $addToSet: { bookmarkedArtworks: artworkId }},
-        { new: true,
-      //only return relevant fields
-          select: "firstName lastName bookmarkedArtworks"}
-      );
-      // handle missing user
-      if (!userWithUpdatedBookmarks) {
-        return res.status(404).json({ message: "User not found" });
+    const user = await User.findByIdAndUpdate(
+      id,
+      { $addToSet: { bookmarkedArtworks: artworkId } },
+      { new: true }
+    ).populate("badges");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
+
+    const bookmarkCount = user.bookmarkedArtworks.length;
+    const earnedBadgeIds = user.badges.map(b => b._id.toString());
+
+    const bookmarkBadges = await Badge.find({ "criteria.type": "bookmarks" });
+
+    for (const badge of bookmarkBadges) {
+      const alreadyHas = earnedBadgeIds.includes(badge._id.toString());
+      const meetsCriteria = bookmarkCount >= badge.criteria.count;
+
+      if (!alreadyHas && meetsCriteria) {
+        user.badges.push(badge._id);
+      }
+    }
+
+    await user.save();
+
     res.status(200).json({
-      message: "Bookmarks added successfully",
-      //return updated user
-      user: userWithUpdatedBookmarks
+      message: "Bookmark added and badges updated",
+      user
     });
 
-    } catch (error) {
-      res.status(500).json({
-      message: "Error adding new bookmark",
-      error: error.message,
+  } catch (error) {
+    res.status(500).json({
+      message: "Error adding bookmark or checking badge",
+      error: error.message
     });
-    }
+  }
 }
 
 async function addVisitedArtwork(req, res) {
   try {
     const { id: userId, artworkId } = req.params;
 
-    const userWithUpdatedArtwork = await User.findByIdAndUpdate(
+    const user = await User.findByIdAndUpdate(
       userId,
       { $addToSet: { visitedArtworks: artworkId } },
-      {
-        new: true,
-        select: "firstName lastName visitedArtworks",
-      }
-    );
+      { new: true }
+    ).populate("badges");
 
-    if (!userWithUpdatedArtwork) {
+    if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
+    const visitCount = user.visitedArtworks.length;
+    const earnedBadgeIds = user.badges.map(b => b._id.toString());
+
+    const visitBadges = await Badge.find({ "criteria.type": "visits" });
+
+    for (const badge of visitBadges) {
+      const alreadyHas = earnedBadgeIds.includes(badge._id.toString());
+      const meetsCriteria = visitCount >= badge.criteria.count;
+
+      if (!alreadyHas && meetsCriteria) {
+        user.badges.push(badge._id);
+      }
+    }
+
+    await user.save();
+
     res.status(200).json({
-      message: "Visited artwork added successfully",
-      user: userWithUpdatedArtwork,
+      message: "Visited artwork added and badges updated",
+      user
     });
+
   } catch (error) {
     res.status(500).json({
       message: "Error updating visited artwork",
-      error: error.message,
+      error: error.message
     });
   }
 }
+
 
 async function addBadge(req, res) {
   try {
