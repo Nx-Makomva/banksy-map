@@ -1,5 +1,6 @@
 // ArtworkFullPopup.jsx
 import '../assets/styles/ArtworkFullPopup.css';
+import { getImageUrl } from '../utils/s3url';
 
 const ArtworkFullPopup = ({ artwork, onClose }) => {
     return (
@@ -12,7 +13,7 @@ const ArtworkFullPopup = ({ artwork, onClose }) => {
         <div className="full-popup-content">
             {artwork.photos && (
             <img 
-                src={artwork.photos} 
+                src={artwork.imageUrl}
                 alt={artwork.title}
                 className="artwork-full-image"
             />
