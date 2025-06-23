@@ -29,6 +29,7 @@ const MapContainer = ({artworks, onArtworkSelect}) => {
             {/* Render markers for each artwork */}
             {Array.isArray(artworks) && artworks?.map(artwork => {
                 const [lng, lat] = artwork.location.coordinates;
+                console.log("FROM MAP CONTAINER:", artworks)
                 return (
                 <AdvancedMarker
                     key={artwork.id}
