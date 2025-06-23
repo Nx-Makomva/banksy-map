@@ -1,10 +1,9 @@
-import { useContext } from "react";
-import { UserContext } from "../../contexts/UserContext";
+import { useUser } from "../../contexts/UserContext";
 import "../../assets/styles/ProfileSideBar.css";
 import BadgesButton from "./BadgesButton"
 
 export function ProfileSideBar() {
-    const { user } = useContext(UserContext);
+    const { user } = useUser();
 
     const initials = `${user.firstName[0]}${user.lastName[0]}`.toUpperCase();
     const fullName = `${user.firstName} ${user.lastName}`;

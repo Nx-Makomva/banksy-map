@@ -1,0 +1,159 @@
+/* ArtworkFullPopup.css */
+.artwork-full-popup {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background: #b6f6ea;
+  z-index: 999999 !important;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: fullPopupSlideIn 0.3s ease-out;
+}
+
+.artwork-full-popup .full-popup-header {
+    padding: 20px 25px;
+    border-bottom: 1px solid #eee;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ff51b0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 999999;
+    flex-shrink: 0;
+    font-family: 'Permanent Marker', cursive;
+}
+
+.artwork-full-popup .full-popup-header h2 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 600;
+  color: white;
+
+  flex: 1;
+  margin-right: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.artwork-full-popup .close-btn {
+    position: absolute;
+    top: 3px;
+    right: 16px;
+    font-size: 45px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: white; 
+    font-family: 'Permanent Marker';
+}
+
+
+.artwork-full-popup .close-btn:hover {
+  color: #000;
+  transform: scale(1.05);
+}
+
+.artwork-full-popup .full-popup-content {
+  flex: 1;
+  padding: 25px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.artwork-full-popup .artwork-full-image {
+  width: 100%;
+  max-height: 50vh;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.artwork-full-popup .artwork-details {
+  max-width: 800px;
+}
+
+.artwork-full-popup .artwork-details p {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #444;
+}
+
+.artwork-full-popup .artwork-details p strong {
+  color: #333;
+  font-weight: 600;
+}
+
+.artwork-full-popup .artwork-details p:last-child {
+  margin-bottom: 0;
+}
+
+/* Custom scrollbar for full popup content */
+.artwork-full-popup .full-popup-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.artwork-full-popup .full-popup-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.artwork-full-popup .full-popup-content::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+.artwork-full-popup .full-popup-content::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+@keyframes fullPopupSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .artwork-mini-popup {
+    max-width: 280px;
+    margin: 10px;
+  }
+  
+  .artwork-mini-popup .mini-content {
+    padding: 12px;
+    gap: 10px;
+  }
+  
+  .artwork-mini-popup .mini-image {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .artwork-full-popup .full-popup-header {
+    padding: 15px 20px;
+  }
+  
+  .artwork-full-popup .full-popup-header h2 {
+    font-size: 20px;
+  }
+  
+  .artwork-full-popup .full-popup-content {
+    padding: 20px;
+  }
+  
+  .artwork-full-popup .artwork-full-image {
+    max-height: 40vh;
+  }
+}

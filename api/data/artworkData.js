@@ -1,229 +1,194 @@
 const artworks = [
-    {
-    title: "Girl with Balloon",
-    discoveryYear: "2002",
-    streetName: "South Bank",
-    city: "London",
-    location: {
-        type: "Point",
-        coordinates: [-0.1149, 51.5054]
-        },
-    description: "A girl reaching out toward a red, heart-shaped balloon, symbolizing hope and innocence.",
-    themeTags: ["hope", "innocence", "love", "political"],
-    photos: ["https://example.com/photos/girl-with-balloon-1.jpg"],
-    isAuthenticated: true,
-    comments: []
+{
+    title: "Very Little Helps",
+    discoveryYear: "2008",
+    address: "Essex Road, Islington, London, N1 8NE",
+    location: { type: "Point", coordinates: [ -0.116773, 51.506950 ] },
+    description: "Three children saluting a Tesco flag—critique of mass consumerism.",
+    themeTags: ["consumerism","children","corporate critique"],
+    photos: [],
+    isAuthenticated: true
     },
     {
-    title: "There Is Always Hope",
-    discoveryYear: "2006",
-    streetName: "South Bank",
-    city: "London",
-    location: {
-        type: "Point",
-        coordinates: [-0.1138, 51.5057]
-        },
-    description: "Text-based graffiti often paired with the image of the girl and balloon, symbolizing optimism.",
-    themeTags: ["hope", "text", "inspiration"],
-    photos: ["https://example.com/photos/there-is-always-hope-1.jpg"],
-    isAuthenticated: true,
-    comments: []
+    title: "Cash Machine Girl",
+    discoveryYear: "2007",
+    address: "Exmouth Market, Clerkenwell, London, EC1R",
+    location: { type: "Point", coordinates: [ -0.103357, 51.509865 ] },
+    description: "Child lifted by ATM's robotic arm—critique of banking and capitalism.",
+    themeTags: ["banking","child","capitalism"],
+    photos: [],
+    isAuthenticated: true
     },
     {
-    title: "Flower Thrower",
-    discoveryYear: "2003",
-    streetName: "Bethnal Green Road",
-    city: "London",
-    location: {
-        type: "Point",
-        coordinates: [-0.0562, 51.5281]
-        },
-    description: "A masked protester throwing a bouquet of flowers instead of a Molotov cocktail.",
-    themeTags: ["peace", "protest", "anti-violence"],
-    photos: ["https://example.com/photos/flower-thrower-1.jpg"],
-    isAuthenticated: true,
-    comments: []
-    },
-    {
-    title: "Pulp Fiction",
-    discoveryYear: "2002",
-    streetName: "North London",
-    city: "London",
-    location: {
-        type: "Point",
-        coordinates: [-0.1570, 51.5470]
-        },
-    description: "Banksy’s iconic image of John Travolta and Samuel L. Jackson holding bananas instead of guns.",
-    themeTags: ["pop culture", "irony", "film"],
-    photos: ["https://example.com/photos/pulp-fiction-1.jpg"],
-    isAuthenticated: true,
-    comments: []
-    },
-    {
-    title: "Kissing Coppers",
-    discoveryYear: "2004",
-    streetName: "Brighton Road",
-    city: "London",
-    location: {
-        type: "Point",
-        coordinates: [-0.1387, 51.4623]
-        },
-    description: "Two British policemen kissing, challenging authority and societal norms.",
-    themeTags: ["love", "authority", "LGBTQ+"],
-    photos: ["https://example.com/photos/kissing-coppers-1.jpg"],
-    isAuthenticated: true,
-    comments: []
+    title: "Choose Your Weapon",
+    discoveryYear: "2010",
+    address: "The Grange, Bermondsey, London, SE1 3AD",
+    location: { type: "Point", coordinates: [ -0.058, 51.498 ] },
+    description: "Hooded figure walking a barking dog—reference to Keith Haring.",
+    themeTags: ["homage","dog","urban commentary"],
+    photos: [],
+    isAuthenticated: true
     },
     {
     title: "One Nation Under CCTV",
     discoveryYear: "2007",
-    streetName: "East London",
-    city: "London",
-    location: {
-        type: "Point",
-        coordinates: [-0.0482, 51.5194]
-    },
-    description: "A child painting the words ‘One Nation Under CCTV’, critiquing surveillance culture.",
-    themeTags: ["surveillance", "political", "privacy"],
-    photos: ["https://example.com/photos/one-nation-under-cctv-1.jpg"],
-    isAuthenticated: true,
-    comments: []
+    address: "Newman Street (formerly), Westminster, London, W1",
+    location: { type: "Point", coordinates: [ -0.138, 51.515 ] },
+    description: "Child painting phrase while watched by police and CCTV—surveillance critique.",
+    themeTags: ["surveillance","child","state control"],
+    photos: [],
+    isAuthenticated: true
     },
     {
-    title: "Laugh Now",
-    discoveryYear: "2003",
-    streetName: "Shoreditch",
-    city: "London",
-    location: {
-        type: "Point",
-        coordinates: [-0.0705, 51.5265]
-    },
-    description: "Monkeys wearing sandwich boards with the phrase 'Laugh now, but one day we'll be in charge'.",
-    themeTags: ["satire", "society", "humor"],
-    photos: ["https://example.com/photos/laugh-now-1.jpg"],
-    isAuthenticated: true,
-    comments: []
-    },
-    {
-    title: "Bomb Hugger",
-    discoveryYear: "2004",
-    streetName: "Camden",
-    city: "London",
-    location: {
-        type: "Point",
-        coordinates: [-0.1425, 51.5416]
-    },
-    description: "A young girl hugging a bomb, juxtaposing innocence with violence.",
-    themeTags: ["war", "innocence", "anti-war"],
-    photos: ["https://example.com/photos/bomb-hugger-1.jpg"],
-    isAuthenticated: true,
-    comments: []
-    },
-    {
-    title: "Mobile Lovers",
-    discoveryYear: "2014",
-    streetName: "Clapham",
-    city: "London",
-    location: {
-        type: "Point",
-        coordinates: [-0.1381, 51.4610]
-    },
-    description: "A couple embracing while looking at their phones, commenting on modern disconnection.",
-    themeTags: ["technology", "love", "modern life"],
-    photos: ["https://example.com/photos/mobile-lovers-1.jpg"],
-    isAuthenticated: true,
-    comments: []
-    },
-    {
-    title: "Shop Till You Drop",
-    discoveryYear: "2011",
-    streetName: "Notting Hill",
-    city: "London",
-    location: {
-        type: "Point",
-        coordinates: [-0.2072, 51.5090]
-        },
-    description: "A child using a shopping trolley to escape from a bombing, commenting on consumerism and conflict.",
-    themeTags: ["consumerism", "war", "social commentary"],
-    photos: ["https://example.com/photos/shop-till-you-drop-1.jpg"],
-    isAuthenticated: true,
-    comments: []
+    title: "Pulp Fiction",
+    discoveryYear: "2002",
+    address: "Old Street, Shoreditch, London, EC2A",
+    location: { type: "Point", coordinates: [ -0.087, 51.525 ] },
+    description: "Travolta and Jackson with bananas instead of guns—pop‑culture twist.",
+    themeTags: ["pop culture","film reference","humor"],
+    photos: [],
+    isAuthenticated: true
     },
     {
     title: "Slave Labour",
     discoveryYear: "2012",
-    streetName: "Bethnal Green",
-    city: "London",
-    location: {
-        type: "Point",
-        coordinates: [-0.0595, 51.5276]
-    },
-    description: "Depicts a child sewing Union Jack bunting, critiquing child labor and consumer culture.",
-    themeTags: ["child labor", "consumerism", "political"],
-    photos: ["https://example.com/photos/slave-labour-1.jpg"],
-    isAuthenticated: true,
-    comments: []
+    address: "Poundland, Wood Green, London, N22",
+    location: { type: "Point", coordinates: [ -0.125, 51.590 ] },
+    description: "Child sewing Union Jack bunting—critique of sweatshop labour.",
+    themeTags: ["child labour","sweatshop","political"],
+    photos: [],
+    isAuthenticated: true
     },
     {
-    title: "The Mild Mild West",
-    discoveryYear: "1997",
-    streetName: "Stokes Croft",
-    city: "London",
-    location: {
-        type: "Point",
-        coordinates: [-2.5862, 51.4605]
-    },
-    description: "A teddy bear throwing a Molotov cocktail, symbolizing resistance.",
-    themeTags: ["resistance", "protest", "peace"],
-    photos: ["https://example.com/photos/the-mild-mild-west-1.jpg"],
-    isAuthenticated: false,
-    comments: []
+    title: "Girl with Balloon",
+    discoveryYear: "2002",
+    address: "Waterloo Bridge, South Bank, London, SE1",
+    location: { type: "Point", coordinates: [ -0.113, 51.508 ] },
+    description: "Girl reaching for heart-shaped balloon—hope and loss symbolism.",
+    themeTags: ["hope","loss","minimalism"],
+    photos: [],
+    isAuthenticated: true
     },
     {
-    title: "Napalm",
+    title: "Falling Shopper",
+    discoveryYear: "2011",
+    address: "Bruton Lane, Mayfair, London, W1J 6PT",
+    location: { type: "Point", coordinates: [ -0.1256, 51.5007 ] },
+    description: "Same as Shop ’Til You Drop—consumerism falling theme.",
+    themeTags: ["consumerism","fall","satire"],
+    photos: [],
+    isAuthenticated: true
+    },
+    {
+    title: "The Drinker (statue)",
     discoveryYear: "2004",
-    streetName: "Hackney",
-    city: "London",
-    location: {
-        type: "Point",
-        coordinates: [-0.0571, 51.5450]
-    },
-    description: "A disturbing image featuring Mickey Mouse and Ronald McDonald holding hands with a naked girl, commenting on consumerism and war.",
-    themeTags: ["consumerism", "war", "critique"],
-    photos: ["https://example.com/photos/napalm-1.jpg"],
-    isAuthenticated: true,
-    comments: []
+    address: "Princes Circus, Shaftesbury Avenue, London, W1D",
+    location: { type: "Point", coordinates: [ -0.128, 51.516 ] },
+    description: "Satirical statue riffing on Rodin's Thinker—commentary on public behavior.",
+    themeTags: ["statue","satire","public art"],
+    photos: [],
+    isAuthenticated: true
     },
     {
-    title: "Self Portrait",
-    discoveryYear: "2003",
-    streetName: "Camden",
-    city: "London",
-    location: {
-        type: "Point",
-        coordinates: [-0.1420, 51.5409]
-    },
-    description: "A stencil portrait of Banksy himself, rare and mysterious.",
-    themeTags: ["self", "identity", "mystery"],
-    photos: ["https://example.com/photos/self-portrait-1.jpg"],
-    isAuthenticated: false,
-    comments: []
+    title: "A Piranhas on Police Box",
+    discoveryYear: "2024",
+    address: "Ludgate Hill, City of London, EC4M",
+    location: { type: "Point", coordinates: [ -0.099, 51.513 ] },
+    description: "Piranhas stenciled on police box—part of London Zoo series.",
+    themeTags: ["animal","London Zoo","recent"],
+    photos: [],
+    isAuthenticated: true
     },
     {
-    title: "Popes",
-    discoveryYear: "2005",
-    streetName: "Central London",
-    city: "London",
-    location: {
-        type: "Point",
-        coordinates: [-0.1246, 51.5081]
+    title: "Elephants",
+    discoveryYear: "2024",
+    address: "Chelsea area, West London, SW3",
+    location: { type: "Point", coordinates: [ -0.187, 51.484 ] },
+    description: "Two elephants trunk-to-trunk—London Zoo series commentary.",
+    themeTags: ["animal","London Zoo","environment"],
+    photos: [],
+    isAuthenticated: true
     },
-    description: "Two popes kissing, a commentary on religion and acceptance.",
-    themeTags: ["religion", "love", "controversy"],
-    photos: ["https://example.com/photos/popes-1.jpg"],
-    isAuthenticated: true,
-    comments: []
+    {
+    title: "Monkeys on Bridge",
+    discoveryYear: "2024",
+    address: "Brick Lane bridge, East London, E1",
+    location: { type: "Point", coordinates: [ -0.071, 51.522 ] },
+    description: "Three monkeys climbing—London Zoo series.",
+    themeTags: ["animal","urban","playful"],
+    photos: [],
+    isAuthenticated: true
+    },
+    {
+    title: "Pelicans at Fish Bar",
+    discoveryYear: "2024",
+    address: "Walthamstow, East London, E17",
+    location: { type: "Point", coordinates: [ -0.019, 51.585 ] },
+    description: "Pelicans stealing fish from shop signage—London Zoo series.",
+    themeTags: ["animal","humor","local"],
+    photos: [],
+    isAuthenticated: true
+    },
+    {
+    title: "Rhinoceros",
+    discoveryYear: "2024",
+    address: "Westmoor Street, Charlton, London, SE7",
+    location: { type: "Point", coordinates: [ 0.023, 51.492 ] },
+    description: "Rhino stepping on car with traffic cone horn—London Zoo finale.",
+    themeTags: ["animal","London Zoo","satire"],
+    photos: [],
+    isAuthenticated: true
+    },
+    {
+    title: "Sweeping It Under The Carpet",
+    discoveryYear: "2006",
+    address: "Soho, London, W1D",
+    location: { type: "Point", coordinates: [ -0.134, 51.514 ] },
+    description: "A maid sweeping dirt under a carpet painted on a wall—commentary on social ignorance.",
+    themeTags: ["social critique", "urban art", "humor"],
+    photos: [],
+    isAuthenticated: true
+    },
+    {
+    title: "Mild Mild West",
+    discoveryYear: "1999",
+    address: "Stokes Croft, Bristol, UK (relocated piece shown occasionally in London exhibits)",
+    location: { type: "Point", coordinates: [ -0.1276, 51.5074 ] }, // Center London approx coords
+    description: "A teddy bear throwing a Molotov cocktail—anti-violence message.",
+    themeTags: ["anti-violence", "iconic", "urban"],
+    photos: [],
+    isAuthenticated: true
+    },
+    {
+    title: "The Little Diver",
+    discoveryYear: "2009",
+    address: "Camden Town, London, NW1",
+    location: { type: "Point", coordinates: [ -0.142, 51.541 ] },
+    description: "A stencil of a little diver underwater on a brick wall—surreal, playful street art.",
+    themeTags: ["playful", "urban", "surreal"],
+    photos: [],
+    isAuthenticated: true
+    },
+    {
+    title: "Rat with Camera",
+    discoveryYear: "2013",
+    address: "South Bank, London, SE1",
+    location: { type: "Point", coordinates: [ -0.112, 51.505 ] },
+    description: "A rat holding a vintage camera—Banksy's signature rat motif mixed with social commentary.",
+    themeTags: ["rats", "photography", "street art"],
+    photos: [],
+    isAuthenticated: true
+    },
+    {
+    title: "There Is Always Hope",
+    discoveryYear: "2004",
+    address: "Tate Modern, Bankside, London, SE1",
+    location: { type: "Point", coordinates: [ -0.099, 51.507 ] },
+    description: "Text reading ‘There Is Always Hope’ with balloon heart stencil—symbol of optimism.",
+    themeTags: ["hope", "text art", "optimism"],
+    photos: [],
+    isAuthenticated: true
     }
-];
+]
 
 module.exports = artworks;

@@ -1,7 +1,7 @@
 export function CollectedContainer() {
     return (
         <>
-        <div className="collectedContainer">
+        <div className="tab-content-container">
         <p>Collected</p>
         </div>
         </>
