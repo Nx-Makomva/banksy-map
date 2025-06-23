@@ -17,7 +17,7 @@ const ArtworkForm = ({ onClose }) => {
     });
 
     const [fileName, setFileName] = useState("");
-		const [coordinates, setCoodinates] = useState({ lat: null, lng: null })
+		const [coordinates, setCoordinates] = useState({ lat: null, lng: null })
 
     const resetForm = () => {
         setForm({
@@ -52,7 +52,7 @@ const ArtworkForm = ({ onClose }) => {
 				try {
 					const coords = await geocodeAddress(form.address);
 					console.log("The coords are: ", coords)
-					setCoodinates(coords)
+					setCoordinates(coords)
 				} catch (error) {
 					console.error('Could not geocode address', error);
 				}
@@ -99,9 +99,9 @@ const ArtworkForm = ({ onClose }) => {
                 <label htmlFor="title">Title</label>
                 <input type="text" placeholder="'Girl with Balloon'" name="title" value={form.title} onChange={handleChange}required />
                 <label htmlFor="discoveryYear">Discovery Year</label>
-                <input type="text" placeholder="'2002'" name="discoveryYear" value={form.discoveryYear} onBlur={HandleAddressBlur} onChange={handleChange}required />
+                <input type="text" placeholder="'2002'" name="discoveryYear" value={form.discoveryYear} onChange={handleChange}required />
                 <label htmlFor="address">Address</label>
-                <input type="text" placeholder="'Waterloo Bridge, South Bank, London, SE1'" name="address" value={form.address} onChange={handleChange}required />
+                <input type="text" placeholder="'Waterloo Bridge, South Bank, London, SE1'" name="address" value={form.address} onBlur={HandleAddressBlur} onChange={handleChange}required />
                 <label htmlFor="description">Description</label>
                 <input type="text" placeholder="'Red heart-shaped balloon drifting away from young girl reaching out'" name="description" value={form.description} onChange={handleChange}required />
                 <label htmlFor="themeTags">Themes</label>

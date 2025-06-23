@@ -2,7 +2,7 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 // Secure URL generator (fake URL, displayed on frontend), filename encoded
 const getImageUrl = (key) => {
-  return `${BACKEND_URL}/api/images/${encodeURIComponent(key)}`;
+  return `${BACKEND_URL}/image/${encodeURIComponent(key)}`;
 };
 
 export async function createArtwork(formData) {

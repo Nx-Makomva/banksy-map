@@ -1,5 +1,5 @@
 import { useUser } from "../../contexts/UserContext";
-import "../../assets/styles/ProfileSideBar.css";
+// import "../../assets/styles/ProfileSideBar.css";
 import BadgesButton from "./BadgesButton"
 
 export function ProfileSideBar() {
