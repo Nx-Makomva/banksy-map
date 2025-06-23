@@ -1,9 +1,12 @@
 // ArtworkMiniPopup.jsx
 import '../../assets/styles/ArtworkMiniPopup.css'
 import BookmarkButton from '../BookmarkButton';
+import { getImageUrl } from '../../utils/s3url';
+
 
 const ArtworkMiniPopup = ({ artwork, onClose, onArtworkSelect, isBookmarked, setIsBookmarked }) => {
-
+const image = getImageUrl(artwork.photos[0]);
+console.log(image)
 
     return (
         <div 
@@ -14,7 +17,8 @@ const ArtworkMiniPopup = ({ artwork, onClose, onArtworkSelect, isBookmarked, set
             <div className="mini-content">
                 {artwork.photos && (
                     <img 
-                    src={artwork.photos} 
+                    key={artwork.id}
+                    src={artwork.imageUrl} // grabs the name of the first file
                     alt={artwork.title}
                     className="artwork-mini-image"
                     />

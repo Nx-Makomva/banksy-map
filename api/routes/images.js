@@ -1,5 +1,5 @@
-import express from 'express';
-import AWS from 'aws-sdk';
+const express = require("express");
+const AWS = require('aws-sdk');
 
 const router = express.Router();
 const s3 = new AWS.S3();
@@ -12,4 +12,4 @@ router.get('/:key', (req, res) => {
 
 });
 
-export default router;
+module.exports = router;

@@ -11,6 +11,8 @@ const authenticationRouter = require("./routes/authentication");
 const tokenChecker = require("./middleware/tokenChecker");
 const badgeRoutes = require("./routes/badge");
 const bookmarksRouter = require("./routes/bookmarks");
+const imageRouter = require("./routes/images");
+
 
 const app = express();
 app.use(express.json())
@@ -28,6 +30,7 @@ app.use("/comments", express.json(), tokenChecker, commentsRouter);
 app.use("/tokens", express.json(), authenticationRouter);
 app.use("/badges", badgeRoutes);
 app.use("/bookmarks", express.json(), tokenChecker, bookmarksRouter);
+app.use("/image", imageRouter);
 
 
 // 404 Handler

@@ -6,6 +6,9 @@ const ArtworkFullPopup = ({ artwork, onClose, isBookmarked, setIsBookmarked }) =
     
     const artworkId = artwork._id;
 
+import { getImageUrl } from '../utils/s3url';
+
+
     return (
         <div className="artwork-full-popup artwork-popup">
         <div className="full-popup-header">
@@ -16,7 +19,7 @@ const ArtworkFullPopup = ({ artwork, onClose, isBookmarked, setIsBookmarked }) =
         <div className="full-popup-content">
             {artwork.photos && (
             <img 
-                src={artwork.photos} 
+                src={artwork.imageUrl}
                 alt={artwork.title}
                 className="artwork-full-image"
             />
