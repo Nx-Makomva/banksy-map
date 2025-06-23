@@ -6,7 +6,7 @@ const artworks = [
     location: { type: "Point", coordinates: [ -0.116773, 51.506950 ] },
     description: "Three children saluting a Tesco flag—critique of mass consumerism.",
     themeTags: ["consumerism","children","corporate critique"],
-    photos: [],
+    photos: ["tesco-flag.avif"],
     isAuthenticated: true
     },
     {
@@ -16,7 +16,7 @@ const artworks = [
     location: { type: "Point", coordinates: [ -0.103357, 51.509865 ] },
     description: "Child lifted by ATM's robotic arm—critique of banking and capitalism.",
     themeTags: ["banking","child","capitalism"],
-    photos: [],
+    photos: ["cash-machine-girl.jpg"],
     isAuthenticated: true
     },
     {
@@ -26,7 +26,7 @@ const artworks = [
     location: { type: "Point", coordinates: [ -0.058, 51.498 ] },
     description: "Hooded figure walking a barking dog—reference to Keith Haring.",
     themeTags: ["homage","dog","urban commentary"],
-    photos: [],
+    photos: ["choose-your-weapon.jpg"],
     isAuthenticated: true
     },
     {
@@ -36,7 +36,7 @@ const artworks = [
     location: { type: "Point", coordinates: [ -0.138, 51.515 ] },
     description: "Child painting phrase while watched by police and CCTV—surveillance critique.",
     themeTags: ["surveillance","child","state control"],
-    photos: [],
+    photos: ["one-nation-under-cctv.jpg"],
     isAuthenticated: true
     },
     {
@@ -46,7 +46,7 @@ const artworks = [
     location: { type: "Point", coordinates: [ -0.087, 51.525 ] },
     description: "Travolta and Jackson with bananas instead of guns—pop‑culture twist.",
     themeTags: ["pop culture","film reference","humor"],
-    photos: [],
+    photos: ["pulp-fiction.jpg"],
     isAuthenticated: true
     },
     {
@@ -56,7 +56,7 @@ const artworks = [
     location: { type: "Point", coordinates: [ -0.125, 51.590 ] },
     description: "Child sewing Union Jack bunting—critique of sweatshop labour.",
     themeTags: ["child labour","sweatshop","political"],
-    photos: [],
+    photos: ["slave-labour.jpg"],
     isAuthenticated: true
     },
     {
@@ -66,7 +66,7 @@ const artworks = [
     location: { type: "Point", coordinates: [ -0.113, 51.508 ] },
     description: "Girl reaching for heart-shaped balloon—hope and loss symbolism.",
     themeTags: ["hope","loss","minimalism"],
-    photos: [],
+    photos: ["girl-with-balloon.webp"],
     isAuthenticated: true
     },
     {
@@ -76,7 +76,7 @@ const artworks = [
     location: { type: "Point", coordinates: [ -0.1256, 51.5007 ] },
     description: "Same as Shop ’Til You Drop—consumerism falling theme.",
     themeTags: ["consumerism","fall","satire"],
-    photos: [],
+    photos: ["shop-till-you-drop.jpg"],
     isAuthenticated: true
     },
     {
@@ -86,7 +86,7 @@ const artworks = [
     location: { type: "Point", coordinates: [ -0.128, 51.516 ] },
     description: "Satirical statue riffing on Rodin's Thinker—commentary on public behavior.",
     themeTags: ["statue","satire","public art"],
-    photos: [],
+    photos: ["the-drinker.jpg"],
     isAuthenticated: true
     },
     {
@@ -96,7 +96,7 @@ const artworks = [
     location: { type: "Point", coordinates: [ -0.099, 51.513 ] },
     description: "Piranhas stenciled on police box—part of London Zoo series.",
     themeTags: ["animal","London Zoo","recent"],
-    photos: [],
+    photos: ["piranhas.jpg"],
     isAuthenticated: true
     },
     {
@@ -106,7 +106,7 @@ const artworks = [
     location: { type: "Point", coordinates: [ -0.187, 51.484 ] },
     description: "Two elephants trunk-to-trunk—London Zoo series commentary.",
     themeTags: ["animal","London Zoo","environment"],
-    photos: [],
+    photos: ["elephants.jpg"],
     isAuthenticated: true
     },
     {
@@ -116,7 +116,7 @@ const artworks = [
     location: { type: "Point", coordinates: [ -0.071, 51.522 ] },
     description: "Three monkeys climbing—London Zoo series.",
     themeTags: ["animal","urban","playful"],
-    photos: [],
+    photos: ["monkeys.jpg"],
     isAuthenticated: true
     },
     {
@@ -126,7 +126,7 @@ const artworks = [
     location: { type: "Point", coordinates: [ -0.019, 51.585 ] },
     description: "Pelicans stealing fish from shop signage—London Zoo series.",
     themeTags: ["animal","humor","local"],
-    photos: [],
+    photos: ["pelicans-1.jpg"],
     isAuthenticated: true
     },
     {
@@ -136,7 +136,7 @@ const artworks = [
     location: { type: "Point", coordinates: [ 0.023, 51.492 ] },
     description: "Rhino stepping on car with traffic cone horn—London Zoo finale.",
     themeTags: ["animal","London Zoo","satire"],
-    photos: [],
+    photos: ["rhinoceros.webp"],
     isAuthenticated: true
     },
     {
@@ -146,7 +146,7 @@ const artworks = [
     location: { type: "Point", coordinates: [ -0.134, 51.514 ] },
     description: "A maid sweeping dirt under a carpet painted on a wall—commentary on social ignorance.",
     themeTags: ["social critique", "urban art", "humor"],
-    photos: [],
+    photos: ["sweep-it-under-the-carpet.jpg"],
     isAuthenticated: true
     },
     {
@@ -156,7 +156,7 @@ const artworks = [
     location: { type: "Point", coordinates: [ -0.1276, 51.5074 ] }, // Center London approx coords
     description: "A teddy bear throwing a Molotov cocktail—anti-violence message.",
     themeTags: ["anti-violence", "iconic", "urban"],
-    photos: [],
+    photos: ["the-mild-mild-west.jpg"],
     isAuthenticated: true
     },
     {
@@ -166,7 +166,7 @@ const artworks = [
     location: { type: "Point", coordinates: [ -0.142, 51.541 ] },
     description: "A stencil of a little diver underwater on a brick wall—surreal, playful street art.",
     themeTags: ["playful", "urban", "surreal"],
-    photos: [],
+    photos: ["little-diver.jpg"],
     isAuthenticated: true
     },
     {
@@ -176,17 +176,7 @@ const artworks = [
     location: { type: "Point", coordinates: [ -0.112, 51.505 ] },
     description: "A rat holding a vintage camera—Banksy's signature rat motif mixed with social commentary.",
     themeTags: ["rats", "photography", "street art"],
-    photos: [],
-    isAuthenticated: true
-    },
-    {
-    title: "There Is Always Hope",
-    discoveryYear: "2004",
-    address: "Tate Modern, Bankside, London, SE1",
-    location: { type: "Point", coordinates: [ -0.099, 51.507 ] },
-    description: "Text reading ‘There Is Always Hope’ with balloon heart stencil—symbol of optimism.",
-    themeTags: ["hope", "text art", "optimism"],
-    photos: [],
+    photos: ["rat-with-camera.jpg"],
     isAuthenticated: true
     }
 ]

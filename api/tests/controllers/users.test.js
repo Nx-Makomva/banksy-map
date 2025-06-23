@@ -173,12 +173,11 @@ describe("PATCH /users/:id/bookmark/:artworkId", () => {
       title: "Test Artwork",
       description: "A beautiful mural on a building",
       isAuthenticated: true,
+      address: "5th Avenue, New York",
       location: {
         type: "Point",
         coordinates: [40.7128, -74.0060],
       },
-      city: "New York",
-      streetName: "5th Avenue",
       discoveryYear: 2021,
     });
   };
@@ -248,17 +247,16 @@ describe("PATCH /users/:id/collected/:artworkId", () => {
     });
   });
 
-  const createValidArtwork = async () => {
+    const createValidArtwork = async () => {
     return await Artwork.create({
       title: "Test Artwork",
       description: "A beautiful mural on a building",
       isAuthenticated: true,
+      address: "5th Avenue, New York",
       location: {
         type: "Point",
         coordinates: [40.7128, -74.0060],
       },
-      city: "New York",
-      streetName: "5th Avenue",
       discoveryYear: 2021,
     });
   };

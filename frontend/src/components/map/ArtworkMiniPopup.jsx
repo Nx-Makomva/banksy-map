@@ -1,9 +1,10 @@
 // ArtworkMiniPopup.jsx
 import '../../assets/styles/ArtworkMiniPopup.css'
+import { getImageUrl } from '../../utils/s3url';
 
 const ArtworkMiniPopup = ({ artwork, onClose, onArtworkSelect }) => {
-
-
+const image = getImageUrl(artwork.photos[0]);
+console.log(image)
     return (
         <div 
             className="artwork-mini-popup"
@@ -13,7 +14,8 @@ const ArtworkMiniPopup = ({ artwork, onClose, onArtworkSelect }) => {
             <div className="mini-content">
                 {artwork.photos && (
                     <img 
-                    src={artwork.photos} 
+                    key={artwork.id}
+                    src={artwork.imageUrl} // grabs the name of the first file
                     alt={artwork.title}
                     className="artwork-mini-image"
                     />
