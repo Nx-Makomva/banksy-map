@@ -2,7 +2,7 @@
 import '../../assets/styles/ArtworkMiniPopup.css'
 import BookmarkButton from '../BookmarkButton';
 
-const ArtworkMiniPopup = ({ artwork, onClose, onArtworkSelect, userId, isBookmarked, setIsBookmarked }) => {
+const ArtworkMiniPopup = ({ artwork, onClose, onArtworkSelect, isBookmarked, setIsBookmarked }) => {
 
 
     return (
@@ -29,8 +29,7 @@ const ArtworkMiniPopup = ({ artwork, onClose, onArtworkSelect, userId, isBookmar
                     )}
                 </div>
                 <BookmarkButton
-                artworkId={artwork._id || artwork.id}
-                userId={userId}
+                artworkId={artwork._id}
                 isBookmarked={isBookmarked}
                 onToggle={setIsBookmarked}
                 />

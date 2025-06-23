@@ -1,7 +1,8 @@
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-export async function addBookmark(userId, artworkId) {
+export async function addBookmark(artworkId) {
     const token = localStorage.getItem("token");
+
     const requestOptions = {
         method: "POST",
         headers: { 
@@ -12,7 +13,7 @@ export async function addBookmark(userId, artworkId) {
     };
 
     try {
-        const response = await fetch(`${BACKEND_URL}/bookmarks/${userId}`, requestOptions);
+        const response = await fetch(`${BACKEND_URL}/bookmarks`, requestOptions);
 
         if (!response.ok) {
         const errorData = await response.json();
@@ -27,7 +28,7 @@ export async function addBookmark(userId, artworkId) {
     }
 }
 
-    export async function removeBookmark(userId, artworkId) {
+    export async function removeBookmark(artworkId) {
     const token = localStorage.getItem("token");
     const requestOptions = {
         method: "DELETE",
@@ -37,7 +38,7 @@ export async function addBookmark(userId, artworkId) {
     };
 
     try {
-        const response = await fetch(`${BACKEND_URL}/bookmarks/${userId}/${artworkId}`, requestOptions);
+        const response = await fetch(`${BACKEND_URL}/bookmarks/${artworkId}`, requestOptions);
 
         if (!response.ok) {
         const errorData = await response.json();
@@ -52,7 +53,7 @@ export async function addBookmark(userId, artworkId) {
     }
     }
 
-    export async function getAllUserBookmarks(userId) {
+    export async function getAllUserBookmarks() {
     const token = localStorage.getItem("token");
     const requestOptions = {
         method: "GET",
@@ -62,7 +63,7 @@ export async function addBookmark(userId, artworkId) {
     };
 
     try {
-        const response = await fetch(`${BACKEND_URL}/bookmarks/${userId}`, requestOptions);
+        const response = await fetch(`${BACKEND_URL}/bookmarks`, requestOptions);
 
         if (!response.ok) {
         const errorData = await response.json();

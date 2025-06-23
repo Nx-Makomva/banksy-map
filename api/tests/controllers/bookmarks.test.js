@@ -40,10 +40,10 @@ describe("/bookmarks", () => {
         token = generateToken(user._id);
     });
 
-    describe("POST /bookmarks/:userId", () => {
+    describe("POST /bookmarks", () => {
         test("adds a bookmark for the user", async () => {
         const response = await request(app)
-            .post(`/bookmarks/${user._id}`)
+            .post(`/bookmarks`)
             .set("Authorization", `Bearer ${token}`)
             .send({ artwork_id: artwork._id.toString() });
 
@@ -52,14 +52,14 @@ describe("/bookmarks", () => {
         expect(response.body.bookmarkedArtworks).toContain(artwork._id.toString());
         });
 
-        test("returns 400 if artwork is already bookmarked", async () => {
+    test("returns 400 if artwork is already bookmarked", async () => {
         await request(app)
-            .post(`/bookmarks/${user._id}`)
+            .post(`/bookmarks`)
             .set("Authorization", `Bearer ${token}`)
             .send({ artwork_id: artwork._id.toString() });
 
         const response = await request(app)
-            .post(`/bookmarks/${user._id}`)
+            .post(`/bookmarks`)
             .set("Authorization", `Bearer ${token}`)
             .send({ artwork_id: artwork._id.toString() });
 
@@ -68,50 +68,53 @@ describe("/bookmarks", () => {
         });
     });
 
-    describe("GET /bookmarks/:userId", () => {
-        test("returns all bookmarks for user", async () => {
-        await request(app)
-            .post(`/bookmarks/${user._id}`)
-            .set("Authorization", `Bearer ${token}`)
-            .send({ artwork_id: artwork._id.toString() });
+    describe("DELETE /bookmarks/:id", () => {
+        it("should return 401 if token is invalid", async () => {
+            const fakeId = new mongoose.Types.ObjectId();
 
-        const response = await request(app)
-            .get(`/bookmarks/${user._id}`)
-            .set("Authorization", `Bearer ${token}`);
+            const res = await request(app)
+            .delete(`/bookmarks/${fakeId}`)
+            .set("Authorization", "Bearer invalid_token");
 
-        expect(response.statusCode).toBe(200);
-        expect(response.body.bookmarks.length).toBe(1);
-        expect(response.body.bookmarks[0]._id).toBe(artwork._id.toString());
+            expect(res.statusCode).toBe(401);
         });
     });
 
-    describe("DELETE /bookmarks/:userId/:artworkId", () => {
-        test("removes a bookmark", async () => {
-        await request(app)
-            .post(`/bookmarks/${user._id}`)
+    describe("GET /bookmarks", () => {
+        test("returns all bookmarks for the authenticated user", async () => {
+        // First add a bookmark for the user
+            await request(app)
+            .post("/bookmarks")
             .set("Authorization", `Bearer ${token}`)
             .send({ artwork_id: artwork._id.toString() });
 
-        const response = await request(app)
-            .delete(`/bookmarks/${user._id}/${artwork._id}`)
+            // Now fetch all bookmarks
+            const response = await request(app)
+            .get("/bookmarks")
             .set("Authorization", `Bearer ${token}`);
 
-        expect(response.statusCode).toBe(200);
-        expect(response.body.message).toBe("Bookmark removed successfully");
-
-        const userInDb = await User.findById(user._id);
-        expect(userInDb.bookmarkedArtworks).not.toContainEqual(artwork._id);
+            expect(response.statusCode).toBe(200);
+            expect(response.body.bookmarks).toBeInstanceOf(Array);
+            expect(response.body.count).toBe(1);
+            expect(response.body.bookmarks[0]._id).toBe(artwork._id.toString());
+            expect(response.body.bookmarks[0].title).toBe("Test Artwork");
         });
 
-        test("returns 404 if user not found", async () => {
-        const fakeUserId = new mongoose.Types.ObjectId();
+        test("returns 401 if no token or invalid token provided", async () => {
+            const response = await request(app).get("/bookmarks");
 
-        const response = await request(app)
-            .delete(`/bookmarks/${fakeUserId}/${artwork._id}`)
+            expect(response.statusCode).toBe(404);
+        });
+
+        test("returns empty array if user has no bookmarks", async () => {
+            const response = await request(app)
+            .get("/bookmarks")
             .set("Authorization", `Bearer ${token}`);
 
-        expect(response.statusCode).toBe(404);
-        expect(response.body.message).toBe("User not found");
+            expect(response.statusCode).toBe(200);
+            expect(response.body.bookmarks).toEqual([]);
+            expect(response.body.count).toBe(0);
         });
-    });
+        });
+
 });

@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react';
 import { getAllUserBookmarks } from '../../services/bookmarks';
 import "../../assets/styles/BookmarksContainer.css";
 import BookmarkButton from '../BookmarkButton';
+import { useUser } from '../../contexts/UserContext';
 
-const BookmarkedArtworksList = ({ userId, setIsBookmarked }) => {
+const BookmarkedArtworksList = ({ setIsBookmarked }) => {
 
+    const { user } = useUser()
+    const userId = user._id
     const [bookmarkedArtworks, setBookmarkedArtworks] = useState([]);
     const [error, setError] = useState(null);
 
@@ -48,8 +51,7 @@ const BookmarkedArtworksList = ({ userId, setIsBookmarked }) => {
                 <div className="artwork-header">
                 <h3>{artwork.title}</h3>
                 <BookmarkButton
-                artworkId={artwork._id || artwork.id}
-                userId={userId}
+                artworkId={artwork._id}
                 isBookmarked={true}
                 onToggle={handleBookmarkToggle}
                 />

@@ -3,8 +3,11 @@ const Artwork = require("../models/artwork");
 
 async function addBookmark(req, res) {
     try {
-        const user_id = req.params.userId;
+        const user_id = req.user_id;
         const { artwork_id } = req.body;
+
+        console.log("Request body:", req.body);
+        console.log("User ID from request:", req.user_id);
 
         const user = await User.findById(user_id);
         if (!user) {
@@ -44,7 +47,8 @@ async function addBookmark(req, res) {
 
     async function removeBookmark(req, res) {
     try {
-        const user_id = req.params.userId;
+
+        const user_id = req.user_id;
         const artwork_id = req.params.artworkId;
 
         const user = await User.findById(user_id);
@@ -73,7 +77,7 @@ async function addBookmark(req, res) {
 
     async function getAllUserBookmarks(req, res) {
     try {
-        const user_id = req.params.userId;
+        const user_id = req.user_id;
 
         const user = await User.findById(user_id)
         .populate("bookmarkedArtworks", "title photos location description")

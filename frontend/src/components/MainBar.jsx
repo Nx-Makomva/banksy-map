@@ -16,8 +16,8 @@ const MainBar = ({
   }) => {
 
     const { user } = useUser();
-    const userId = user?.id || user?._id;
-    const artworkId = selectedArtwork?._id || selectedArtwork?.id;
+    const userId = user?._id;
+    const artworkId = selectedArtwork?._id
     const [isBookmarked, setIsBookmarked] = useState(false);
 
     useEffect(() => {
@@ -51,20 +51,18 @@ const MainBar = ({
                 artwork={selectedArtwork}
                 onClose={onClosePopup}
                 onArtworkSelect={onArtworkSelect}
-                userId={userId}
                 isBookmarked={isBookmarked}
                 setIsBookmarked={setIsBookmarked}
               />
             )}
           </>
         )}
-          {activeView === 'account' && <ProfileMainContainer userId={userId} isBookmarked={true} setIsBookmarked={setIsBookmarked} />}
+          {activeView === 'account' && <ProfileMainContainer isBookmarked={true} setIsBookmarked={setIsBookmarked} />}
                 {/* Full popup overlay - covers entire MainBar */}
           {selectedArtwork && showFullPopup && (
             <ArtworkFullPopup
               artwork={selectedArtwork}
               onClose={onClosePopup}
-              userId={userId}
               isBookmarked={isBookmarked}
               setIsBookmarked={setIsBookmarked}
             />

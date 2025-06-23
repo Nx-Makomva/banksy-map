@@ -1,15 +1,21 @@
 import { addBookmark, removeBookmark } from '../services/bookmarks';
 import { FaRegBookmark } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa";
-import "../assets/styles/BookmarkButton.css"
+import "../assets/styles/BookmarkButton.css";
+import { useUser } from "../contexts/UserContext";
 
-const BookmarkButton = ({ artworkId, userId, isBookmarked, onToggle }) => {
+const BookmarkButton = ({ artworkId, isBookmarked, onToggle }) => {
+
+    const { refreshUser } = useUser();
+
     const handleClick = async () => {
         try {
         if (isBookmarked) {
-            await removeBookmark(userId, artworkId);
+            await removeBookmark(artworkId);
+            await refreshUser();
         } else {
-            await addBookmark(userId, artworkId);
+            await addBookmark(artworkId);
+            await refreshUser();
         }
         onToggle(!isBookmarked, artworkId);
         } catch (error) {
