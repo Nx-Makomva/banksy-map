@@ -31,7 +31,7 @@ const MapContainer = ({artworks, onArtworkSelect}) => {
                 const [lng, lat] = artwork.location.coordinates;
                 return (
                 <AdvancedMarker
-                    key={artwork.id}
+                    key={artwork._id}
                     position={{ lat, lng }}
                     title={artwork.title}
                     onClick={(event) => handleMarkerClick(artwork, event)}
