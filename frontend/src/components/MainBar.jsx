@@ -4,7 +4,6 @@ import ArtworkMiniPopup from "./map/ArtworkMiniPopup";
 import ArtworkFullPopup from "./ArtworkFullPopup";
 import { useUser } from '../contexts/UserContext';
 import { useEffect, useState } from 'react';
-import { getAllUserBookmarks } from '../services/bookmarks';
 
 const MainBar = ({
       activeView, 
@@ -19,21 +18,23 @@ const MainBar = ({
     const userId = user?._id;
     const artworkId = selectedArtwork?._id
     const [isBookmarked, setIsBookmarked] = useState(false);
+    const [isVisited, setIsVisited] = useState(false);
 
     useEffect(() => {
-      const checkBookmark = async () => {
+      const fetchStatus = async () => {
         if (!userId || !artworkId) return;
 
         try {
-          const data = await getAllUserBookmarks(userId);
-          const alreadyBookmarked = data.bookmarks.some(b => b._id === artworkId);
+          const alreadyBookmarked = user.bookmarkedArtworks?.some(b => b._id === artworkId);
+          const alreadyVisited = user.visitedArtworks?.some(v => v._id === artworkId);
           setIsBookmarked(alreadyBookmarked);
+          setIsVisited(alreadyVisited);
         } catch (err) {
           console.error("Failed to check if bookmarked", err);
         }
       };
 
-      checkBookmark();
+      fetchStatus();
     }, [userId, artworkId]);
 
     return (
@@ -53,11 +54,13 @@ const MainBar = ({
                 onArtworkSelect={onArtworkSelect}
                 isBookmarked={isBookmarked}
                 setIsBookmarked={setIsBookmarked}
+                isVisited={isVisited}
+                setIsVisited={setIsVisited}
               />
             )}
           </>
         )}
-          {activeView === 'account' && <ProfileMainContainer isBookmarked={true} setIsBookmarked={setIsBookmarked} />}
+          {activeView === 'account' && <ProfileMainContainer isBookmarked={true} setIsBookmarked={setIsBookmarked} isVisited={true} setIsVisited={setIsVisited} />}
                 {/* Full popup overlay - covers entire MainBar */}
           {selectedArtwork && showFullPopup && (
             <ArtworkFullPopup
@@ -65,6 +68,8 @@ const MainBar = ({
               onClose={onClosePopup}
               isBookmarked={isBookmarked}
               setIsBookmarked={setIsBookmarked}
+              isVisited={isVisited}
+              setIsVisited={setIsVisited}
             />
           )}
         </div>
