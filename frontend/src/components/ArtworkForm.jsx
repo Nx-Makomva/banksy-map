@@ -2,6 +2,7 @@ import { FiUpload } from "react-icons/fi";
 import "../assets/styles/ArtworkForm.css";
 import { createArtwork } from '../services/artworks';
 import { useState } from "react";
+import { geocodeAddress } from "../services/geocoding";
 
 
 const ArtworkForm = ({ onClose }) => {
@@ -16,6 +17,7 @@ const ArtworkForm = ({ onClose }) => {
     });
 
     const [fileName, setFileName] = useState("");
+		const [coordinates, setCoodinates] = useState({ lat: null, lng: null })
 
     const resetForm = () => {
         setForm({
@@ -45,6 +47,18 @@ const ArtworkForm = ({ onClose }) => {
         setFileName(file ? file.name : "");
     };
 
+		const HandleAddressBlur = async() => {
+			if (form.address) {
+				try {
+					const coords = await geocodeAddress(form.address);
+					console.log("The coords are: ", coords)
+					setCoodinates(coords)
+				} catch (error) {
+					console.error('Could not geocode address', error);
+				}
+			}
+		}
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -53,6 +67,9 @@ const ArtworkForm = ({ onClose }) => {
         formData.append("discoveryYear", form.discoveryYear);
         formData.append("address", form.address);
         formData.append("description", form.description);
+        formData.append("locationLat", coordinates.lat);
+        formData.append("locationLng", coordinates.lng);
+				console.log("These are the coordinatesss!!", coordinates.lat, coordinates.lng)
         
         const tags = form.themeTags
             .split(',')
@@ -82,7 +99,7 @@ const ArtworkForm = ({ onClose }) => {
                 <label htmlFor="title">Title</label>
                 <input type="text" placeholder="'Girl with Balloon'" name="title" value={form.title} onChange={handleChange}required />
                 <label htmlFor="discoveryYear">Discovery Year</label>
-                <input type="text" placeholder="'2002'" name="discoveryYear" value={form.discoveryYear} onChange={handleChange}required />
+                <input type="text" placeholder="'2002'" name="discoveryYear" value={form.discoveryYear} onBlur={HandleAddressBlur} onChange={handleChange}required />
                 <label htmlFor="address">Address</label>
                 <input type="text" placeholder="'Waterloo Bridge, South Bank, London, SE1'" name="address" value={form.address} onChange={handleChange}required />
                 <label htmlFor="description">Description</label>
