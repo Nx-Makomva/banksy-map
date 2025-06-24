@@ -3,9 +3,18 @@ import '../assets/styles/ArtworkFullPopup.css';
 import BookmarkButton from './BookmarkButton';
 import { useUser } from '../contexts/UserContext';
 import VisitButton from './VisitButton';
+import CommentsButton from "./CommentsButton"
+import { useState } from 'react';
+import CommentItem from "./CommentItem"
+
 const ArtworkFullPopup = ({ artwork, onClose, isBookmarked, setIsBookmarked, isVisited, setIsVisited }) => {
     const { user } = useUser();
     const artworkId = artwork._id;
+    const [comments, setComments] = useState(artwork.comments || []);
+  
+    const handleCommentPosted = (newComment) => {
+    setComments(prev => [newComment, ...prev]);
+  };
 
     return (
         <div className="artwork-full-popup artwork-popup">
@@ -25,6 +34,12 @@ const ArtworkFullPopup = ({ artwork, onClose, isBookmarked, setIsBookmarked, isV
                 artworkId={artwork._id}
                 isVisited={isVisited}
                 onToggle={setIsVisited}
+                />
+            )}
+            {user._id && (
+                <CommentsButton
+                artworkId={artwork._id}
+                onCommentPosted={handleCommentPosted} 
                 />
             )}
             </div>
@@ -47,6 +62,14 @@ const ArtworkFullPopup = ({ artwork, onClose, isBookmarked, setIsBookmarked, isV
                 <p><strong>Location:</strong> {artwork.address}</p>
             )}
             </div>
+             <div className="comments-section">
+                {comments.map((comment, idx) => (
+                <CommentItem 
+                    key={idx} 
+                    comment={comment} 
+                />
+                ))}
+      </div>
         </div>
         </div>
     );

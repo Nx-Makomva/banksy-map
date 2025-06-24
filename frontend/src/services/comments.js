@@ -4,7 +4,6 @@ export async function addComment(artworkId, text) {
 
   try {
     const token = localStorage.getItem('token');
-    
     const response = await fetch(`${BACKEND_URL}/comments/${artworkId}`, {
       method: 'POST',
       headers: {

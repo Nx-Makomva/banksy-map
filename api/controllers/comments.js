@@ -22,6 +22,7 @@ async function addComment(req, res) {
       text,
     });
 
+
     await Artwork.findByIdAndUpdate(
       artwork_id,
       { $push: { comments: comment._id } },
