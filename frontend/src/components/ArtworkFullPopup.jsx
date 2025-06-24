@@ -1,9 +1,9 @@
 // ArtworkFullPopup.jsx
 import '../assets/styles/ArtworkFullPopup.css';
 import BookmarkButton from './BookmarkButton';
-
+import { useUser } from '../contexts/UserContext';
 const ArtworkFullPopup = ({ artwork, onClose, isBookmarked, setIsBookmarked }) => {
-    
+    const { user } = useUser();
     const artworkId = artwork._id;
 
     return (
@@ -29,7 +29,7 @@ const ArtworkFullPopup = ({ artwork, onClose, isBookmarked, setIsBookmarked }) =
                 <p><strong>Location:</strong> {artwork.address}</p>
             )}
             </div>
-            {artworkId && (
+            {user._id && (
                 <BookmarkButton
                 artworkId={artworkId}
                 isBookmarked={isBookmarked}
