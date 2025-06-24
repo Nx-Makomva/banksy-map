@@ -1,14 +1,11 @@
 // ArtworkMiniPopup.jsx
 import '../../assets/styles/ArtworkMiniPopup.css'
 import BookmarkButton from '../BookmarkButton';
-import { getImageUrl } from '../../utils/s3url';
 import VisitButton from "../VisitButton"
 import { useUser } from '../../contexts/UserContext';
 
 const ArtworkMiniPopup = ({ artwork, onClose, onArtworkSelect, isBookmarked, setIsBookmarked, isVisited, setIsVisited }) => {
     const { user } = useUser();
-    const image = getImageUrl(artwork.photos[0]);
-    console.log(image)
 
     return (
         <div 

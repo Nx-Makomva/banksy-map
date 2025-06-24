@@ -5,7 +5,6 @@ const MapContainer = ({artworks, onArtworkSelect}) => {
     const location = { lat: 51.5074, lng: -0.1278 }; // 📍 Central London
 
     const handleMarkerClick = (artwork) => {
-        console.log('Marker clicked:', artwork.title);
         onArtworkSelect(artwork);
     }
 
