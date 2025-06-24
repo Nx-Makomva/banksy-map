@@ -21,7 +21,7 @@ html, body, #root {
 
 /* Main page layout container */
 .pageColumnsContainer {
-    margin-top: 62px;
+    /* margin-top: 62px; */
     display: flex;
     height: calc(100vh - 62px);
     padding: 1rem;
@@ -32,7 +32,7 @@ html, body, #root {
 /* Sidebar styling */
 .sidebar {
     flex: 0 0 25%;
-    background-color: rgba(218, 214, 214, 0.793); /* semi-transparent black */
+    background-color: rgba(218, 214, 214, 0.628); /* semi-transparent black */
     border-radius: 16px;
     padding: 1rem;
     color: black;
@@ -46,7 +46,7 @@ html, body, #root {
     display: flex;
     flex-direction: column;
     color: black;
-    background-color: #f0f0f0;
+    background-color: #f0f0f000;
     border-radius: 16px;
     /* padding: 1rem; */
     box-sizing: border-box;
@@ -77,9 +77,10 @@ html, body, #root {
 .tab-button {
     flex: 1;
     padding: 0.75rem;
-    font-size: 1rem;
+    font-size: 1.5rem;
     background-color: #1fd9b7;
     color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -104,7 +105,7 @@ html, body, #root {
 .tab-content-container {
     padding: 0.75rem;
     font-size: 1rem;
-    background-color: #b6f6ea;
+    background-color: #ffffff00;
     height: calc(100% - 6px);
     color: rgb(60, 60, 60);
     border: none;

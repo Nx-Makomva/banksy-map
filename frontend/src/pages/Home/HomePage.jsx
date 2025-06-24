@@ -186,23 +186,28 @@ export function HomePage() {
     }
 
     // handles clicking on an artwork pin
-    const handleArtworkSelect = (artwork, position = null) => {
-        if (selectedArtwork?._id === artwork._id) {
-            // Second click on same artwork - show full popup
+    const handleArtworkSelect = ( artwork, position = null) => {
+        if (activeView === 'account') {
+            setSelectedArtwork(artwork);
             setShowFullPopup(true);
         } else {
-            // First click or different artwork - show mini popup
-            setSelectedArtwork(artwork);
-            if (position) {
-                setPopupPosition(position);
+            if (selectedArtwork?._id === artwork._id) {
+                // Second click on same artwork - show full popup
+                setShowFullPopup(true);
+            } else {
+                // First click or different artwork - show mini popup
+                setSelectedArtwork(artwork);
+                if (position) {
+                    setPopupPosition(position);
+                }
+                setShowFullPopup(false);
             }
-            setShowFullPopup(false);
         }
+        
     };
     
     // handle closing popup
     const handleClosePopup = () => {
-        console.log('handleClosePopup called!'); // Add this line
         setSelectedArtwork(null);
         setShowFullPopup(false);
     };

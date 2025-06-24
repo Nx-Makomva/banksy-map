@@ -5,7 +5,7 @@ import BookmarksContainer from "./BookmarksContainer";
 import { CommentsContainer } from "./CommentsContainer";
 
 
-export function ProfileMainContainer({ isBookmarked, setIsBookmarked, isVisited, setIsVisited }) {
+export function ProfileMainContainer({ setIsBookmarked, setIsVisited, onArtworkSelect }) {
     const [activeTab, setActiveTab] = useState('collected'); // 'collected', 'bookmarks' or 'comments'
 
 
@@ -13,8 +13,8 @@ export function ProfileMainContainer({ isBookmarked, setIsBookmarked, isVisited,
         <>
         <div className="profile-main-container">
         <TabBar setActiveTab={setActiveTab}/>
-        {activeTab === 'collected' && <VisitsContainer setIsVisited={setIsVisited} />}
-        {activeTab === 'bookmarks' && <BookmarksContainer setIsBookmarked={setIsBookmarked}/>}
+        {activeTab === 'collected' && <VisitsContainer setIsVisited={setIsVisited} onArtworkSelect={onArtworkSelect} />}
+        {activeTab === 'bookmarks' && <BookmarksContainer setIsBookmarked={setIsBookmarked} onArtworkSelect={onArtworkSelect}/>}
         {activeTab === 'comments' && <CommentsContainer/>}
         </div>
         </>

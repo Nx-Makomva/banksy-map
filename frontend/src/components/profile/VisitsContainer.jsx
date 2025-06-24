@@ -3,7 +3,7 @@ import VisitButton from '../VisitButton';
 import { useUser } from '../../contexts/UserContext';
 import { getImageUrl } from '../../utils/s3url';
 
-const VisitedArtworksList = ({ setIsVisited }) => {
+const VisitedArtworksList = ({ setIsVisited, onArtworkSelect }) => {
 
     const { user } = useUser()
     const userId = user._id
@@ -51,7 +51,10 @@ const VisitedArtworksList = ({ setIsVisited }) => {
         <ul>
             {visitedArtworks.map((artwork) => (
             <li key={artwork._id}>
-                <div className="artwork-header">
+                <div className="artwork-header"
+                    style={{ cursor: 'pointer' }} 
+                    onClick={() => onArtworkSelect(artwork)}
+                    >
                     <div className="artwork-text">
                         <h3>{artwork.title}</h3>
                         <p>{artwork.description}</p>

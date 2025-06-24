@@ -23,6 +23,12 @@
     padding-bottom: 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Subtle white border */
     width: 100%;
+    align-items: center;
+}
+
+.sidebar-section:first-child {
+    display: flex;
+    justify-content: center;
 }
 
 .sidebar-section:last-child {
