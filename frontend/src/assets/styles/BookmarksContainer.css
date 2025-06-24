@@ -11,13 +11,14 @@
 }
 
 .tab-content-container li {
-    background: #cef7f0;
+    background: #f1f1f1;
     border: 1px solid #e9ecef;
     border-radius: 12px;
     padding: 20px;
     display: flex;
-    flex-direction: column;
-    gap: 12px;
+    flex-direction: row-reverse; /* Image (last) goes left, content (first) goes right */
+    gap: 16px;
+    align-items: flex-start; /* Align items to top */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -29,9 +30,17 @@
 
 .tab-content-container .artwork-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-between; /* Back to original - space between content and button */
+    align-items: flex-start; /* Changed from center to flex-start */
     gap: 12px;
+    flex: 1; /* Take remaining space */
+}
+
+.tab-content-container .artwork-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
 }
 
 .tab-content-container li h3 {
@@ -39,11 +48,12 @@
     color: #333;
     font-size: 1.25rem;
     font-weight: 600;
-    flex: 1;
 }
 
 .tab-content-container li img {
-    align-self: flex-start;
+    flex-shrink: 0; /* Prevents image from shrinking */
+    width: 100px;
+    border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 

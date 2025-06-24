@@ -48,22 +48,23 @@ const BookmarkedArtworksList = ({ setIsBookmarked }) => {
             {bookmarkedArtworks.map((artwork) => (
             <li key={artwork._id}>
                 <div className="artwork-header">
-                <h3>{artwork.title}</h3>
-                <BookmarkButton
-                artworkId={artwork._id}
-                isBookmarked={true}
-                onToggle={handleBookmarkToggle}
-                />
+                    <div className="artwork-text">
+                        <h3>{artwork.title}</h3>
+                        <p>{artwork.description}</p>
+                    </div>
+                    <BookmarkButton
+                    artworkId={artwork._id}
+                    isBookmarked={true}
+                    onToggle={handleBookmarkToggle}
+                    />
                 </div>
-                
                 {artwork.photos && (
-                <img
-                    src={artwork.photos}
-                    alt={artwork.title}
-                    style={{ width: '150px', borderRadius: '8px' }}
-                />
+                    <img
+                        src={"http://localhost:3000/image/" + artwork.photos[0]}
+                        alt={artwork.title}
+                        style={{ width: '150px', borderRadius: '8px' }}
+                    />
                 )}
-                <p>{artwork.description}</p>
             </li>
             ))}
         </ul>

@@ -12,6 +12,14 @@
     max-width: 400px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
     animation: popupFadeIn 0.2s ease-out;
+    padding-bottom: 60px;
+}
+.artwork-mini-popup .button-group-mini-popup {
+    position: absolute;
+    bottom: 12px;
+    left: 16px;
+    display: flex;
+    gap: 10px;
 }
 
 .artwork-mini-popup .close-btn {
