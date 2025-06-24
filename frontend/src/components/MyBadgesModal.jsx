@@ -1,21 +1,30 @@
 import { useEffect, useState } from "react";
 import BadgeCard from "./BadgeCard";
+import { getAllBadges } from "../services/badge"; // ← NEW IMPORT
 import './MyBadgesModal.css';
 
 function MyBadgesModal({ onClose, earnedBadgeIds = [] }) {
     const [badges, setBadges] = useState([]);
 
     useEffect(() => {
-        async function fetchBadges() { //define fetch as function  look at atwork.jsx
-            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/badges`);
-            const data = await res.json();
-            const withEarned = data.badge.map((badge) => ({
-                ...badge,
-                isEarned: earnedBadgeIds.includes(badge._id)
-            }));
-            setBadges(withEarned);
+        async function loadBadges() {
+            try {
+                const allBadges = await getAllBadges();
+                console.log("All Badges:", allBadges);
+                console.log("Earned IDs:", earnedBadgeIds);
+
+                const withEarned = allBadges.map((badge) => ({
+                    ...badge,
+                    isEarned: earnedBadgeIds.map(id => id.toString()).includes(badge._id.toString())
+                }));
+
+                setBadges(withEarned);
+            } catch (error) {
+                console.error("Failed to load badges:", error);
+            }
         }
-        fetchBadges();
+
+        loadBadges();
     }, [earnedBadgeIds]);
 
     return (

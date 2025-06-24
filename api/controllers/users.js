@@ -7,28 +7,51 @@ const Artwork = require("../models/artwork");
 const Badge = require("../models/badge");
 
 async function getCurrentUser(req, res) {
-    // default response if no logged-in user - for use in main page rendering
-    const anonymousResponse = {_id: null};
+    const anonymousResponse = { _id: null };
+
     try {
         if (!req.user_id) {
-        return res.json(anonymousResponse);
+            return res.json(anonymousResponse);
         }
-        
-        // Get details of logged in user from db
+
+        // Load user
         const user = await User.findById(req.user_id)
-                    .select("id email firstName lastName bookmarkedArtworks visitedArtworks badges")
-                    .populate("bookmarkedArtworks visitedArtworks badges");
-        if (user) {
-            res.json(user);
-        } else {
-        // user_id exists but user not found in db 
-        res.json(anonymousResponse);
+            .select("id email firstName lastName bookmarkedArtworks visitedArtworks badges")
+            .populate("bookmarkedArtworks visitedArtworks badges");
+
+        if (!user) {
+            return res.json(anonymousResponse);
         }
+
+        // ✅ Badge re-evaluation logic
+        const earnedBadgeIds = user.badges.map(b => b._id.toString());
+        const allBadges = await Badge.find();
+
+        for (const badge of allBadges) {
+            const { type, count } = badge.criteria;
+            let progress = 0;
+
+            if (type === "bookmarks") progress = user.bookmarkedArtworks.length;
+            if (type === "visits") progress = user.visitedArtworks.length;
+            if (type === "signup") progress = 1;
+
+            const alreadyEarned = earnedBadgeIds.includes(badge._id.toString());
+
+            if (!alreadyEarned && progress >= count) {
+                user.badges.push(badge._id);
+            }
+        }
+
+        await user.save(); // Save only if new badges were added
+
+        return res.json(user);
+
     } catch (error) {
         console.error('Error getting current user:', error);
-        res.json(anonymousResponse);
+        return res.json(anonymousResponse);
     }
 }
+
 
 async function create(req, res) {
   // get values from input fields
@@ -96,12 +119,17 @@ async function getById(req, res) {
 async function addBookmarked(req, res) {
   try {
     const { id, artworkId } = req.params;
+console.log("📥 [addBookmarked] triggered for user:", id, "artwork:", artworkId);
 
-    const user = await User.findByIdAndUpdate(
-      id,
-      { $addToSet: { bookmarkedArtworks: artworkId } },
-      { new: true }
-    ).populate("badges");
+    // Step 1: Add bookmark
+    await User.findByIdAndUpdate(id, {
+      $addToSet: { bookmarkedArtworks: artworkId }
+    });
+
+    // Step 2: Re-fetch updated user with populated data
+    const user = await User.findById(id)
+      .populate("badges")
+      .populate("bookmarkedArtworks");
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -111,6 +139,8 @@ async function addBookmarked(req, res) {
     const earnedBadgeIds = user.badges.map(b => b._id.toString());
 
     const bookmarkBadges = await Badge.find({ "criteria.type": "bookmarks" });
+    console.log("📦 Matching badges for bookmarks/visits:", bookmarkBadges.map(b => b._id.toString()));
+
 
     for (const badge of bookmarkBadges) {
       const alreadyHas = earnedBadgeIds.includes(badge._id.toString());
@@ -120,7 +150,7 @@ async function addBookmarked(req, res) {
         user.badges.push(badge._id);
       }
     }
-
+    console.log("🏆 Awarded badges now:", user.badges.map(b => b.toString()));
     await user.save();
 
     res.status(200).json({
@@ -139,12 +169,17 @@ async function addBookmarked(req, res) {
 async function addVisitedArtwork(req, res) {
   try {
     const { id: userId, artworkId } = req.params;
+console.log("📥 [addVisitedArtwork] triggered for user:", userId, "artwork:", artworkId);
 
-    const user = await User.findByIdAndUpdate(
-      userId,
-      { $addToSet: { visitedArtworks: artworkId } },
-      { new: true }
-    ).populate("badges");
+    // Step 1: Add visited artwork
+    await User.findByIdAndUpdate(userId, {
+      $addToSet: { visitedArtworks: artworkId }
+    });
+
+    // Step 2: Re-fetch updated user
+    const user = await User.findById(userId)
+      .populate("badges")
+      .populate("visitedArtworks");
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -154,6 +189,7 @@ async function addVisitedArtwork(req, res) {
     const earnedBadgeIds = user.badges.map(b => b._id.toString());
 
     const visitBadges = await Badge.find({ "criteria.type": "visits" });
+    console.log("📦 Matching badges for visits:", visitBadges.map(b => b._id.toString()));
 
     for (const badge of visitBadges) {
       const alreadyHas = earnedBadgeIds.includes(badge._id.toString());
@@ -163,6 +199,7 @@ async function addVisitedArtwork(req, res) {
         user.badges.push(badge._id);
       }
     }
+  console.log("🏆 Awarded badges now:", user.badges.map(b => b.toString()));
 
     await user.save();
 

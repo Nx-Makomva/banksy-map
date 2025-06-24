@@ -5,11 +5,16 @@ import "../../assets/styles/BadgesButton.css";
 
 const BadgesButton = () => {
     const [showModal, setShowModal] = useState(false);
-    const { user } = useUser(); //refreshUser?
+    const { user, refreshUser } = useUser(); //refreshUser?
+
+    const handleOpenModal = async () => {
+        await refreshUser();
+        setShowModal(true);
+    }
 
     return (
         <>
-            <button className="badges-button" onClick={() => setShowModal(true)}>
+            <button className="badges-button" onClick={handleOpenModal}>
                 <img src="/VIEW BADGES.png" alt="View Badges" />
             </button>
             {showModal && (

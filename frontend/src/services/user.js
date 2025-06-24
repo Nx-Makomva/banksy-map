@@ -28,8 +28,8 @@ export async function getUserById(id) {
 }
 
 export async function addBookmarkedArtwork(userId, artworkId) {
-  const response = await fetch(`${BACKEND_URL}/users/${userId}/bookmark/${artworkId}`, {
-    method: 'PATCH',
+  const response = await fetch(`${BACKEND_URL}/users/${userId}/bookmarked/${artworkId}`, {
+    method: 'PATCH'
   });
 
   if (!response.ok) {
@@ -40,19 +40,19 @@ export async function addBookmarkedArtwork(userId, artworkId) {
 }
 
 export async function addVisitedArtwork(userId, artworkId) {
-  const response = await fetch(`${BACKEND_URL}/users/${userId}/collected/${artworkId}`, {
-    method: 'PATCH',
+  const response = await fetch(`${BACKEND_URL}/users/${userId}/visited/${artworkId}`, {
+    method: 'PATCH'
   });
 
   if (!response.ok) {
-    throw new Error('Failed to add visited artwork');
+    throw new Error('Failed to mark artwork as visited');
   }
 
   return await response.json();
 }
 
 export async function addBadgeToUser(userId, badgeId) {
-  const response = await fetch(`$${BACKEND_URL}/users/${userId}/badges/${badgeId}`, {
+  const response = await fetch(`${BACKEND_URL}/users/${userId}/badges/${badgeId}`, {
     method: 'PATCH',
   });
 
