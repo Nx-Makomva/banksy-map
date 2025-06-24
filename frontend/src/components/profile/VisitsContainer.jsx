@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import VisitButton from '../VisitButton';
 import { useUser } from '../../contexts/UserContext';
+import { getImageUrl } from '../../utils/s3url';
 
 const VisitedArtworksList = ({ setIsVisited }) => {
 
@@ -12,8 +13,12 @@ const VisitedArtworksList = ({ setIsVisited }) => {
     useEffect(() => {
         const fetchVisits = async () => {
         try {
-            const data = user.visitedArtworks;
-            setVisitedArtworks(data || []);
+            const data = user.visitedArtworks || [];
+            const transformed = data.map((artwork) => ({
+                ...artwork,
+                imageUrl: getImageUrl(artwork.photos[0]),
+            }));
+            setVisitedArtworks(transformed);
         } catch (err) {
             setError(err.message || "Error fetching visits");
         }
@@ -59,7 +64,7 @@ const VisitedArtworksList = ({ setIsVisited }) => {
                 </div>
                 {artwork.photos && (
                     <img
-                    src={"http://localhost:3000/image/" + artwork.photos[0]}
+                    src={artwork.imageUrl}
                     alt={artwork.title}
                     style={{ width: '100px', borderRadius: '8px' }}
                     />

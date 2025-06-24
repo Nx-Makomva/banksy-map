@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import "../../assets/styles/BookmarksContainer.css";
 import BookmarkButton from '../BookmarkButton';
 import { useUser } from '../../contexts/UserContext';
+import { getImageUrl } from '../../utils/s3url';
 
 const BookmarkedArtworksList = ({ setIsBookmarked }) => {
 
@@ -13,8 +14,12 @@ const BookmarkedArtworksList = ({ setIsBookmarked }) => {
     useEffect(() => {
         const fetchBookmarks = async () => {
         try {
-            const data = user.bookmarkedArtworks;
-            setBookmarkedArtworks(data || []);
+            const data = user.bookmarkedArtworks || [];
+            const transformed = data.map((artwork) => ({
+                ...artwork,
+                imageUrl: getImageUrl(artwork.photos[0]),
+            }));
+            setBookmarkedArtworks(transformed);
         } catch (err) {
             setError(err.message || "Error fetching bookmarks");
         }
@@ -60,9 +65,9 @@ const BookmarkedArtworksList = ({ setIsBookmarked }) => {
                 </div>
                 {artwork.photos && (
                     <img
-                        src={"http://localhost:3000/image/" + artwork.photos[0]}
+                        src={artwork.imageUrl}
                         alt={artwork.title}
-                        style={{ width: '150px', borderRadius: '8px' }}
+                        style={{ width: '100px', borderRadius: '8px' }}
                     />
                 )}
             </li>
