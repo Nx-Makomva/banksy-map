@@ -18,8 +18,6 @@ export function HomePage() {
     const { user, logout } = useUser()
     const navigate = useNavigate();
     const loggedIn = user?._id;
-    console.log(loggedIn)
-    console.log(user)
 
     // Use single state to manage which view is active - clicks are made in navbar
     const [activeView, setActiveView] = useState('map'); // 'map' or 'account'
@@ -41,17 +39,18 @@ export function HomePage() {
         themeTags: [],
         isAuthenticated: undefined,
         location: null, // lat, long, maxDistance
+        bookmarked: false,
+        visited: false
     });
     // set co-ords state for location filters
    // const [coordinates, setCoordinates] = useState({ lat: null, lng: null })
-    console.log(filters.location)
+
     // Fetch ALL artworks on component mount - with no filters
     // for getting dropdowns
     useEffect(() => {
         const fetchAllArtworks = async () => {
             try {
                 const allArtworksData = await getAllArtworks();
-                console.log('All artworks fetched:', allArtworksData);
                 setAllArtworks(allArtworksData.allArtworks);
             } catch (err) {
                 console.error('Error fetching all artworks:', err);
@@ -83,17 +82,23 @@ export function HomePage() {
                 queryParams.lng = filters.location.lng;
                 queryParams.maxDistance = filters.location.maxDistance || 1000;
             }
+            // adds 'bookmarked' to query param
+            if (filters.bookmarked) {
+                queryParams.bookmarked = filters.bookmarked;
+            }
+            // adds 'visited' to query param
+            if (filters.visited) {
+                queryParams.visited = filters.visited;
+            }
             
             const artworksData = await getAllArtworks(queryParams);
-            console.log(artworksData)
             setFilteredArtworks(artworksData.allArtworks);
-            console.log("set filtered artworks:", filteredArtworks)
         } catch (err) {
             console.error('Error fetching artworks:', err);
         } 
         };
         fetchFilteredArtworks();
-  }, [filters]); // Empty dependency array - runs once on mount
+  }, [filters]);
 
 
     // filters- set function
@@ -106,13 +111,10 @@ export function HomePage() {
     useEffect(() => {
         const timeoutId = setTimeout(async () => {
             if (addressInput.trim() && addressInput !== "Current Location") {
-                console.log("Searching for address:", addressInput);
                 setIsSearchingAddress(true);
                 try {
                     const coordinates = await geocodeAddress(addressInput);
-                    console.log("Geocoding result:", coordinates); // Debug log
                     if (coordinates) {
-                        console.log("Setting location filter:", coordinates);
                         setFilters(prev => ({
                             ...prev,
                             location: {
@@ -202,7 +204,6 @@ export function HomePage() {
     
     // handle closing popup
     const handleClosePopup = () => {
-        console.log('handleClosePopup called!'); // Add this line
         setSelectedArtwork(null);
         setShowFullPopup(false);
     };
