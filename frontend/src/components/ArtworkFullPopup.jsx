@@ -10,7 +10,24 @@ const ArtworkFullPopup = ({ artwork, onClose, isBookmarked, setIsBookmarked, isV
     return (
         <div className="artwork-full-popup artwork-popup">
         <div className="full-popup-header">
+            
+            <div className='header-left'>
             <h2>{artwork.title}</h2>
+            {user._id && (
+                <BookmarkButton
+                artworkId={artworkId}
+                isBookmarked={isBookmarked}
+                onToggle={setIsBookmarked}
+                />
+            )}
+            {user._id && (
+                <VisitButton
+                artworkId={artwork._id}
+                isVisited={isVisited}
+                onToggle={setIsVisited}
+                />
+            )}
+            </div>
             <button className="close-btn" onClick={onClose}>×</button>
         </div>
         
@@ -30,18 +47,6 @@ const ArtworkFullPopup = ({ artwork, onClose, isBookmarked, setIsBookmarked, isV
                 <p><strong>Location:</strong> {artwork.address}</p>
             )}
             </div>
-            {user._id && (
-                <BookmarkButton
-                artworkId={artworkId}
-                isBookmarked={isBookmarked}
-                onToggle={setIsBookmarked}
-                />
-            )}
-            <VisitButton
-            artworkId={artwork._id}
-            isVisited={isVisited}
-            onToggle={setIsVisited}
-            />
         </div>
         </div>
     );
