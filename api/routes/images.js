@@ -1,15 +1,14 @@
 const express = require("express");
-const AWS = require('aws-sdk');
 
 const router = express.Router();
-const s3 = new AWS.S3();
 
 router.get('/:key', (req, res) => {
+  console.log("We got through to the image route function")
   const key = decodeURIComponent(req.params.key);
+  console.log("This is the key in image.js decoded: ", key)
 
   res.redirect(`https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`);
   
-
 });
 
 module.exports = router;

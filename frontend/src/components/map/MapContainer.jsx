@@ -5,7 +5,6 @@ const MapContainer = ({artworks, onArtworkSelect}) => {
     const location = { lat: 51.5074, lng: -0.1278 }; // 📍 Central London
 
     const handleMarkerClick = (artwork) => {
-        console.log('Marker clicked:', artwork.title);
         onArtworkSelect(artwork);
     }
 
@@ -29,7 +28,6 @@ const MapContainer = ({artworks, onArtworkSelect}) => {
             {/* Render markers for each artwork */}
             {Array.isArray(artworks) && artworks?.map(artwork => {
                 const [lng, lat] = artwork.location.coordinates;
-                console.log("FROM MAP CONTAINER:", artworks)
                 return (
                 <AdvancedMarker
                     key={artwork._id}

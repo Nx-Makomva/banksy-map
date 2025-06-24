@@ -17,6 +17,7 @@ export async function createArtwork(formData) {
 
     const createdArtwork = await response.json();
     console.log("This is the created artwork", createdArtwork);
+    console.log("This the created artwork photo field", createdArtwork.artwork.photos);
     
     // Adding full image URL to response
     if (createdArtwork.artwork?.photos?.[0]) {
@@ -25,7 +26,6 @@ export async function createArtwork(formData) {
       console.log("This the created artwork photo field", createdArtwork.artwork?.photos?.[0]);
     }
 
-    console.log('Artwork created:', createdArtwork);
     return createdArtwork;
     
   } catch (error) {
