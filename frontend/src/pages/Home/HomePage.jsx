@@ -8,8 +8,6 @@ import MainBar from "../../components/MainBar";
 import "../../assets/styles/HomePage.css";
 import { getAllArtworks } from "../../services/artworks";
 import { geocodeAddress } from "../../services/geocoding";
-//import { set } from "../../../../api/app";
-
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -42,9 +40,7 @@ export function HomePage() {
         isAuthenticated: undefined,
         location: null, // lat, long, maxDistance
     });
-    // set co-ords state for location filters
-   // const [coordinates, setCoordinates] = useState({ lat: null, lng: null })
-    console.log(filters.location)
+
     // Fetch ALL artworks on component mount - with no filters
     // for getting dropdowns
     useEffect(() => {
@@ -93,7 +89,7 @@ export function HomePage() {
         } 
         };
         fetchFilteredArtworks();
-  }, [filters]); // Empty dependency array - runs once on mount
+  }, [filters]); // ONly filters change for rerun DO NOT PUT artworks HERE even though it asks!!!!
 
 
     // filters- set function
@@ -106,13 +102,10 @@ export function HomePage() {
     useEffect(() => {
         const timeoutId = setTimeout(async () => {
             if (addressInput.trim() && addressInput !== "Current Location") {
-                console.log("Searching for address:", addressInput);
                 setIsSearchingAddress(true);
                 try {
                     const coordinates = await geocodeAddress(addressInput);
-                    console.log("Geocoding result:", coordinates); // Debug log
                     if (coordinates) {
-                        console.log("Setting location filter:", coordinates);
                         setFilters(prev => ({
                             ...prev,
                             location: {
