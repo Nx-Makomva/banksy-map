@@ -18,38 +18,45 @@
     border-bottom: 1px solid #eee;
     box-sizing: border-box;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     background: #ff51b0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 999999;
     flex-shrink: 0;
     font-family: 'Permanent Marker', cursive;
+    gap: 12px;
+}
+
+.artwork-full-popup .header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
 }
 
 .artwork-full-popup .full-popup-header h2 {
   margin: 0;
+  margin-right: 24px;
   font-size: 30px;
   font-weight: 600;
   color: white;
-
-  flex: 1;
-  margin-right: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .artwork-full-popup .close-btn {
-    position: absolute;
-    top: 3px;
-    right: 16px;
+    position: static;
+    top: auto;
+    right: auto;
     font-size: 45px;
     border: none;
     background: transparent;
     cursor: pointer;
     color: white; 
     font-family: 'Permanent Marker';
+    order: 3;
 }
 
 
