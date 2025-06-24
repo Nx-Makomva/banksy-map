@@ -2,7 +2,8 @@
 import '../assets/styles/ArtworkFullPopup.css';
 import BookmarkButton from './BookmarkButton';
 import { useUser } from '../contexts/UserContext';
-const ArtworkFullPopup = ({ artwork, onClose, isBookmarked, setIsBookmarked }) => {
+import VisitButton from './VisitButton';
+const ArtworkFullPopup = ({ artwork, onClose, isBookmarked, setIsBookmarked, isVisited, setIsVisited }) => {
     const { user } = useUser();
     const artworkId = artwork._id;
 
@@ -36,6 +37,11 @@ const ArtworkFullPopup = ({ artwork, onClose, isBookmarked, setIsBookmarked }) =
                 onToggle={setIsBookmarked}
                 />
             )}
+            <VisitButton
+            artworkId={artwork._id}
+            isVisited={isVisited}
+            onToggle={setIsVisited}
+            />
         </div>
         </div>
     );

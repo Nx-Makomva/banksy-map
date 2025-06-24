@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { TabBar } from "./TabBar";
-import { CollectedContainer } from "./CollectedContainer";
+import VisitsContainer  from "./VisitsContainer";
 import BookmarksContainer from "./BookmarksContainer";
 import { CommentsContainer } from "./CommentsContainer";
 
 
-export function ProfileMainContainer({ userId , isBookmarked, setIsBookmarked }) {
+export function ProfileMainContainer({ isBookmarked, setIsBookmarked, isVisited, setIsVisited }) {
     const [activeTab, setActiveTab] = useState('collected'); // 'collected', 'bookmarks' or 'comments'
 
 
@@ -13,8 +13,8 @@ export function ProfileMainContainer({ userId , isBookmarked, setIsBookmarked })
         <>
         <div className="profile-main-container">
         <TabBar setActiveTab={setActiveTab}/>
-        {activeTab === 'collected' && <CollectedContainer/>}
-        {activeTab === 'bookmarks' && <BookmarksContainer userId={userId} isBookmarked={isBookmarked} setIsBookmarked={setIsBookmarked}/>}
+        {activeTab === 'collected' && <VisitsContainer setIsVisited={setIsVisited} />}
+        {activeTab === 'bookmarks' && <BookmarksContainer setIsBookmarked={setIsBookmarked}/>}
         {activeTab === 'comments' && <CommentsContainer/>}
         </div>
         </>

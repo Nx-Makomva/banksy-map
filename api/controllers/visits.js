@@ -1,13 +1,10 @@
 const User = require("../models/user");
 const Artwork = require("../models/artwork");
 
-async function addBookmark(req, res) {
+async function addVisit(req, res) {
     try {
         const user_id = req.user_id;
         const { artwork_id } = req.body;
-
-        console.log("Request body:", req.body);
-        console.log("User ID from request:", req.user_id);
 
         const user = await User.findById(user_id);
         if (!user) {
@@ -23,29 +20,29 @@ async function addBookmark(req, res) {
         });
         }
 
-        const alreadyBookmarked = user.bookmarkedArtworks.includes(artwork_id);
-        if (alreadyBookmarked) {
+        const alreadyVisited = user.visitedArtworks.includes(artwork_id);
+        if (alreadyVisited) {
         return res.status(400).json({
             message: "Artwork already bookmarked",
         });
         }
 
-        user.bookmarkedArtworks.push(artwork_id);
+        user.visitedArtworks.push(artwork_id);
         await user.save();
 
         res.status(201).json({
-        message: "Bookmark added successfully",
-        bookmarkedArtworks: user.bookmarkedArtworks,
+        message: "Visit added successfully",
+        visitedArtworks: user.visitedArtworks,
         });
     } catch (error) {
-        console.error("Error adding bookmark", error);
+        console.error("Error adding visit", error);
         res.status(500).json({
         error: error.message,
         });
     }
 }
 
-    async function removeBookmark(req, res) {
+    async function removeVisit(req, res) {
     try {
 
         const user_id = req.user_id;
@@ -58,26 +55,26 @@ async function addBookmark(req, res) {
         });
         }
 
-        user.bookmarkedArtworks = user.bookmarkedArtworks.filter(
+        user.visitedArtworks = user.visitedArtworks.filter(
         (id) => id.toString() !== artwork_id
         );
         await user.save();
 
         res.status(200).json({
-        message: "Bookmark removed successfully",
-        bookmarkedArtworks: user.bookmarkedArtworks,
+        message: "Visit removed successfully",
+        visitedArtworks: user.visitedArtworks,
         });
     } catch (error) {
-        console.error("Error removing bookmark", error);
+        console.error("Error removing visit", error);
         res.status(500).json({
         error: error.message,
         });
     }
 }
 
-const BookmarksController = {
-    addBookmark: addBookmark,
-    removeBookmark: removeBookmark,
+const VisitsController = {
+    addVisit: addVisit,
+    removeVisit: removeVisit,
 };
 
-module.exports = BookmarksController;
+module.exports = VisitsController;

@@ -1,6 +1,6 @@
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-export async function addBookmark(artworkId) {
+export async function addVisit(artworkId) {
     const token = localStorage.getItem("token");
 
     const requestOptions = {
@@ -13,22 +13,22 @@ export async function addBookmark(artworkId) {
     };
 
     try {
-        const response = await fetch(`${BACKEND_URL}/bookmarks`, requestOptions);
+        const response = await fetch(`${BACKEND_URL}/visits`, requestOptions);
 
         if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to add bookmark");
+        throw new Error(errorData.error || "Failed to add visit");
         }
 
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error("Error adding bookmark:", error);
+        console.error("Error adding visit:", error);
         throw error;
     }
 }
 
-export async function removeBookmark(artworkId) {
+    export async function removeVisit(artworkId) {
     const token = localStorage.getItem("token");
     const requestOptions = {
         method: "DELETE",
@@ -38,17 +38,17 @@ export async function removeBookmark(artworkId) {
     };
 
     try {
-        const response = await fetch(`${BACKEND_URL}/bookmarks/${artworkId}`, requestOptions);
+        const response = await fetch(`${BACKEND_URL}/visits/${artworkId}`, requestOptions);
 
         if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to remove bookmark");
+        throw new Error(errorData.error || "Failed to remove visit");
         }
 
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error("Error removing bookmark:", error);
+        console.error("Error removing visit:", error);
         throw error;
     }
-}
+    }
