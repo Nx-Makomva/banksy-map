@@ -25,6 +25,8 @@ export async function createArtwork(formData) {
     // Adding full image URL to response
     if (createdArtwork.artwork?.photos?.[0]) {
       createdArtwork.artwork.imageUrl = getImageUrl(createdArtwork.artwork.photos[0]);
+      console.log("image url", createdArtwork.artwork.imageUrl);
+      console.log("the other one", createdArtwork.artwork?.photos?.[0])
     }
 
     console.log('Artwork created:', createdArtwork);
