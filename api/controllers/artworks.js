@@ -24,7 +24,7 @@ async function create(req, res) {
       },
       description,
       themeTags,
-      photos: [req.file?.path],
+      photos: [req.file?.key],
       isAuthenticated: false,
       comments: [],
     });

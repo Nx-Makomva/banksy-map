@@ -16,15 +16,16 @@ export async function createArtwork(formData) {
     }
 
     const createdArtwork = await response.json();
+    console.log("This is the created artwork", createdArtwork);
+    console.log("This the created artwork photo field", createdArtwork.artwork.photos);
     
     // Adding full image URL to response
     if (createdArtwork.artwork?.photos?.[0]) {
       createdArtwork.artwork.imageUrl = getImageUrl(createdArtwork.artwork.photos[0]);
-      console.log("image url", createdArtwork.artwork.imageUrl);
-      console.log("the other one", createdArtwork.artwork?.photos?.[0])
+      console.log("This the created artwork photo imageurl", createdArtwork.artwork.imageUrl);
+      console.log("This the created artwork photo field", createdArtwork.artwork?.photos?.[0]);
     }
 
-    console.log('Artwork created:', createdArtwork);
     return createdArtwork;
     
   } catch (error) {
