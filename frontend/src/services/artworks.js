@@ -1,11 +1,6 @@
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 import { getImageUrl } from "../utils/s3url";
 
-// // Secure URL generator (fake URL, displayed on frontend), filename encoded
-// const getImageUrl = (key) => {
-//   return `${BACKEND_URL}/api/images/${encodeURIComponent(key)}`;
-// };
-
 export async function createArtwork(formData) {
   const requestOptions = {
     method: "POST",
@@ -21,10 +16,13 @@ export async function createArtwork(formData) {
     }
 
     const createdArtwork = await response.json();
+    console.log("This is the created artwork", createdArtwork);
     
     // Adding full image URL to response
     if (createdArtwork.artwork?.photos?.[0]) {
       createdArtwork.artwork.imageUrl = getImageUrl(createdArtwork.artwork.photos[0]);
+      console.log("This the created artwork photo imageurl", createdArtwork.artwork.imageUrl);
+      console.log("This the created artwork photo field", createdArtwork.artwork?.photos?.[0]);
     }
 
     console.log('Artwork created:', createdArtwork);
