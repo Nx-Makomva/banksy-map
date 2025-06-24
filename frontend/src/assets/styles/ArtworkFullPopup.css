@@ -6,7 +6,7 @@
   right: 0 !important;
   bottom: 0 !important;
   background: #b6f6ea;
-  z-index: 999999 !important;
+  z-index: 999000;
   overflow: hidden;
   display: flex;
   flex-direction: column;

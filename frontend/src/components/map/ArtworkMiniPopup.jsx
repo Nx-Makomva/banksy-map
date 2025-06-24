@@ -3,11 +3,12 @@ import '../../assets/styles/ArtworkMiniPopup.css'
 import BookmarkButton from '../BookmarkButton';
 import { getImageUrl } from '../../utils/s3url';
 import VisitButton from "../VisitButton"
-
+import { useUser } from '../../contexts/UserContext';
 
 const ArtworkMiniPopup = ({ artwork, onClose, onArtworkSelect, isBookmarked, setIsBookmarked, isVisited, setIsVisited }) => {
-const image = getImageUrl(artwork.photos[0]);
-console.log(image)
+    const { user } = useUser();
+    const image = getImageUrl(artwork.photos[0]);
+    console.log(image)
 
     return (
         <div 
@@ -33,16 +34,18 @@ console.log(image)
                     <p><strong>Location:</strong> {artwork.address}</p>
                     )}
                 </div>
+            {user._id && (
                 <BookmarkButton
                 artworkId={artwork._id}
                 isBookmarked={isBookmarked}
                 onToggle={setIsBookmarked}
-                />
+                /> )}
+            {user._id && (
                 <VisitButton
                 artworkId={artwork._id}
                 isVisited={isVisited}
                 onToggle={setIsVisited}
-                />
+                />)}
                 <button 
                     className="expand-btn"
                     onClick={() => onArtworkSelect(artwork)}

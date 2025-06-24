@@ -32,7 +32,7 @@ const MapContainer = ({artworks, onArtworkSelect}) => {
                 console.log("FROM MAP CONTAINER:", artworks)
                 return (
                 <AdvancedMarker
-                    key={artwork.id}
+                    key={artwork._id}
                     position={{ lat, lng }}
                     title={artwork.title}
                     onClick={(event) => handleMarkerClick(artwork, event)}
