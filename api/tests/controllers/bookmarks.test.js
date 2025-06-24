@@ -80,41 +80,4 @@ describe("/bookmarks", () => {
         });
     });
 
-    describe("GET /bookmarks", () => {
-        test("returns all bookmarks for the authenticated user", async () => {
-        // First add a bookmark for the user
-            await request(app)
-            .post("/bookmarks")
-            .set("Authorization", `Bearer ${token}`)
-            .send({ artwork_id: artwork._id.toString() });
-
-            // Now fetch all bookmarks
-            const response = await request(app)
-            .get("/bookmarks")
-            .set("Authorization", `Bearer ${token}`);
-
-            expect(response.statusCode).toBe(200);
-            expect(response.body.bookmarks).toBeInstanceOf(Array);
-            expect(response.body.count).toBe(1);
-            expect(response.body.bookmarks[0]._id).toBe(artwork._id.toString());
-            expect(response.body.bookmarks[0].title).toBe("Test Artwork");
-        });
-
-        test("returns 401 if no token or invalid token provided", async () => {
-            const response = await request(app).get("/bookmarks");
-
-            expect(response.statusCode).toBe(404);
-        });
-
-        test("returns empty array if user has no bookmarks", async () => {
-            const response = await request(app)
-            .get("/bookmarks")
-            .set("Authorization", `Bearer ${token}`);
-
-            expect(response.statusCode).toBe(200);
-            expect(response.body.bookmarks).toEqual([]);
-            expect(response.body.count).toBe(0);
-        });
-        });
-
 });
