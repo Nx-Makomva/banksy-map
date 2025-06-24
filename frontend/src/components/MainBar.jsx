@@ -2,6 +2,9 @@ import MapContainer from "./map/MapContainer";
 import { ProfileMainContainer } from "./profile/ProfileMainContainer";
 import ArtworkMiniPopup from "./map/ArtworkMiniPopup";
 import ArtworkFullPopup from "./ArtworkFullPopup";
+import { useUser } from '../contexts/UserContext';
+import { useEffect, useState } from 'react';
+import { getAllUserBookmarks } from '../services/bookmarks';
 
 const MainBar = ({
       activeView, 
@@ -11,6 +14,27 @@ const MainBar = ({
       showFullPopup, 
       onClosePopup 
   }) => {
+
+    const { user } = useUser();
+    const userId = user?._id;
+    const artworkId = selectedArtwork?._id
+    const [isBookmarked, setIsBookmarked] = useState(false);
+
+    useEffect(() => {
+      const checkBookmark = async () => {
+        if (!userId || !artworkId) return;
+
+        try {
+          const data = await getAllUserBookmarks(userId);
+          const alreadyBookmarked = data.bookmarks.some(b => b._id === artworkId);
+          setIsBookmarked(alreadyBookmarked);
+        } catch (err) {
+          console.error("Failed to check if bookmarked", err);
+        }
+      };
+
+      checkBookmark();
+    }, [userId, artworkId]);
 
     return (
         <div className="main-content" style={{ position: 'relative' }}>
@@ -26,17 +50,21 @@ const MainBar = ({
               <ArtworkMiniPopup
                 artwork={selectedArtwork}
                 onClose={onClosePopup}
-                onArtworkSelect={onArtworkSelect} 
+                onArtworkSelect={onArtworkSelect}
+                isBookmarked={isBookmarked}
+                setIsBookmarked={setIsBookmarked}
               />
             )}
           </>
         )}
-          {activeView === 'account' && <ProfileMainContainer />}
+          {activeView === 'account' && <ProfileMainContainer isBookmarked={true} setIsBookmarked={setIsBookmarked} />}
                 {/* Full popup overlay - covers entire MainBar */}
           {selectedArtwork && showFullPopup && (
             <ArtworkFullPopup
               artwork={selectedArtwork}
               onClose={onClosePopup}
+              isBookmarked={isBookmarked}
+              setIsBookmarked={setIsBookmarked}
             />
           )}
         </div>

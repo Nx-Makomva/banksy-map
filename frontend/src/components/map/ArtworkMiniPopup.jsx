@@ -1,10 +1,13 @@
 // ArtworkMiniPopup.jsx
 import '../../assets/styles/ArtworkMiniPopup.css'
+import BookmarkButton from '../BookmarkButton';
 import { getImageUrl } from '../../utils/s3url';
 
-const ArtworkMiniPopup = ({ artwork, onClose, onArtworkSelect }) => {
+
+const ArtworkMiniPopup = ({ artwork, onClose, onArtworkSelect, isBookmarked, setIsBookmarked }) => {
 const image = getImageUrl(artwork.photos[0]);
 console.log(image)
+
     return (
         <div 
             className="artwork-mini-popup"
@@ -29,6 +32,11 @@ console.log(image)
                     <p><strong>Location:</strong> {artwork.address}</p>
                     )}
                 </div>
+                <BookmarkButton
+                artworkId={artwork._id}
+                isBookmarked={isBookmarked}
+                onToggle={setIsBookmarked}
+                />
                 <button 
                     className="expand-btn"
                     onClick={() => onArtworkSelect(artwork)}
