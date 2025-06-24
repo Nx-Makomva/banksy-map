@@ -33,35 +33,6 @@ export async function getUserById(id) {
   return await response.json();
 }
 
-export async function addBookmarkedArtwork(userId, artworkId) {
-  const response = await fetch(`${BACKEND_URL}/users/${userId}/bookmark/${artworkId}`, {
-    method: 'PATCH',
-  });
-
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    const error = new Error('Failed to add bookmark');
-    error.cause = errorData.error || errorData.message;
-    throw error;
-  }
-
-  return await response.json();
-}
-
-export async function addVisitedArtwork(userId, artworkId) {
-  const response = await fetch(`${BACKEND_URL}/users/${userId}/collected/${artworkId}`, {
-    method: 'PATCH',
-  });
-
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    const error = new Error('Failed to add visited artwork');
-    error.cause = errorData.error || errorData.message;
-    throw error;
-  }
-
-  return await response.json();
-}
 
 export async function addBadgeToUser(userId, badgeId) {
   const response = await fetch(`${BACKEND_URL}/users/${userId}/badges/${badgeId}`, {

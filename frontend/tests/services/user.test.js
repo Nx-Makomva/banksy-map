@@ -25,7 +25,7 @@ describe('User Service', () => {
         expect.fail('Should have thrown an error');
       } catch (error) {
         expect(error.message).toBe('Failed to create user');
-        expect(error.cause).toBe(errorMessage); // Now properly set
+        expect(error.cause).toBe(errorMessage); 
       }
     });
   });
@@ -46,7 +46,7 @@ describe('User Service', () => {
         expect.fail('Should have thrown an error');
       } catch (error) {
         expect(error.message).toBe('User not found');
-        expect(error.cause).toBe(errorMessage); // Now properly set
+        expect(error.cause).toBe(errorMessage); 
       }
     });
   });
@@ -56,80 +56,6 @@ describe('User Service', () => {
 describe('Artwork Service', () => {
   beforeEach(() => {
     global.fetch = vi.fn();
-  });
-
-  describe('addBookmarkedArtwork', () => {
-    const userId = 'user123';
-    const artworkId = 'artwork456';
-
-    test('successfully adds bookmark', async () => {
-      const mockResponse = { success: true };
-      fetch.mockResolvedValueOnce({
-        ok: true,
-        json: async () => mockResponse
-      });
-
-      const result = await addBookmarkedArtwork(userId, artworkId);
-      expect(fetch).toHaveBeenCalledWith(
-        `${BACKEND_URL}/users/${userId}/bookmark/${artworkId}`,
-        { method: 'PATCH' }
-      );
-      expect(result).toEqual(mockResponse);
-    });
-
-    test('includes specific error details when available', async () => {
-      const errorMessage = 'Artwork already bookmarked';
-      fetch.mockResolvedValueOnce({
-        ok: false,
-        status: 400,
-        json: async () => ({ error: errorMessage })
-      });
-
-      try {
-        await addBookmarkedArtwork(userId, artworkId);
-        expect.fail('Should have thrown an error');
-      } catch (error) {
-        expect(error.message).toBe('Failed to add bookmark');
-        expect(error.cause).toBe(errorMessage);
-      }
-    });
-  });
-
-  describe('addVisitedArtwork', () => {
-    const userId = 'user123';
-    const artworkId = 'artwork456';
-
-    test('successfully adds visited artwork', async () => {
-      const mockResponse = { success: true };
-      fetch.mockResolvedValueOnce({
-        ok: true,
-        json: async () => mockResponse
-      });
-
-      const result = await addVisitedArtwork(userId, artworkId);
-      expect(fetch).toHaveBeenCalledWith(
-        `${BACKEND_URL}/users/${userId}/collected/${artworkId}`,
-        { method: 'PATCH' }
-      );
-      expect(result).toEqual(mockResponse);
-    });
-
-    test('includes specific error details when available', async () => {
-      const errorMessage = 'Artwork already visited';
-      fetch.mockResolvedValueOnce({
-        ok: false,
-        status: 400,
-        json: async () => ({ error: errorMessage })
-      });
-
-      try {
-        await addVisitedArtwork(userId, artworkId);
-        expect.fail('Should have thrown an error');
-      } catch (error) {
-        expect(error.message).toBe('Failed to add visited artwork');
-        expect(error.cause).toBe(errorMessage);
-      }
-    });
   });
 
   describe('addBadgeToUser', () => {
