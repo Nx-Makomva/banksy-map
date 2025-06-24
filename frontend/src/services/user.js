@@ -11,7 +11,10 @@ export async function createUser(data) {
   });
 
   if (!response.ok) {
-    throw new Error('Failed to create user');
+    const errorData = await response.json().catch(() => ({}));
+    const error = new Error('Failed to create user');
+    error.cause = errorData.error || errorData.message;
+    throw error;
   }
 
   return await response.json();
@@ -21,7 +24,10 @@ export async function getUserById(id) {
   const response = await fetch(`${BACKEND_URL}/users/${id}`);
 
   if (!response.ok) {
-    throw new Error('User not found');
+    const errorData = await response.json().catch(() => ({}));
+    const error = new Error('User not found');
+    error.cause = errorData.error || errorData.message;
+    throw error;
   }
 
   return await response.json();
@@ -33,7 +39,10 @@ export async function addBookmarkedArtwork(userId, artworkId) {
   });
 
   if (!response.ok) {
-    throw new Error('Failed to add bookmark');
+    const errorData = await response.json().catch(() => ({}));
+    const error = new Error('Failed to add bookmark');
+    error.cause = errorData.error || errorData.message;
+    throw error;
   }
 
   return await response.json();
@@ -45,19 +54,25 @@ export async function addVisitedArtwork(userId, artworkId) {
   });
 
   if (!response.ok) {
-    throw new Error('Failed to add visited artwork');
+    const errorData = await response.json().catch(() => ({}));
+    const error = new Error('Failed to add visited artwork');
+    error.cause = errorData.error || errorData.message;
+    throw error;
   }
 
   return await response.json();
 }
 
 export async function addBadgeToUser(userId, badgeId) {
-  const response = await fetch(`$${BACKEND_URL}/users/${userId}/badges/${badgeId}`, {
+  const response = await fetch(`${BACKEND_URL}/users/${userId}/badges/${badgeId}`, {
     method: 'PATCH',
   });
 
   if (!response.ok) {
-    throw new Error('Failed to add badge');
+    const errorData = await response.json().catch(() => ({}));
+    const error = new Error('Failed to add badge');
+    error.cause = errorData.error || errorData.message;
+    throw error;
   }
 
   return await response.json();
@@ -75,9 +90,19 @@ export async function getMe(token) {
 
     const response = await fetch(`${BACKEND_URL}/users/current`, requestOptions);
     
-    // if (!response.ok){
-    //     throw new Error('Unauthorized')
-    // }
+  if (!response.ok) {
+    let errorDetails;
+    try {
+      const errorData = await response.json();
+      errorDetails = errorData.error || errorData.message;
+    } catch {
+      errorDetails = await response.text().catch(() => 'Unknown error');
+    }
+    
+    const error = new Error('Unauthorized');
+    error.cause = errorDetails;
+    throw error;
+  }
 
     const currentUserData = await response.json();
     return currentUserData;
