@@ -34,6 +34,7 @@ const ArtworkMiniPopup = ({ artwork, onClose, onArtworkSelect, isBookmarked, set
                     <p><strong>Location:</strong> {artwork.address}</p>
                     )}
                 </div>
+                <div className='button-group-mini-popup'>
             {user._id && (
                 <BookmarkButton
                 artworkId={artwork._id}
@@ -46,6 +47,7 @@ const ArtworkMiniPopup = ({ artwork, onClose, onArtworkSelect, isBookmarked, set
                 isVisited={isVisited}
                 onToggle={setIsVisited}
                 />)}
+                </div>
                 <button 
                     className="expand-btn"
                     onClick={() => onArtworkSelect(artwork)}
