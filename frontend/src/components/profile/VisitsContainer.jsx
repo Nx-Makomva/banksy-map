@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-// import "../../assets/styles/VisitsContainer.css";
 import VisitButton from '../VisitButton';
 import { useUser } from '../../contexts/UserContext';
+import { getImageUrl } from '../../utils/s3url';
 
 const VisitedArtworksList = ({ setIsVisited }) => {
 
@@ -13,8 +13,12 @@ const VisitedArtworksList = ({ setIsVisited }) => {
     useEffect(() => {
         const fetchVisits = async () => {
         try {
-            const data = user.visitedArtworks;
-            setVisitedArtworks(data || []);
+            const data = user.visitedArtworks || [];
+            const transformed = data.map((artwork) => ({
+                ...artwork,
+                imageUrl: getImageUrl(artwork.photos[0]),
+            }));
+            setVisitedArtworks(transformed);
         } catch (err) {
             setError(err.message || "Error fetching visits");
         }
@@ -48,22 +52,23 @@ const VisitedArtworksList = ({ setIsVisited }) => {
             {visitedArtworks.map((artwork) => (
             <li key={artwork._id}>
                 <div className="artwork-header">
-                <h3>{artwork.title}</h3>
-                <VisitButton
-                artworkId={artwork._id}
-                isVisited={true}
-                onToggle={handleVisitToggle}
-                />
+                    <div className="artwork-text">
+                        <h3>{artwork.title}</h3>
+                        <p>{artwork.description}</p>
+                    </div>
+                    <VisitButton
+                    artworkId={artwork._id}
+                    isVisited={true}
+                    onToggle={handleVisitToggle}
+                    />
                 </div>
-                
                 {artwork.photos && (
-                <img
-                    src={artwork.photos}
+                    <img
+                    src={artwork.imageUrl}
                     alt={artwork.title}
-                    style={{ width: '150px', borderRadius: '8px' }}
-                />
+                    style={{ width: '100px', borderRadius: '8px' }}
+                    />
                 )}
-                <p>{artwork.description}</p>
             </li>
             ))}
         </ul>
