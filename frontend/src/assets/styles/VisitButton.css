@@ -1,0 +1,20 @@
+.visit-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    color: inherit;
+}
+
+.visit-button:hover {
+    transform: scale(1.2);
+}
+
+.visit-button svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
