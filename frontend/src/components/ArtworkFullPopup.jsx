@@ -44,9 +44,6 @@ const ArtworkFullPopup = ({ artwork, onClose, isBookmarked, setIsBookmarked, isV
             onToggle={setIsVisited}
             />
         </div>
-        <button className='collected-button'>I collected it</button>
-        <button className='bookmarked-button'>Collect it later</button>
-        <button className='comment-button'>Leave a comment</button>
         </div>
     );
 };
