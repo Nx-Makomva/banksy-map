@@ -28,22 +28,27 @@ const MapContainer = ({artworks, onArtworkSelect}) => {
         >
             {/* Render markers for each artwork */}
             {Array.isArray(artworks) && artworks?.map(artwork => {
-                const [lng, lat] = artwork.location.coordinates;
-                console.log("FROM MAP CONTAINER:", artworks)
-                return (
-                <AdvancedMarker
-                    key={artwork._id}
-                    position={{ lat, lng }}
-                    title={artwork.title}
-                    onClick={(event) => handleMarkerClick(artwork, event)}
-                >
-                    <Pin
-                    background={'#ff51b0'}
-                    borderColor={'#B6F6EA'}
-                    glyphColor={'#B6F6EA'}
-                    />
-                </AdvancedMarker>
-            );
+                try {
+                    const [lng, lat] = artwork.location.coordinates;
+                    console.log("FROM MAP CONTAINER:", artworks)
+                    return (
+                    <AdvancedMarker
+                        key={artwork._id}
+                        position={{ lat, lng }}
+                        title={artwork.title}
+                        onClick={(event) => handleMarkerClick(artwork, event)}
+                    >
+                        <Pin
+                        background={'#ff51b0'}
+                        borderColor={'#B6F6EA'}
+                        glyphColor={'#B6F6EA'}
+                        />
+                    </AdvancedMarker>
+                );
+            } catch (error) {
+                    console.warn(`Invalid coordinates for artwork ${artwork._id}:`, error);
+                    return null; // Don't render this marker
+            }
         })}
         </Map>
     );
