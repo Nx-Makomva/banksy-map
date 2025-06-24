@@ -6,7 +6,7 @@ function MyBadgesModal({ onClose, earnedBadgeIds = [] }) {
     const [badges, setBadges] = useState([]);
 
     useEffect(() => {
-        async function fetchBadges() {
+        async function fetchBadges() { //define fetch as function  look at atwork.jsx
             const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/badges`);
             const data = await res.json();
             const withEarned = data.badge.map((badge) => ({

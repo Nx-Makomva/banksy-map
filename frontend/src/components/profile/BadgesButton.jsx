@@ -5,7 +5,7 @@ import "../../assets/styles/BadgesButton.css";
 
 const BadgesButton = () => {
     const [showModal, setShowModal] = useState(false);
-    const { user } = useUser(); 
+    const { user } = useUser(); //refreshUser?
 
     return (
         <>
