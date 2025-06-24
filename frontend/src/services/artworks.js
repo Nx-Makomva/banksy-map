@@ -1,11 +1,6 @@
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 import { getImageUrl } from "../utils/s3url";
 
-// // Secure URL generator (fake URL, displayed on frontend), filename encoded
-// const getImageUrl = (key) => {
-//   return `${BACKEND_URL}/api/images/${encodeURIComponent(key)}`;
-// };
-
 export async function createArtwork(formData) {
   const requestOptions = {
     method: "POST",
