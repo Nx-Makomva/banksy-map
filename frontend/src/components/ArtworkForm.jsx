@@ -51,7 +51,6 @@ const ArtworkForm = ({ onClose }) => {
 			if (form.address) {
 				try {
 					const coords = await geocodeAddress(form.address);
-					console.log("The coords are: ", coords)
 					setCoordinates(coords)
 				} catch (error) {
 					console.error('Could not geocode address', error);
@@ -69,7 +68,6 @@ const ArtworkForm = ({ onClose }) => {
         formData.append("description", form.description);
         formData.append("locationLat", coordinates.lat);
         formData.append("locationLng", coordinates.lng);
-				console.log("These are the coordinatesss!!", coordinates.lat, coordinates.lng)
         
         const tags = form.themeTags
             .split(',')
@@ -82,6 +80,7 @@ const ArtworkForm = ({ onClose }) => {
 
         if (form.photos) {
         formData.append("photos", form.photos);
+				console.log("these are the photos", form.photos)
         }
 
         await createArtwork(formData);
@@ -99,7 +98,7 @@ const ArtworkForm = ({ onClose }) => {
                 <label htmlFor="title">Title</label>
                 <input type="text" placeholder="'Girl with Balloon'" name="title" value={form.title} onChange={handleChange}required />
                 <label htmlFor="discoveryYear">Discovery Year</label>
-                <input type="text" placeholder="'2002'" name="discoveryYear" value={form.discoveryYear} onChange={handleChange}required />
+                <input type="number" placeholder="'2002'" name="discoveryYear" value={form.discoveryYear} onChange={handleChange}required />
                 <label htmlFor="address">Address</label>
                 <input type="text" placeholder="'Waterloo Bridge, South Bank, London, SE1'" name="address" value={form.address} onBlur={HandleAddressBlur} onChange={handleChange}required />
                 <label htmlFor="description">Description</label>
