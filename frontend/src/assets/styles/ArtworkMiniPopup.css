@@ -5,7 +5,7 @@
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
     background: white;
-    border: 3px solid #1FD9B7; /* Default/fallback border */
+    border: 3px solid #1FD9B7;
     padding: 20px;
     z-index: 999999 !important;
     border-radius: 12px;
@@ -13,7 +13,7 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
     animation: popupFadeIn 0.2s ease-out;
     padding-bottom: 60px;
-    transition: all 0.3s ease; /* Smooth transitions for border changes */
+    transition: all 0.3s ease;
 }
 
 /* Authenticated Banksy artwork - Subtle green success treatment */
@@ -35,7 +35,7 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
 }
 
-/* Optional: Add authentication badge/indicator */
+/* Authentication badge/indicator possibly? */
 .artwork-mini-popup::after {
     content: '';
     position: absolute;
@@ -65,7 +65,6 @@
     50% { opacity: 0.4; }
 }
 
-/* Rest of your existing styles */
 .artwork-mini-popup .button-group-mini-popup {
     position: absolute;
     bottom: 12px;

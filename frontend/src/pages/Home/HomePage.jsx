@@ -8,8 +8,6 @@ import MainBar from "../../components/MainBar";
 import "../../assets/styles/HomePage.css";
 import { getAllArtworks } from "../../services/artworks";
 import { geocodeAddress } from "../../services/geocoding";
-//import { set } from "../../../../api/app";
-
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -42,8 +40,6 @@ export function HomePage() {
         bookmarked: false,
         visited: false
     });
-    // set co-ords state for location filters
-   // const [coordinates, setCoordinates] = useState({ lat: null, lng: null })
 
     // Fetch ALL artworks on component mount - with no filters
     // for getting dropdowns
@@ -98,7 +94,7 @@ export function HomePage() {
         } 
         };
         fetchFilteredArtworks();
-  }, [filters]);
+    }, [filters]);
 
 
     // filters- set function
