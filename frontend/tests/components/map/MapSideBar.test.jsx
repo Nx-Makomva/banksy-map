@@ -47,8 +47,6 @@ vi.mock('../../../src/components/ArtworkForm', () => ({
 // Mock CSS import
 vi.mock('../../../assets/styles/MapSideBar.css', () => ({}));
 
-
-
 describe('MapSideBar', () => {
     const mockOnFiltersChange = vi.fn();
     const mockOnAddressInputChange = vi.fn();
@@ -81,7 +79,7 @@ describe('MapSideBar', () => {
         location: null
     };
 
-        const mockUser = {
+    const mockUser = {
         _id: 'user123',
         name: 'Test User'
     };

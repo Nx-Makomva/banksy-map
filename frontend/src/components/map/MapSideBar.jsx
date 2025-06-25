@@ -129,7 +129,7 @@ const MapSideBar = ({
                 <h3>Filter Banksy by:</h3>
 
                 <fieldset className="filter-group">
-                    <label htmlFor="theme-select">Tags:</label>
+                    <label className="group-title" htmlFor="theme-select">Tags:</label>
                     <select
                     id="theme-select"
                     multiple
@@ -149,7 +149,7 @@ const MapSideBar = ({
 
                 {/* Authentication Filter */}
                 <fieldset className="filter-group">
-                    <label>Authenticity:</label>
+                    <label className="group-title">Authenticity:</label>
                     <div className="radio-group">
                         <label className="radio-label">
                         <input
@@ -182,7 +182,7 @@ const MapSideBar = ({
                 </fieldset>
                 {user._id && (
                     <fieldset className="filter-group">
-                    <label>My Collection:</label>
+                    <label className="group-title">My Collection:</label>
                     <div className="checkbox-group">
                         <label className="checkbox-label">
                             <input
@@ -208,7 +208,7 @@ const MapSideBar = ({
                 )}
 
                 <fieldset className="filter-group">
-                    <label htmlFor="address-input">Find a Banksy near me:</label>
+                    <label className="group-title" htmlFor="address-input">Find a Banksy near me:</label>
                     <div className="location-input-group">
                         <input
                             id="address-input"
