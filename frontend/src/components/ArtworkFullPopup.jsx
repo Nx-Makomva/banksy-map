@@ -32,9 +32,19 @@ const ArtworkFullPopup = ({ artwork, onClose, isBookmarked, setIsBookmarked, isV
 
         fetchComments();
     }, [artworkId]);
-    console.log("FROM ART POPUP:", comments)
+    
     const handleCommentPosted = (newComment) => {
         setComments(prev => [newComment, ...prev]);
+    };
+
+    const handleDeleteComment = (deletedCommentId) => {
+    setComments(prev => prev.filter(c => c._id !== deletedCommentId));
+    };
+
+    const handleUpdateComment = (updatedComment) => {
+    setComments(prev => prev.map(c => 
+    c._id === updatedComment._id ? updatedComment : c
+    ));
     };
 
     return (
@@ -87,10 +97,15 @@ const ArtworkFullPopup = ({ artwork, onClose, isBookmarked, setIsBookmarked, isV
                     ) : commentsError ? (
                         <div className="comments-error">Error loading comments: {commentsError}</div>
                     ) : comments.length > 0 ? (
-                        comments.map((comment) => (
-                            <CommentItem 
-                                key={comment._id} 
-                                comment={comment} 
+                        comments.map((comment, idx) => (
+                            <CommentItem
+                                key={idx}
+                                comment={{ 
+                                ...comment,
+                                isOwner: comment.user_id?._id === user._id // Add ownership flag
+                                }}
+                                onDelete={handleDeleteComment}
+                                onUpdate={handleUpdateComment}
                             />
                         ))
                     ) : (

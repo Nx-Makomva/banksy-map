@@ -21,7 +21,7 @@ async function addComment(req, res) {
       artwork_id,
       text,
     });
-
+    const commentId = comment._id 
 
     await Artwork.findByIdAndUpdate(
       artwork_id,
@@ -29,11 +29,13 @@ async function addComment(req, res) {
       { new: true }
     );
 
+    const readyForResponse = await Comment.findById(commentId)
+      .populate("user_id", "firstName lastName")
+      .populate("artwork_id", "comments");
+
     res.status(201).json({
-      comment,
-      username: user.firstName,
+      readyForResponse,
       message: "Comment created successfully",
-      timestamp: comment.createdAt,
     });
   } catch (error) {
     if (process.env.NODE_ENV !== 'test') {
@@ -47,9 +49,9 @@ async function addComment(req, res) {
 
 async function getCommentsByArtworkId(req, res) {
   try {
-    const artworkId = req.artwork_id;
+    const artwork_id = req.params.artwork_id;
 
-    const artworkComments = await Comment.find({ artworkId})
+    const artworkComments = await Comment.find({ artwork_id})
       .populate("user_id", "firstName lastName")
       .populate("artwork_id", "comments")
       .sort({ createdAt: -1 });
@@ -58,6 +60,9 @@ async function getCommentsByArtworkId(req, res) {
       comments: artworkComments,
       count: artworkComments.length,
     });
+  
+
+
   } catch (error) {
     console.error("Error retrieving comments", error);
     res.status(500).json({
@@ -71,7 +76,7 @@ async function getAllUserComments(req, res) {
     const user_id = req.user_id;
 
     const userComments = await Comment.find({ user_id })
-      .populate("user_id", "firstName")
+      .populate("user_id", "firstName lastName")
       .populate("artwork_id", "title photos")
       .sort({ createdAt: -1 });
 
@@ -97,14 +102,15 @@ async function updateComment(req, res) {
         runValidators: true,
         omitUndefined: true,
       }
-    );
+    ).populate("user_id", "firstName lastName")
+      .populate("artwork_id", "title photos")
+      .sort({ createdAt: -1 });
 
     if (!updatedComment) {
       return res.status(404).json({
         message: "Comment not found",
       });
     }
-
     res.status(200).json({
       updatedComment,
       message: "Comment updated successfully",
