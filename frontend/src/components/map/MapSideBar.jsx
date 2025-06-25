@@ -3,6 +3,7 @@ import ReportButton from "../ReportButton";
 import ArtworkForm from "../ArtworkForm";
 // import { getCurrentPosition } from "../../services/geocoding";
 import "../../assets/styles/MapSideBar.css"
+import { useUser } from "../../contexts/UserContext";
 
 const MapSideBar = ({
     artworks = [],
@@ -17,6 +18,8 @@ const MapSideBar = ({
 }) => {
     
     const [showArtworkForm, setShowArtworkForm] = useState(false);
+    const { user } = useUser();
+    
 
 
 
@@ -177,8 +180,8 @@ const MapSideBar = ({
                         </label>
                     </div>
                 </div>
-
-                <div className="filter-group">
+                {user._id && (
+                    <div className="filter-group">
                     <label>My Collection:</label>
                     <div className="checkbox-group">
                         <label className="checkbox-label">
@@ -202,6 +205,7 @@ const MapSideBar = ({
                         <small>Showing artworks that are both bookmarked AND visited</small>
                     )}
                 </div>
+                )}
 
                 <div className="filter-group">
                     <label htmlFor="address-input">Find a Banksy near me:</label>
