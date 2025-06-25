@@ -128,7 +128,7 @@ const MapSideBar = ({
             <div className="sidebar-section filters-section">
                 <h3>Filter Banksy by:</h3>
 
-                <div className="filter-group">
+                <fieldset className="filter-group">
                     <label htmlFor="theme-select">Tags:</label>
                     <select
                     id="theme-select"
@@ -145,10 +145,10 @@ const MapSideBar = ({
                     ))}
                     </select>
                     <small>Hold Ctrl/Cmd to select multiple themes</small>
-                </div>
+                </fieldset>
 
                 {/* Authentication Filter */}
-                <div className="filter-group">
+                <fieldset className="filter-group">
                     <label>Authenticity:</label>
                     <div className="radio-group">
                         <label className="radio-label">
@@ -179,9 +179,9 @@ const MapSideBar = ({
                             Pending authentication
                         </label>
                     </div>
-                </div>
+                </fieldset>
                 {user._id && (
-                    <div className="filter-group">
+                    <fieldset className="filter-group">
                     <label>My Collection:</label>
                     <div className="checkbox-group">
                         <label className="checkbox-label">
@@ -204,10 +204,10 @@ const MapSideBar = ({
                     {(filters.bookmarked && filters.visited) && (
                         <small>Showing artworks that are both bookmarked AND visited</small>
                     )}
-                </div>
+                </fieldset>
                 )}
 
-                <div className="filter-group">
+                <fieldset className="filter-group">
                     <label htmlFor="address-input">Find a Banksy near me:</label>
                     <div className="location-input-group">
                         <input
@@ -259,16 +259,16 @@ const MapSideBar = ({
                         </button>
                     </div>
                 )}
-                </div>
+                </fieldset>
 
-                <div className="filter-group">
+                <fieldset className="filter-group">
                     <button
                         onClick={handleClearAllFilters}
                         className="clear-all-filters-button"
                     >
                         Clear All Filters
                     </button>
-                </div>
+                </fieldset>
 
             </div>
         </div>
