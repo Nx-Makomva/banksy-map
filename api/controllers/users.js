@@ -7,28 +7,51 @@ const Artwork = require("../models/artwork");
 const Badge = require("../models/badge");
 
 async function getCurrentUser(req, res) {
-    // default response if no logged-in user - for use in main page rendering
-    const anonymousResponse = {_id: null};
+    const anonymousResponse = { _id: null };
+
     try {
         if (!req.user_id) {
-        return res.json(anonymousResponse);
+            return res.json(anonymousResponse);
         }
-        
-        // Get details of logged in user from db
+
+        // Load user
         const user = await User.findById(req.user_id)
-                    .select("id email firstName lastName bookmarkedArtworks visitedArtworks badges")
-                    .populate("bookmarkedArtworks visitedArtworks badges");
-        if (user) {
-            res.json(user);
-        } else {
-        // user_id exists but user not found in db 
-        res.json(anonymousResponse);
+            .select("id email firstName lastName bookmarkedArtworks visitedArtworks badges")
+            .populate("bookmarkedArtworks visitedArtworks badges");
+
+        if (!user) {
+            return res.json(anonymousResponse);
         }
+
+        // ✅ Badge re-evaluation logic
+        const earnedBadgeIds = user.badges.map(b => b._id.toString());
+        const allBadges = await Badge.find();
+
+        for (const badge of allBadges) {
+            const { type, count } = badge.criteria;
+            let progress = 0;
+
+            if (type === "bookmarks") progress = user.bookmarkedArtworks.length;
+            if (type === "visits") progress = user.visitedArtworks.length;
+            if (type === "signup") progress = 1;
+
+            const alreadyEarned = earnedBadgeIds.includes(badge._id.toString());
+
+            if (!alreadyEarned && progress >= count) {
+                user.badges.push(badge._id);
+            }
+        }
+
+        await user.save(); // Save only if new badges were added
+
+        return res.json(user);
+
     } catch (error) {
         console.error('Error getting current user:', error);
-        res.json(anonymousResponse);
+        return res.json(anonymousResponse);
     }
 }
+
 
 async function create(req, res) {
   // get values from input fields
@@ -42,6 +65,21 @@ async function create(req, res) {
   // encrypt the password
   const hash = await bcrypt.hash(password, saltRounds);
   const user = new User({ email, password:hash, firstName, lastName });
+
+  //Look up the signup badge
+  try {
+    const signUpBadge = await Badge.findOne({
+      'criteria.type': 'signup',
+      'criteria.count': 1
+    });
+
+    if (signUpBadge) {
+      user.badges.push(signUpBadge._id);
+    }
+  }catch (badgeErr) {
+      console.error('Error finding signup badge:', badgeErr.message);
+    }
+  
 
   // save user and return the id
   user

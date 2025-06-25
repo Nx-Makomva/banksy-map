@@ -1,0 +1,386 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&display=swap');
+
+.badge-card {
+    position: relative;
+    width: 220px;
+    height: 280px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Oswald', sans-serif;
+    margin: 10px;
+}
+
+.badge-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #f5f5f5;
+    border: 3px solid #2c2c2c;
+    border-radius: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 
+        8px 8px 0px #2c2c2c,
+        0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Spray Paint Effect */
+.spray-effect {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 60px;
+    height: 40px;
+    background: radial-gradient(ellipse, var(--spray-color, #ff1744) 30%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    filter: blur(1px);
+    transform: rotate(-15deg);
+    z-index: 1;
+}
+
+/* Stencil-style border effect */
+.stencil-border {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border: 2px dashed #666;
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+/* Badge Icon Container */
+.badge-icon-container {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    margin-bottom: 15px;
+    z-index: 2;
+}
+
+.icon-stencil {
+    width: 100%;
+    height: 100%;
+    background: #2c2c2c;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 
+        inset 0 0 0 3px #f5f5f5,
+        0 4px 0 #1a1a1a;
+}
+
+.icon-stencil::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border: 2px solid #2c2c2c;
+    border-radius: 50%;
+    border-style: dashed;
+    opacity: 0.4;
+}
+
+.badge-icon {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+    transition: all 0.3s ease;
+    filter: brightness(0) invert(1);
+}
+
+.lock-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 28px;
+    z-index: 3;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+/* Badge Content */
+.badge-content {
+    text-align: center;
+    z-index: 2;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.badge-name {
+    color: #2c2c2c;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 8px 0;
+    text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+    line-height: 1.2;
+}
+
+.badge-description {
+    color: #555;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.4;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+/* Earned Tag */
+.earned-tag {
+    position: absolute;
+    top: 15px;
+    right: -5px;
+    background: #2c2c2c;
+    color: #f5f5f5;
+    padding: 4px 12px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transform: rotate(15deg);
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+    z-index: 3;
+}
+
+.earned-tag::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 5px solid #2c2c2c;
+}
+
+/* Graffiti Dots */
+.graffiti-dots {
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    display: flex;
+    gap: 3px;
+    z-index: 1;
+}
+
+.dot {
+    width: 4px;
+    height: 4px;
+    background: #666;
+    border-radius: 50%;
+    opacity: 0.6;
+}
+
+/* Earned State */
+.badge-card.earned {
+    transform: translateY(-2px);
+}
+
+.badge-card.earned .badge-card-inner {
+    background: #f5f5f5;
+    box-shadow: 
+        8px 8px 0px #2c2c2c,
+        0 0 30px rgba(255, 23, 68, 0.2);
+}
+
+.badge-card.earned .spray-effect {
+    opacity: 0.7;
+    animation: spray-drip 3s ease-in-out infinite;
+}
+
+.badge-card.earned .icon-stencil {
+    background: #2c2c2c;
+    animation: stencil-pop 0.6s ease-out;
+}
+
+.badge-card.earned .badge-icon {
+    filter: brightness(0) invert(1);
+}
+
+.badge-card.earned .stencil-border {
+    opacity: 0.6;
+    animation: stencil-fade 2s ease-in-out infinite;
+}
+
+/* Locked State */
+.badge-card.locked .badge-card-inner {
+    background: #e8e8e8;
+    border-color: #999;
+    box-shadow: 
+        8px 8px 0px #999,
+        0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+.badge-card.locked .icon-stencil {
+    background: #999;
+    box-shadow: 
+        inset 0 0 0 3px #e8e8e8,
+        0 4px 0 #777;
+}
+
+.badge-card.locked .badge-icon {
+    filter: brightness(0) invert(1) opacity(0.5);
+}
+
+.badge-card.locked .badge-name {
+    color: #999;
+    text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
+}
+
+.badge-card.locked .badge-description {
+    color: #aaa;
+}
+
+.badge-card.locked .stencil-border {
+    border-color: #bbb;
+    opacity: 0.2;
+}
+
+/* Style Variants */
+.badge-card.street.earned .badge-card-inner {
+    background: #1a1a1a;
+    border-color: #f5f5f5;
+    box-shadow: 
+        8px 8px 0px #f5f5f5,
+        0 0 30px rgba(255, 23, 68, 0.3);
+}
+
+.badge-card.street.earned .badge-name {
+    color: #f5f5f5;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
+}
+
+.badge-card.street.earned .badge-description {
+    color: #ccc;
+}
+
+.badge-card.street.earned .icon-stencil {
+    background: #f5f5f5;
+    box-shadow: 
+        inset 0 0 0 3px #1a1a1a,
+        0 4px 0 #ccc;
+}
+
+.badge-card.street.earned .badge-icon {
+    filter: brightness(0);
+}
+
+/* Hover Effects */
+.badge-card:hover {
+    transform: translateY(-5px) rotate(1deg);
+}
+
+.badge-card:hover .badge-card-inner {
+    box-shadow: 
+        12px 12px 0px #2c2c2c,
+        0 0 40px rgba(0, 0, 0, 0.2);
+}
+
+.badge-card.earned:hover .spray-effect {
+    opacity: 1;
+    animation: spray-burst 0.6s ease-out;
+}
+
+.badge-card:hover .icon-stencil {
+    transform: scale(1.05);
+}
+
+.badge-card.locked:hover .badge-card-inner {
+    box-shadow: 
+        12px 12px 0px #999,
+        0 0 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Animations */
+@keyframes spray-drip {
+    0%, 100% { 
+        opacity: 0.7; 
+        transform: rotate(-15deg) scale(1);
+    }
+    50% { 
+        opacity: 0.9; 
+        transform: rotate(-15deg) scale(1.2);
+    }
+}
+
+@keyframes spray-burst {
+    0% { 
+        opacity: 0.7; 
+        transform: rotate(-15deg) scale(1);
+    }
+    50% { 
+        opacity: 1; 
+        transform: rotate(-15deg) scale(1.5);
+    }
+    100% { 
+        opacity: 0.7; 
+        transform: rotate(-15deg) scale(1);
+    }
+}
+
+@keyframes stencil-pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes stencil-fade {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 0.8; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .badge-card {
+        width: 180px;
+        height: 230px;
+        margin: 8px;
+    }
+    
+    .badge-card-inner {
+        padding: 15px;
+    }
+    
+    .badge-icon-container {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .badge-icon {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .badge-name {
+        font-size: 16px;
+    }
+    
+    .badge-description {
+        font-size: 11px;
+    }
+    
+    .earned-tag {
+        padding: 3px 8px;
+        font-size: 9px;
+    }
+}

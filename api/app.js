@@ -25,7 +25,7 @@ app.use("/uploads", express.static("uploads"));
 
 app.use("/users", express.json(), usersUnprotectedRouter);
 app.use("/users", express.json(), tokenChecker, usersProtectedRouter);
-app.use("/artworks", express.json(), artworksRouter); // This has photos on it so create method needs extra middleware
+app.use("/artworks", express.json(), artworksRouter);
 app.use("/comments", express.json(), tokenChecker, commentsRouter);
 app.use("/tokens", express.json(), authenticationRouter);
 app.use("/badges", badgeRoutes);

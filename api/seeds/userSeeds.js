@@ -1,8 +1,10 @@
 const { connectToDatabase } = require('../db/db')
 const User = require('../models/user.js')
 const Artwork = require('../models/artwork.js')
+const Badge = require('../models/badge.js')
 const userData = require('../data/userData.js')
 const artworkData = require('../data/artworkData.js')
+const badgeData = require('../data/badgeData.js')
 const dotenv = require('dotenv')
 
 dotenv.config()
@@ -11,11 +13,15 @@ const importData = async () => {
     try {
         await User.deleteMany()
         await Artwork.deleteMany()
+        await Badge.deleteMany()
 
-        await User.insertMany(userData)
+        createdBadges = await Badge.insertMany(badgeData)
+        createdUsers = await User.insertMany(userData)
         await Artwork.insertMany(artworkData)
 
-        console.log('User and Artwork data imported!')
+
+
+        console.log('User, Artwork and Badges data imported!')
         process.exit()
     } catch (error) {
         console.error('Error importing data:', error)
@@ -27,6 +33,7 @@ const destroyData = async () => {
     try {
         await User.deleteMany()
         await Artwork.deleteMany()
+        await Badge.deleteMany()
 
         console.log('User and Artwork data destroyed!')
         process.exit()
