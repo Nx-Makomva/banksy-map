@@ -10,4 +10,6 @@ const BadgeSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Badge', BadgeSchema);
+const Badge = mongoose.model('Badge', BadgeSchema);
+
+module.exports = Badge;
