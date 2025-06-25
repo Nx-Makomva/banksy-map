@@ -22,6 +22,7 @@ async function addComment(req, res) {
       text,
     });
 
+
     await Artwork.findByIdAndUpdate(
       artwork_id,
       { $push: { comments: comment._id } },
@@ -39,6 +40,27 @@ async function addComment(req, res) {
       console.error("Error creating comment");
     }
     res.status(400).json({
+      error: error.message,
+    });
+  }
+}
+
+async function getCommentsByArtworkId(req, res) {
+  try {
+    const artworkId = req.artwork_id;
+
+    const artworkComments = await Comment.find({ artworkId})
+      .populate("user_id", "firstName lastName")
+      .populate("artwork_id", "comments")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      comments: artworkComments,
+      count: artworkComments.length,
+    });
+  } catch (error) {
+    console.error("Error retrieving comments", error);
+    res.status(500).json({
       error: error.message,
     });
   }
@@ -120,6 +142,7 @@ async function deleteComment(req, res) {
 const CommentsController = {
   addComment: addComment,
   getAllUserComments: getAllUserComments,
+  getCommentsByArtworkId: getCommentsByArtworkId,
   updateComment: updateComment,
   deleteComment: deleteComment,
 };
