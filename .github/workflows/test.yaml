@@ -1,0 +1,40 @@
+name: Run API & Frontend Tests
+
+on: [pull_request]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [24]
+    
+    steps:
+      - name: 🏁 Checkout repo
+        uses: actions/checkout@v4
+      
+      - name: 🧪 Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      
+      - name: 📦 Install backend dependencies
+        working-directory: api
+        run: npm ci
+      
+      - name: 🧑‍🔬 Run backend tests
+        working-directory: api
+        run: npm test
+      
+      - name: 📦 Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+      
+      - name: 👨‍🎨 Run frontend tests
+        working-directory: frontend
+        run: npm test
+      
+      - name: 🧹 Run frontend linter
+        working-directory: frontend
+        run: npm run lint

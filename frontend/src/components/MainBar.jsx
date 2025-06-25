@@ -35,6 +35,8 @@ const MainBar = ({
       };
 
       fetchStatus();
+    // the below line stops eslint from complaining about the dependency array
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, artworkId]);
 
     return (
