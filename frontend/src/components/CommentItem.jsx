@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { deleteComment, updateComment } from '../services/comments';
+import "../assets/styles/CommentsItem.css";
 
 const CommentItem = ({ comment, onDelete, onUpdate }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -77,7 +78,7 @@ const CommentItem = ({ comment, onDelete, onUpdate }) => {
                 >
                   {isLoading ? 'Saving...' : 'Save'}
                 </button>
-                
+
                 <button
                   onClick={() => {
                     setIsEditing(false);
