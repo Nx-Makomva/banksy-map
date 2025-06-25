@@ -85,7 +85,6 @@ async function getSingleArtwork(req, res) {
 async function getAllArtworks(req, res) {
   // This will return all artworks as a default, IF NO FILTER is present
   // Otherwise it will return artworks according to filter
-  console.log("We got to all artworks")
   try {
     const {
       themeTags,
@@ -98,9 +97,6 @@ async function getAllArtworks(req, res) {
       sortOrder,
       maxDistance,
     } = req.query;
-
-      console.log("This is the REQ.QUERY", req.query)
-
 
     const filter = {};
 
