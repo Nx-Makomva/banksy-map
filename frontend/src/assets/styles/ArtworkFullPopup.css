@@ -5,7 +5,7 @@
   left: 0 !important;
   right: 0 !important;
   bottom: 0 !important;
-  background: #b6f6ea;
+  background: #ffd5ec;
   z-index: 999000;
   overflow: hidden;
   display: flex;
@@ -20,8 +20,8 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    background: #ff51b0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: #1fd9b7;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);;
     z-index: 999999;
     flex-shrink: 0;
     font-family: 'Permanent Marker', cursive;

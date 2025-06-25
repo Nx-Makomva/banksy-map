@@ -6,9 +6,6 @@ async function addBookmark(req, res) {
         const user_id = req.user_id;
         const { artwork_id } = req.body;
 
-        console.log("Request body:", req.body);
-        console.log("User ID from request:", req.user_id);
-
         const user = await User.findById(user_id);
         if (!user) {
         return res.status(404).json({
@@ -38,7 +35,6 @@ async function addBookmark(req, res) {
         bookmarkedArtworks: user.bookmarkedArtworks,
         });
     } catch (error) {
-        console.error("Error adding bookmark", error);
         res.status(500).json({
         error: error.message,
         });
@@ -68,7 +64,6 @@ async function addBookmark(req, res) {
         bookmarkedArtworks: user.bookmarkedArtworks,
         });
     } catch (error) {
-        console.error("Error removing bookmark", error);
         res.status(500).json({
         error: error.message,
         });

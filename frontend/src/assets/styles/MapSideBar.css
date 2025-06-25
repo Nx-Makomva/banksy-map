@@ -23,6 +23,12 @@
     padding-bottom: 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Subtle white border */
     width: 100%;
+    align-items: center;
+}
+
+.sidebar-section:first-child {
+    display: flex;
+    justify-content: center;
 }
 
 .sidebar-section:last-child {
@@ -159,6 +165,7 @@
     border-radius: 8px;
     cursor: pointer;
     font-size: 1rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
     font-weight: 600;
     font-family: 'Permanent Marker', cursive;
     transition: background-color 0.2s ease, transform 0.1s ease;
@@ -221,6 +228,7 @@
     border-radius: 8px;
     cursor: pointer;
     font-size: 12px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
     font-family: 'Permanent Marker', cursive;
     transition: background-color 0.2s ease, transform 0.1s ease;
 }
@@ -240,6 +248,7 @@
     border-radius: 8px;
     cursor: pointer;
     font-size: 1rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
     font-family: 'Permanent Marker', cursive;
     transition: background-color 0.2s ease, transform 0.1s ease;
     margin-top: 10px;
