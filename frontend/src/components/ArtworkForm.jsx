@@ -4,7 +4,7 @@ import { createArtwork } from "../services/artworks";
 import { useState } from "react";
 import { geocodeAddress } from "../services/geocoding";
 
-const ArtworkForm = ({ onClose }) => {
+const ArtworkForm = ({ onClose, refreshTrigger }) => {
   const [form, setForm] = useState({
     title: "",
     discoveryYear: "",
@@ -71,6 +71,7 @@ const ArtworkForm = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+		// Move this to homepage and add a usestate - refresh (counter) -> add it to dependency array
 
     const formData = new FormData();
     formData.append("title", form.title);
@@ -94,6 +95,7 @@ const ArtworkForm = ({ onClose }) => {
 
     resetForm();
     onClose();
+		refreshTrigger();
   };
 
   return (
@@ -120,7 +122,7 @@ const ArtworkForm = ({ onClose }) => {
             name="discoveryYear"
             value={form.discoveryYear}
             onChange={handleChange}
-            min="0"
+            min="1997"
 						max={new Date().getFullYear()}
             required
           />

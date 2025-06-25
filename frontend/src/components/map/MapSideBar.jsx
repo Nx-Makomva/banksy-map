@@ -12,7 +12,8 @@ const MapSideBar = ({
     onAddressInputChange,
     isSearchingAddress,
     onUseCurrentLocation,
-    isGettingLocation
+    isGettingLocation,
+    refreshTrigger
 }) => {
     
     const [showArtworkForm, setShowArtworkForm] = useState(false);
@@ -119,7 +120,7 @@ const MapSideBar = ({
                 />
             </div>
 
-            {showArtworkForm && <ArtworkForm onClose={handleCloseArtworkForm} />}
+            {showArtworkForm && <ArtworkForm onClose={handleCloseArtworkForm} refreshTrigger={refreshTrigger} />}
 
             <div className="sidebar-section filters-section">
                 <h3>Filter Banksy by:</h3>

@@ -42,8 +42,8 @@ export function HomePage() {
         bookmarked: false,
         visited: false
     });
-    // set co-ords state for location filters
-   // const [coordinates, setCoordinates] = useState({ lat: null, lng: null })
+    
+    const [refreshTrigger, setRefreshTrigger] = useState(0);
 
     // Fetch ALL artworks on component mount - with no filters
     // for getting dropdowns
@@ -60,6 +60,9 @@ export function HomePage() {
         fetchAllArtworks();
     }, []); // Run once on mount
 
+    const onSubmitSucces = () => {
+        setRefreshTrigger(prev => prev + 1)
+    }
 
     useEffect(() => {
         const fetchFilteredArtworks = async () => {
@@ -98,7 +101,7 @@ export function HomePage() {
         } 
         };
         fetchFilteredArtworks();
-  }, [filters]);
+  }, [filters, refreshTrigger]);
 
 
     // filters- set function
@@ -228,6 +231,7 @@ export function HomePage() {
                     isSearchingAddress={isSearchingAddress}
                     onUseCurrentLocation={handleUseCurrentLocation}
                     isGettingLocation={isGettingLocation}
+                    refreshTrigger={onSubmitSucces}
                 />
                 <MainBar 
                     activeView={activeView}
