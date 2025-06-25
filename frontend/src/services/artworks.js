@@ -16,14 +16,10 @@ export async function createArtwork(formData) {
     }
 
     const createdArtwork = await response.json();
-    console.log("This is the created artwork", createdArtwork);
-    console.log("This the created artwork photo field", createdArtwork.artwork.photos);
     
     // Adding full image URL to response
     if (createdArtwork.artwork?.photos?.[0]) {
       createdArtwork.artwork.imageUrl = getImageUrl(createdArtwork.artwork.photos[0]);
-      console.log("This the created artwork photo imageurl", createdArtwork.artwork.imageUrl);
-      console.log("This the created artwork photo field", createdArtwork.artwork?.photos?.[0]);
     }
 
     return createdArtwork;
@@ -37,6 +33,14 @@ export async function createArtwork(formData) {
 
 // get all artworks
 export async function getAllArtworks(queryParams = {}) {
+  const token = localStorage.getItem("token");
+
+  const requestOptions = {
+      method: "GET",
+      headers: { 
+          "Authorization": `Bearer ${token}`
+      },
+  };
   try {
     // Build query string from parameters - so if a query is present it appends it to url
     // this function allows for filtering but default behaviour is - returns all artworks if no filter present.
@@ -55,7 +59,7 @@ export async function getAllArtworks(queryParams = {}) {
     const queryString = searchParams.toString();
     const url = `${BACKEND_URL}/artworks${queryString ? `?${queryString}` : ''}`;
     
-    const response = await fetch(url);
+    const response = await fetch(url, requestOptions);
     
     if (!response.ok) {
       const errorData = await response.json();
@@ -73,7 +77,6 @@ export async function getAllArtworks(queryParams = {}) {
       }));
     }
     
-    console.log('Artworks fetched:', data);
     return data;
     
   } catch (error) {
@@ -98,7 +101,6 @@ export async function getSingleArtwork(id) {
       data.artwork.imageUrl = getImageUrl(data.artwork.photos[0]);
     }
     
-    console.log('Single artwork fetched:', data);
     return data;
     
   } catch (error) {
@@ -131,7 +133,6 @@ export async function updateArtwork(id, updateData) {
       data.updatedArtwork.imageUrl = getImageUrl(data.updatedArtwork.photos[0]);
     }
     
-    console.log('Artwork updated:', data);
     return data;
     
   } catch (error) {
@@ -155,7 +156,6 @@ export async function deleteArtwork(id) {
     
     const data = await response.json();
     
-    console.log('Artwork deleted:', data);
     return data;
     
   } catch (error) {
