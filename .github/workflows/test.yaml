@@ -5,15 +5,6 @@ on: [pull_request]
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    env:
-      MONGODB_URL: ${{ secrets.MONGODB_URL }}
-      NODE_ENV: ${{ secrets.NODE_ENV }}
-      JWT_SECRET: ${{ secrets.JWT_SECRET }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
-      S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
-
     strategy:
       matrix:
         node-version: [24]
@@ -33,6 +24,14 @@ jobs:
       
       - name: 🧑‍🔬 Run backend tests
         working-directory: api
+        env:
+          MONGODB_URL: ${{ secrets.MONGODB_URL }}
+          NODE_ENV: ${{ secrets.NODE_ENV }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
         run: npm test
       
       - name: 📦 Install frontend dependencies
@@ -41,6 +40,10 @@ jobs:
       
       - name: 👨‍🎨 Run frontend tests
         working-directory: frontend
+        env:
+          VITE_BACKEND_URL: ${{ secrets.VITE_BACKEND_URL }}
+          VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
+          VITE_GOOGLE_GEOCODE_API_KEY: ${{ secrets.VITE_GOOGLE_GEOCODE_API_KEY }}
         run: npm test
       
       - name: 🧹 Run frontend linter
