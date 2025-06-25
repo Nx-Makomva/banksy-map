@@ -3,6 +3,7 @@ import ReportButton from "../ReportButton";
 import ArtworkForm from "../ArtworkForm";
 // import { getCurrentPosition } from "../../services/geocoding";
 import "../../assets/styles/MapSideBar.css"
+import { useUser } from "../../contexts/UserContext";
 
 const MapSideBar = ({
     artworks = [],
@@ -16,6 +17,8 @@ const MapSideBar = ({
 }) => {
     
     const [showArtworkForm, setShowArtworkForm] = useState(false);
+    const { user } = useUser();
+    
 
 
 
@@ -71,6 +74,20 @@ const MapSideBar = ({
         }
     };
 
+    const handleBookmarkedChange = (isBookmarked) => {
+        onFiltersChange({
+            ...filters, 
+            bookmarked: isBookmarked
+        });
+    }
+
+    const handleVisitedChange = (isVisited) => {
+        onFiltersChange({
+            ...filters, 
+            visited: isVisited
+        });
+    }
+
     // Clear location filter
     const handleClearLocation = () => {
         onFiltersChange({
@@ -80,16 +97,20 @@ const MapSideBar = ({
         onAddressInputChange("");
     };
 
+    
 
     // Handle clearing all set filters
     const handleClearAllFilters = () => {
         onFiltersChange({
             themeTags: [],
             isAuthenticated: undefined,
-            location: null
+            location: null,
+            bookmarked: false,
+            visited: false
         });
         onAddressInputChange(""); // Clear address input too
     };
+
 
     return (
         <>
@@ -125,7 +146,7 @@ const MapSideBar = ({
                     <small>Hold Ctrl/Cmd to select multiple themes</small>
                 </div>
 
-                          {/* 2. Authentication Filter */}
+                {/* Authentication Filter */}
                 <div className="filter-group">
                     <label>Authenticity:</label>
                     <div className="radio-group">
@@ -158,6 +179,32 @@ const MapSideBar = ({
                         </label>
                     </div>
                 </div>
+                {user._id && (
+                    <div className="filter-group">
+                    <label>My Collection:</label>
+                    <div className="checkbox-group">
+                        <label className="checkbox-label">
+                            <input
+                                type="checkbox"
+                                checked={filters.bookmarked || false}
+                                onChange={(e) => handleBookmarkedChange(e.target.checked)}
+                            />
+                            Show only bookmarked
+                        </label>
+                        <label className="checkbox-label">
+                            <input
+                                type="checkbox"
+                                checked={filters.visited || false}
+                                onChange={(e) => handleVisitedChange(e.target.checked)}
+                            />
+                            Show only visited
+                        </label>
+                    </div>
+                    {(filters.bookmarked && filters.visited) && (
+                        <small>Showing artworks that are both bookmarked AND visited</small>
+                    )}
+                </div>
+                )}
 
                 <div className="filter-group">
                     <label htmlFor="address-input">Find a Banksy near me:</label>

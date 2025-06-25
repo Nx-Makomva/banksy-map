@@ -1,5 +1,6 @@
 const Artwork = require("../models/artwork");
 const Comment = require("../models/comments");
+const User = require("../models/user")
 
 async function create(req, res) {
   try {
@@ -84,16 +85,22 @@ async function getSingleArtwork(req, res) {
 async function getAllArtworks(req, res) {
   // This will return all artworks as a default, IF NO FILTER is present
   // Otherwise it will return artworks according to filter
+  console.log("We got to all artworks")
   try {
     const {
       themeTags,
       isAuthenticated,
+      bookmarked,
+      visited,
       lat,
       lng,
       sortBy,
       sortOrder,
       maxDistance,
     } = req.query;
+
+      console.log("This is the REQ.QUERY", req.query)
+
 
     const filter = {};
 
@@ -107,6 +114,29 @@ async function getAllArtworks(req, res) {
     if (isAuthenticated !== undefined) {
       filter.isAuthenticated = isAuthenticated === "true";
     }
+
+    if (bookmarked === 'true' || visited === 'true') {
+      const user = await User.findById(req.user_id);
+      if (!user) {
+        return res.status(401).json({ error: "You need to be logged in for bookmark filter"});
+      }
+
+      const bookmarkedArtworks = bookmarked ? user.bookmarkedArtworks.map(objectId => objectId.toString()) : null
+      const visitedArtworks = visited ? user.visitedArtworks.map(objectId => objectId.toString()) : null
+
+      if (bookmarked && visited) {
+        const intersectingIds = bookmarkedArtworks.filter(id => visitedArtworks.includes(id));
+        
+        filter._id = { $in: intersectingIds }
+
+      } else if (bookmarked) {
+        filter._id = { $in: bookmarkedArtworks }
+
+      } else if (visited) {
+        filter._id = { $in: visitedArtworks }
+      }
+    }
+
 
     // incase to order results of artworks in order of distance from location
     let query;
@@ -207,8 +237,6 @@ async function deleteArtwork(req, res) {
 
     // Delete the artwork when associated stuff is gone
     deletedArtwork = await Artwork.findByIdAndDelete(id);
-
-    console.log("Artwork and associated comments successfully deleted");
 
     res.status(200).json({
       message: "Artwork and associated comments successfully deleted",
