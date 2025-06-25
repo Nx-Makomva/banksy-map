@@ -140,7 +140,6 @@ describe('Badges Controller', () => {
             .field('criteria.type', 'visits')
             .field('criteria.count', '5');
 
-        console.log(response.body);
         expect(response.status).toBe(200);
         expect(response.body.success).toBe(true);
         expect(response.body.badge.name).toEqual('New Name');
@@ -153,7 +152,6 @@ describe('Badges Controller', () => {
                 .put(`/badges/${fakeId}`)
                 .field('name', 'Ghost');
 
-            console.log(response.body);
             expect(response.status).toBe(404);
             expect(response.body.success).toBe(false);
         });

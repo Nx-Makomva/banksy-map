@@ -4,7 +4,6 @@ const JWT = require("jsonwebtoken");
 function tokenChecker(req, res, next) {
   let token;
   const authHeader = req.get("Authorization");
-  console.log(authHeader)
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     // Only log error if it's not the /users/current endpoint
     if (req.path !== '/current' && process.env.NODE_ENV !== 'test') {
