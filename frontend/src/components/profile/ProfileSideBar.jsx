@@ -19,8 +19,8 @@ export function ProfileSideBar() {
             <div className="fullName">{fullName}</div>
             <div className="email">{email}</div>
             <hr />
-            <div className="stat">Bookmarked Artworks: {bookmarkedCount}</div>
             <div className="stat">Visited Artworks: {visitedCount}</div>
+            <div className="stat">Bookmarked Artworks: {bookmarkedCount}</div>
             <div className="stat">Badges: {badgesCount}</div>
             <BadgesButton />
         </div>
