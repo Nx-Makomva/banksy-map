@@ -60,7 +60,7 @@ const MainBar = ({
             )}
           </>
         )}
-          {activeView === 'account' && <ProfileMainContainer isBookmarked={true} setIsBookmarked={setIsBookmarked} isVisited={true} setIsVisited={setIsVisited} />}
+          {activeView === 'account' && <ProfileMainContainer setIsBookmarked={setIsBookmarked} setIsVisited={setIsVisited} onArtworkSelect={onArtworkSelect} />}
                 {/* Full popup overlay - covers entire MainBar */}
           {selectedArtwork && showFullPopup && (
             <ArtworkFullPopup

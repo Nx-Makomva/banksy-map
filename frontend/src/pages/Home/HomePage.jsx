@@ -16,8 +16,6 @@ export function HomePage() {
     const { user, logout } = useUser()
     const navigate = useNavigate();
     const loggedIn = user?._id;
-    console.log(loggedIn)
-    console.log(user)
 
     // Use single state to manage which view is active - clicks are made in navbar
     const [activeView, setActiveView] = useState('map'); // 'map' or 'account'
@@ -39,7 +37,13 @@ export function HomePage() {
         themeTags: [],
         isAuthenticated: undefined,
         location: null, // lat, long, maxDistance
+        bookmarked: false,
+        visited: false
     });
+
+    
+    const [refreshTrigger, setRefreshTrigger] = useState(0);
+
 
     // Fetch ALL artworks on component mount - with no filters
     // for getting dropdowns
@@ -47,7 +51,6 @@ export function HomePage() {
         const fetchAllArtworks = async () => {
             try {
                 const allArtworksData = await getAllArtworks();
-                console.log('All artworks fetched:', allArtworksData);
                 setAllArtworks(allArtworksData.allArtworks);
             } catch (err) {
                 console.error('Error fetching all artworks:', err);
@@ -57,6 +60,9 @@ export function HomePage() {
         fetchAllArtworks();
     }, []); // Run once on mount
 
+    const onSubmitSucces = () => {
+        setRefreshTrigger(prev => prev + 1)
+    }
 
     useEffect(() => {
         const fetchFilteredArtworks = async () => {
@@ -79,17 +85,25 @@ export function HomePage() {
                 queryParams.lng = filters.location.lng;
                 queryParams.maxDistance = filters.location.maxDistance || 1000;
             }
+            // adds 'bookmarked' to query param
+            if (filters.bookmarked) {
+                queryParams.bookmarked = filters.bookmarked;
+            }
+            // adds 'visited' to query param
+            if (filters.visited) {
+                queryParams.visited = filters.visited;
+            }
             
             const artworksData = await getAllArtworks(queryParams);
-            console.log(artworksData)
             setFilteredArtworks(artworksData.allArtworks);
-            console.log("set filtered artworks:", filteredArtworks)
         } catch (err) {
             console.error('Error fetching artworks:', err);
         } 
         };
         fetchFilteredArtworks();
-  }, [filters]); // ONly filters change for rerun DO NOT PUT artworks HERE even though it asks!!!!
+
+  }, [filters, refreshTrigger]);
+
 
 
     // filters- set function
@@ -179,23 +193,28 @@ export function HomePage() {
     }
 
     // handles clicking on an artwork pin
-    const handleArtworkSelect = (artwork, position = null) => {
-        if (selectedArtwork?._id === artwork._id) {
-            // Second click on same artwork - show full popup
+    const handleArtworkSelect = ( artwork, position = null) => {
+        if (activeView === 'account') {
+            setSelectedArtwork(artwork);
             setShowFullPopup(true);
         } else {
-            // First click or different artwork - show mini popup
-            setSelectedArtwork(artwork);
-            if (position) {
-                setPopupPosition(position);
+            if (selectedArtwork?._id === artwork._id) {
+                // Second click on same artwork - show full popup
+                setShowFullPopup(true);
+            } else {
+                // First click or different artwork - show mini popup
+                setSelectedArtwork(artwork);
+                if (position) {
+                    setPopupPosition(position);
+                }
+                setShowFullPopup(false);
             }
-            setShowFullPopup(false);
         }
+        
     };
     
     // handle closing popup
     const handleClosePopup = () => {
-        console.log('handleClosePopup called!'); // Add this line
         setSelectedArtwork(null);
         setShowFullPopup(false);
     };
@@ -220,6 +239,7 @@ export function HomePage() {
                     isSearchingAddress={isSearchingAddress}
                     onUseCurrentLocation={handleUseCurrentLocation}
                     isGettingLocation={isGettingLocation}
+                    refreshTrigger={onSubmitSucces}
                 />
                 <MainBar 
                     activeView={activeView}

@@ -11,7 +11,8 @@ const Sidebar = ({
     onAddressInputChange,
     isSearchingAddress,
     onUseCurrentLocation,
-    isGettingLocation
+    isGettingLocation,
+    refreshTrigger
 }) =>  {
     return (
         <div className="sidebar">
@@ -24,6 +25,7 @@ const Sidebar = ({
                     isSearchingAddress={isSearchingAddress}
                     onUseCurrentLocation={onUseCurrentLocation}
                     isGettingLocation={isGettingLocation}
+                    refreshTrigger={refreshTrigger}
             />}
             {activeView === 'account' && <ProfileSideBar loggedIn={loggedIn} />}
         </div>

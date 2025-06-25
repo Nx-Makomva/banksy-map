@@ -7,9 +7,21 @@ import { useUser } from '../../contexts/UserContext';
 const ArtworkMiniPopup = ({ artwork, onClose, onArtworkSelect, isBookmarked, setIsBookmarked, isVisited, setIsVisited }) => {
     const { user } = useUser();
 
+    // Determine authentication class
+    const getAuthClass = () => {
+        if (artwork.isAuthenticated === true) {
+            return 'authenticated';
+        } else if (artwork.isAuthenticated === false) {
+            return 'unverified';
+        } else if (artwork.isAuthenticated === null || artwork.isAuthenticated === undefined) {
+            return 'pending';
+        }
+        return ''; // fallback
+    };
+
     return (
         <div 
-            className="artwork-mini-popup"
+            className={`artwork-mini-popup ${getAuthClass()}`}
             onClick={(e) => e.stopPropagation()}
         >
             <button className="close-btn" onClick={onClose}>×</button>
