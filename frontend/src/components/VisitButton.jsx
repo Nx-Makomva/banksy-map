@@ -1,21 +1,25 @@
-// import { addVisit, removeVisit } from '../services/visits';
+import { addVisit, removeVisit } from '../services/visits';
 import { TiTick } from "react-icons/ti";
 import { TiTickOutline } from "react-icons/ti";
 import "../assets/styles/VisitButton.css";
 import { useUser } from "../contexts/UserContext";
-import { addVisitedArtwork } from '../services/user';
 
 const VisitButton = ({ artworkId, isVisited, onToggle }) => {
 
-    const { user, refreshUser } = useUser();
+    const { refreshUser } = useUser();
 
     const handleClick = async () => {
         try {
-            await addVisitedArtwork(user._id, artworkId);
+        if (isVisited) {
+            await removeVisit(artworkId);
             await refreshUser();
-            onToggle(!isVisited, artworkId);
+        } else {
+            await addVisit(artworkId);
+            await refreshUser();
+        }
+        onToggle(!isVisited, artworkId);
         } catch (error) {
-            console.error('Visit error:', error);
+        console.error('Bookmark error:', error);
         }
     };
 
