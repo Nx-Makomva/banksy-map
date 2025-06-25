@@ -56,6 +56,34 @@ export async function getAllUserComments() {
   }
 };
 
+export async function getCommentsByArtworkId(artworkId) {
+  try {
+    const response = await fetch(`${BACKEND_URL}/comments/${artworkId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        // Include auth token if needed
+        ...(localStorage.getItem('token') && {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        })
+      }
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const error = new Error(errorData.message || 'Failed to fetch comments');
+      error.status = response.status;
+      error.cause = errorData.error;
+      throw error;
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching comments:', error);
+    throw error; // Re-throw for handling in components
+  }
+};
+
 
 export async function updateComment(commentId, updates) {
   try {

@@ -4,13 +4,13 @@ const CommentItem = ({ comment }) => {
     <div className="comment">
       <div className="comment-header">
         <span className="comment-author">
-          {comment.user?.firstName} {comment.user?.lastName}
+          {comment.user_id?.firstName} {comment.user_id?.lastName}
         </span>
         <span className="comment-time">
           {new Date(comment.createdAt).toLocaleString()}
         </span>
       </div>
-      <p className="comment-text">{comment.comment?.text}</p>
+      <p className="comment-text">{comment.text}</p>
     </div>
   );
 };
