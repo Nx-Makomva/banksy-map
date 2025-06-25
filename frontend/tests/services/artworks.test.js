@@ -14,9 +14,9 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 // Mock fetch function
 createFetchMock(vi).enableMocks();
 
-// Mock the getImageUrl utility
+// Mock the getImageUrl utility - make sure it's returning correct url
 vi.mock("../../utils/s3url", () => ({
-  getImageUrl: vi.fn((path) => `https://s3.example.com/${path}`)
+  getImageUrl: vi.fn((path) => `http://localhost:3000/image/${path}`)
 }));
 
 describe("artworks service", () => {
@@ -67,7 +67,7 @@ describe("artworks service", () => {
 
       const result = await createArtwork(mockFormData);
 
-      expect(result.artwork.imageUrl).toEqual("https://s3.example.com/photo123.jpg");
+      expect(result.artwork.imageUrl).toEqual("http://localhost:3000/image/photo123.jpg");
     });
 
     test("rejects with error message when status is not ok", async () => {
@@ -104,8 +104,10 @@ describe("artworks service", () => {
       const fetchArguments = fetch.mock.lastCall;
       const url = fetchArguments[0];
 
+      const options = fetch.mock.lastCall[1] // this is the 'options' argument for fetch (where we send request options)
+
       expect(url).toEqual(`${BACKEND_URL}/artworks`);
-      expect(fetch.mock.lastCall[1]).toBeUndefined(); // No options object
+      expect(options.headers).toBeUndefined();
     });
 
     test("builds query string from parameters correctly", async () => {
@@ -171,8 +173,8 @@ describe("artworks service", () => {
 
       const result = await getAllArtworks();
 
-      expect(result.allArtworks[0].imageUrl).toEqual("https://s3.example.com/photo1.jpg");
-      expect(result.allArtworks[1].imageUrl).toEqual("https://s3.example.com/photo2.jpg");
+      expect(result.allArtworks[0].imageUrl).toEqual("http://localhost:3000/image/photo1.jpg");
+      expect(result.allArtworks[1].imageUrl).toEqual("http://localhost:3000/image/photo2.jpg");
       expect(result.allArtworks[2].imageUrl).toBeNull();
     });
 
@@ -221,7 +223,7 @@ describe("artworks service", () => {
 
       const result = await getSingleArtwork("artwork123");
 
-      expect(result.artwork.imageUrl).toEqual("https://s3.example.com/photo123.jpg");
+      expect(result.artwork.imageUrl).toEqual("http://localhost:3000/image/photo123.jpg");
     });
 
     test("rejects with error when artwork not found", async () => {
@@ -278,7 +280,7 @@ describe("artworks service", () => {
 
       const result = await updateArtwork("artwork123", updateData);
 
-      expect(result.updatedArtwork.imageUrl).toEqual("https://s3.example.com/photo123.jpg");
+      expect(result.updatedArtwork.imageUrl).toEqual("http://localhost:3000/image/photo123.jpg");
     });
 
     test("rejects with error when update fails", async () => {
