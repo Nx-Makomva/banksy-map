@@ -11,7 +11,7 @@
 }
 
 .tab-content-container li {
-    background: #ffd5ec;
+    background: #1fd9b7;
     border: 1px solid #e9ecef;
     border-radius: 12px;
     padding: 20px;
@@ -25,7 +25,7 @@
 
 .tab-content-container li:hover {
     transform: translateY(-2px);
-    background: #ffc2e3;
+    background: #cef3ec;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
