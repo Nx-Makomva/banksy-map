@@ -43,15 +43,12 @@ describe('Badges Controller', () => {
 
     describe('POST /badges', () => {
         it('creates a badge successfully', async () => {
-            const response = await request(app).post('/badges').send({
-                name: 'Explorer',
-                description: 'Visited 3 places',
-                icon: '',
-                criteria: {
-                    type: 'visits',
-                    count: 3
-                }
-            });
+            const response = await request(app)
+                .post('/badges')
+                .field('name', 'Explorer')
+                .field('description', 'Visited 3 places')
+                .field('criteria.type', 'visits')
+                .field('criteria.count', '3');
 
             expect(response.status).toBe(201);
             expect(response.body.success).toBe(true);
@@ -59,13 +56,11 @@ describe('Badges Controller', () => {
         });
 
         it('fails if name is missing', async () => {
-            const response = await request(app).post('/badges').send({
-                description: 'Missing name',
-                criteria: {
-                    type: 'visits',
-                    count: 3
-                }
-            });
+            const response = await request(app)
+                .post('/badges')
+                .field('description', 'Missing name')
+                .field('criteria.type', 'visits')
+                .field('criteria.count', '3');
 
             expect(response.status).toBe(400);
             expect(response.body.success).toBe(false);
@@ -81,14 +76,12 @@ describe('Badges Controller', () => {
                 }
             });
 
-            const response = await request(app).post('/badges').send({
-                name: 'Duplicate',
-                description: 'Try again babs',
-                criteria: {
-                    type: 'signup',
-                    count: 1
-                }
-            });
+            const response = await request(app)
+                .post('/badges')
+                .field('name', 'Duplicate')
+                .field('description', 'Try again babs')
+                .field('criteria.type', 'signup')
+                .field('criteria.count', '1');
             
             expect(response.status).toBe(400);
             expect(response.body.message).toMatch(/already exists/);
@@ -140,25 +133,29 @@ describe('Badges Controller', () => {
             }
         });
 
-        const response = await request(app).put(`/badges/${badge._id}`).send({
-            name: 'New Name',
-            description: 'New Description',
-            criteria: {
-                type: 'visits',
-                count: 5
-            }
-        });
+        const response = await request(app)
+            .put(`/badges/${badge._id}`)
+            .field('name', 'New Name')
+            .field('description', 'New Description')
+            .field('criteria.type', 'visits')
+            .field('criteria.count', '5');
 
+        console.log(response.body);
         expect(response.status).toBe(200);
+        expect(response.body.success).toBe(true);
         expect(response.body.badge.name).toEqual('New Name');
         expect(response.body.badge.criteria.count).toEqual(5);
         });
 
         it('returns 404 if that badge does not exist', async () => {
             const fakeId = '609e129a56cd3c35b8e81f11';
-            const response = await request(app).put(`/badges/${fakeId}`).send({ name: 'Ghost' });
+            const response = await request(app)
+                .put(`/badges/${fakeId}`)
+                .field('name', 'Ghost');
 
+            console.log(response.body);
             expect(response.status).toBe(404);
+            expect(response.body.success).toBe(false);
         });
     });
 

@@ -32,7 +32,6 @@ async function getById(req, res) {
             message: 'Badge successfully found'
         });
     } catch (error) {
-        console.error('Error retrieving badge:', error);
         res.status(500).json({
             error: error.message
         });
@@ -41,9 +40,10 @@ async function getById(req, res) {
 
 async function create(req, res) {
     try {
-        const { name, description, icon, criteria } = req.body;
+        const { name, description, 'criteria.type': type, 'criteria.count': count } = req.body;
+        const iconFile = req.file;
 
-        if (!name || !description || !criteria || !criteria.type || !criteria.count) {
+        if (!name || !description || !type || !count) {
             return res.status(400).json({
                 success: false,
                 message: 'Missing required fields!'
@@ -60,10 +60,10 @@ async function create(req, res) {
         const badge = new Badge({
             name,
             description,
-            icon,
+            icon: iconFile?.filename || '',
             criteria: {
-                type: criteria.type,
-                count: criteria.count
+                type,
+                count: Number(count)
             }
         });
         const savedBadge = await badge.save();
@@ -74,13 +74,6 @@ async function create(req, res) {
             badge: savedBadge
         });
     } catch (error) {
-        if (error.name === 'ValidationError') {
-            return res.status(400).json({
-                success: false,
-                message: 'Validation error',
-                error: error.message
-            });
-        }
         res.status(500).json({
             success: false,
             message: 'Error creating badge',
@@ -92,7 +85,8 @@ async function create(req, res) {
 async function updateBadge(req, res) {
     try {
         const { id } = req.params;
-        const { name, description, icon, criteria } = req.body;
+        const { name, description, 'criteria.type': type, 'criteria.count': count } = req.body;
+        const iconFile = req.file;
 
         const existingBadge = await Badge.findById(id);
         if (!existingBadge) {
@@ -113,11 +107,11 @@ async function updateBadge(req, res) {
         const updatedFields = {};
         if (name) updatedFields.name = name;
         if (description) updatedFields.description = description;
-        if (icon !== undefined) updatedFields.icon = icon; // Allow setting to empty
-        if (criteria) {
+        if (iconFile !== undefined) updatedFields.icon = iconFile.filename;
+        if (type || count !== undefined) {
             updatedFields.criteria = {
-                type: criteria.type || existingBadge.criteria.type,
-                count: criteria.count !== undefined ? criteria.count : existingBadge.criteria.count
+                type: type || existingBadge.criteria.type,
+                count: count !== undefined ? Number(count) : existingBadge.criteria.count
             };
         }
         const updatedBadge = await Badge.findByIdAndUpdate(
@@ -131,13 +125,6 @@ async function updateBadge(req, res) {
             badge: updatedBadge
         });
     } catch (error) {
-        if (error.name === 'ValidationError') {
-            return res.status(400).json({
-                success: false,
-                message: 'Validation error',
-                error: error.message
-            });
-        }
         res.status(500).json({
             success: false,
             message: 'Error updating badge',
