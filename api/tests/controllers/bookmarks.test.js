@@ -1,7 +1,7 @@
 const request = require("supertest");
 const app = require("../../app");
-const { default: mongoose } = require("mongoose");
-jest.mock('../../middleware/upload', () => require('../mocks/multer-s3'));
+const mongoose = require("mongoose");
+jest.mock("../../middleware/upload", () => require("../mocks/multer-s3"));
 const User = require("../../models/user");
 const Artwork = require("../../models/artwork");
 const { generateToken } = require("../../lib/token");
@@ -20,7 +20,7 @@ describe("/bookmarks", () => {
         lastName: "User",
         email: "testuser@example.com",
         password: "password123",
-        bookmarkedArtworks: []
+        bookmarkedArtworks: [],
         });
 
         artwork = await Artwork.create({
@@ -29,7 +29,7 @@ describe("/bookmarks", () => {
         address: "123 Test Street",
         location: {
             type: "Point",
-            coordinates: [-0.45, 45]
+            coordinates: [-0.45, 45],
         },
         description: "Test artwork",
         themeTags: ["test"],
@@ -41,43 +41,76 @@ describe("/bookmarks", () => {
     });
 
     describe("POST /bookmarks", () => {
-        test("adds a bookmark for the user", async () => {
-        const response = await request(app)
-            .post(`/bookmarks`)
+        it("adds a bookmark for the user", async () => {
+        const res = await request(app)
+            .post("/bookmarks")
             .set("Authorization", `Bearer ${token}`)
             .send({ artwork_id: artwork._id.toString() });
 
-        expect(response.statusCode).toBe(201);
-        expect(response.body.message).toBe("Bookmark added successfully");
-        expect(response.body.bookmarkedArtworks).toContain(artwork._id.toString());
+        expect(res.statusCode).toBe(201);
+        expect(res.body.message).toBe("Bookmark added successfully");
+        expect(res.body.bookmarkedArtworks).toContain(artwork._id.toString());
         });
 
-    test("returns 400 if artwork is already bookmarked", async () => {
+        it("returns 400 if artwork is already bookmarked", async () => {
         await request(app)
-            .post(`/bookmarks`)
+            .post("/bookmarks")
             .set("Authorization", `Bearer ${token}`)
             .send({ artwork_id: artwork._id.toString() });
 
-        const response = await request(app)
-            .post(`/bookmarks`)
+        const res = await request(app)
+            .post("/bookmarks")
             .set("Authorization", `Bearer ${token}`)
             .send({ artwork_id: artwork._id.toString() });
 
-        expect(response.statusCode).toBe(400);
-        expect(response.body.message).toBe("Artwork already bookmarked");
+        expect(res.statusCode).toBe(400);
+        expect(res.body.message).toBe("Artwork already bookmarked");
+        });
+
+        it("returns 404 if artwork does not exist", async () => {
+        const fakeId = new mongoose.Types.ObjectId();
+        const res = await request(app)
+            .post("/bookmarks")
+            .set("Authorization", `Bearer ${token}`)
+            .send({ artwork_id: fakeId });
+
+        expect(res.statusCode).toBe(404);
+        expect(res.body.message).toBe("Artwork not found");
+        });
+
+        it("returns 400 if artwork_id is missing", async () => {
+        const res = await request(app)
+            .post("/bookmarks")
+            .set("Authorization", `Bearer ${token}`)
+            .send({});
+
+        expect(res.statusCode).toBe(404); 
         });
     });
 
     describe("DELETE /bookmarks/:id", () => {
-        it("should return 401 if token is invalid", async () => {
-            const fakeId = new mongoose.Types.ObjectId();
+        it("removes a bookmark for the user", async () => {
+        await request(app)
+            .post("/bookmarks")
+            .set("Authorization", `Bearer ${token}`)
+            .send({ artwork_id: artwork._id.toString() });
 
-            const res = await request(app)
-            .delete(`/bookmarks/${fakeId}`)
-            .set("Authorization", "Bearer invalid_token");
+        const res = await request(app)
+            .delete(`/bookmarks/${artwork._id}`)
+            .set("Authorization", `Bearer ${token}`);
 
-            expect(res.statusCode).toBe(401);
+        expect(res.statusCode).toBe(200);
+        expect(res.body.message).toBe("Bookmark removed successfully");
+        expect(res.body.bookmarkedArtworks).not.toContain(artwork._id.toString());
+        });
+
+        it("returns 200 even if artwork is not bookmarked", async () => {
+        const res = await request(app)
+            .delete(`/bookmarks/${artwork._id}`)
+            .set("Authorization", `Bearer ${token}`);
+
+        expect(res.statusCode).toBe(200);
+        expect(res.body.message).toBe("Bookmark removed successfully");
         });
     });
-
 });
