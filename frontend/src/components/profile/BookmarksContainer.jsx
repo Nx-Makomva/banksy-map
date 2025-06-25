@@ -4,7 +4,7 @@ import BookmarkButton from '../BookmarkButton';
 import { useUser } from '../../contexts/UserContext';
 import { getImageUrl } from '../../utils/s3url';
 
-const BookmarkedArtworksList = ({ setIsBookmarked }) => {
+const BookmarkedArtworksList = ({ setIsBookmarked, onArtworkSelect }) => {
 
     const { user } = useUser()
     const userId = user._id
@@ -53,7 +53,10 @@ const BookmarkedArtworksList = ({ setIsBookmarked }) => {
             {bookmarkedArtworks.map((artwork) => (
             <li key={artwork._id}>
                 <div className="artwork-header">
-                    <div className="artwork-text">
+                    <div className="artwork-text"
+                    style={{ cursor: 'pointer' }} 
+                    onClick={() => onArtworkSelect(artwork)}
+                    >
                         <h3>{artwork.title}</h3>
                         <p>{artwork.description}</p>
                     </div>
