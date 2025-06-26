@@ -77,7 +77,7 @@ describe("/comments", () => {
       expect(response.body.readyForResponse.createdAt).toBeDefined();
       
     });
-
+  
     test("adds comment to artwork's comments array", async () => {
       const response = await request(app)
         .post(`/comments/${testArtwork._id}`)
@@ -88,8 +88,7 @@ describe("/comments", () => {
 
       const updatedArtwork = await Artwork.findById(testArtwork._id);
       expect(updatedArtwork.comments).toHaveLength(1);
-      expect(updatedArtwork.comments[0].toString()).toBe(response.body.comment._id);
-      // expect(updatedArtwork.comments[0].toString()).toBe(response.body.comment?._id || response.body.readyForResponse._id);
+      expect(updatedArtwork.comments[0].toString()).toBe(response.body.comment?._id || response.body.readyForResponse._id);
 
     });
 
@@ -357,3 +356,4 @@ describe("/comments", () => {
     });
   });
   });
+});

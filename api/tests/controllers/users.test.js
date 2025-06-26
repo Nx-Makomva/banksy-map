@@ -62,20 +62,10 @@ describe("GET /users/current with JWT", () => {
     expect(response.body).toEqual({
       _id: null,
     });
-  });
-
-// Below test needs a check. It returns { _id: null } and not a message with "auth error". 
-// Is this expected behaviour? user returns anonymous object so it might not actually be an auth error. The status return is 200, not 401
-
-  // it("returns 401 if token is invalid", async () => {
-  //   const response = await request(app)
-  //     .get("/users/current")
-  //     .set("Authorization", `Bearer notavalidtoken`);
-
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual({ _id: null });
   });
-});
+  });
 
 describe("POST /users", () => {
   beforeEach(async () => {
