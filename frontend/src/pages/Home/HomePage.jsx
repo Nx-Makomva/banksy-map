@@ -2,8 +2,8 @@ import { useUser } from "../../contexts/UserContext";
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 import {APIProvider} from '@vis.gl/react-google-maps';
-import Navbar from "../../components/Navbar";
-import Sidebar from "../../components/Sidebar";
+import Navbar from "../../components/NavBar";
+import Sidebar from "../../components/SideBar";
 import MainBar from "../../components/MainBar";
 import "../../assets/styles/HomePage.css";
 import { getAllArtworks } from "../../services/artworks";
@@ -41,9 +41,8 @@ export function HomePage() {
         visited: false
     });
 
-    
+    const { refreshUser } = useUser()
     const [refreshTrigger, setRefreshTrigger] = useState(0);
-
 
     // Fetch ALL artworks on component mount - with no filters
     // for getting dropdowns
@@ -217,6 +216,7 @@ export function HomePage() {
     const handleClosePopup = () => {
         setSelectedArtwork(null);
         setShowFullPopup(false);
+        refreshUser()
     };
 
     return (

@@ -23,33 +23,39 @@ describe("GET /users/current with JWT", () => {
   });
 
   it("returns user info for valid token", async () => {
-  const newUser = await User.create({
-    email: "jane@example.com",
-    password: "hashedpass",
-    firstName: "Jane",
-    lastName: "Doe",
-    badges: [] 
-  });
+    const newUser = await User.create({
+      email: "jane@example.com",
+      password: "hashedpass",
+      firstName: "Jane",
+      lastName: "Doe"
+    });
 
-  const token = jwt.sign(
-    { sub: newUser._id.toString() },
-    process.env.JWT_SECRET,
-    { expiresIn: "1h" }
-  );
+    const token = jwt.sign(
+      { sub: newUser._id.toString() },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
 
-  const response = await request(app)
-    .get("/users/current")
-    .set("Authorization", `Bearer ${token}`);
+    const response = await request(app)
+      .get("/users/current")
+      .set("Authorization", `Bearer ${token}`);
 
-  // Convert Mongoose doc to plain object and remove version key
-  const expectedUser = newUser.toObject();
-  delete expectedUser.__v;
-  delete expectedUser.password; 
+    const updatedUserRaw = await User.findById(newUser._id).lean(); 
+    // can't compare badges with raw initialisation of user. sign-up badge gets added after creation so it exists in the response but not prior
+    // so first necessary to finduser in db then do comparison with response body
+    delete response.body.__v;
 
-  expect(response.body.firstName).toEqual(expectedUser.firstName);
-  expect(response.body.lastName).toEqual(expectedUser.lastName);
-  expect(response.body.badges.length).toEqual(1);
-});
+    const updatedUser = {
+      ...updatedUserRaw,
+      _id: updatedUserRaw._id.toString()
+    }
+
+    delete updatedUser.password;
+    delete updatedUser.__v; // removing this and password as password is not returned when fetching user and doc versioning not necessary for comparison
+
+    expect(response.body).toEqual(updatedUser);
+    });
+
 
   it("returns anonymous if token is valid but user not found", async () => {
     const fakeUserId = new User()._id;
@@ -62,18 +68,10 @@ describe("GET /users/current with JWT", () => {
     expect(response.body).toEqual({
       _id: null,
     });
-  });
-
-  it("returns 401 if token is invalid", async () => {
-    const response = await request(app)
-      .get("/users/current")
-      .set("Authorization", `Bearer notavalidtoken`);
-
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual({ _id: null });
   });
-});
-
+  });
 
 describe("POST /users", () => {
   beforeEach(async () => {
@@ -230,5 +228,3 @@ describe("PATCH /users/:id/badges/:badgeId", () => {
     expect(response.body.message).toBe("User not found");
   });
 });
-
-

@@ -6,7 +6,7 @@ import ModalPortal from './ModalPortal';
 import '../assets/styles/CommentModal.css';
 import "../assets/styles/CommentsButton.css";
 
-const commentButton = ({artworkId, onCommentPosted}) => {
+const CommentButton = ({artworkId, onCommentPosted}) => {
 const [isOpen, setIsOpen] = useState(false);
   
   return (
@@ -97,4 +97,4 @@ const CommentForm = ({ artworkId, onClose, onCommentPosted }) => {
   );
 };
 
-export default commentButton;
+export default CommentButton;

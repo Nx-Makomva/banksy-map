@@ -1,5 +1,5 @@
 body {
-    background-image: url('/background.webp');
+    background-image: url('/background-bw.png');
     background-size: cover;
     background-position: center 5px;
     background-repeat: no-repeat;
@@ -38,6 +38,7 @@ html, body, #root {
     color: black;
     overflow-y: auto;
     box-sizing: border-box;
+    border: 2px solid #3c3c3c;
 }
 
 /* Main content styling */
@@ -46,11 +47,11 @@ html, body, #root {
     display: flex;
     flex-direction: column;
     color: black;
-    background-color: #f0f0f000;
+    background-color: rgba(56, 56, 56, 0.649);;
     border-radius: 16px;
-    /* padding: 1rem; */
     box-sizing: border-box;
     overflow: hidden;
+    border: 2px solid #3c3c3c;
 }
 
 /* Map container inside main content */
@@ -63,7 +64,6 @@ html, body, #root {
 
 .profile-main-container {
     height: 100%;
-    margin: 3px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -71,14 +71,14 @@ html, body, #root {
 
 .tab-bar {
     display: flex;
-    width: 100%;
+    margin: 13px;
 }
 
 .tab-button {
     flex: 1;
     padding: 0.75rem;
     font-size: 1.5rem;
-    background-color: #1fd9b7;
+    background-color: #ff51b0;
     color: white;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
     border: none;
@@ -88,10 +88,11 @@ html, body, #root {
     font-family: 'Permanent Marker', cursive;
     margin: 3px;
     transition: background-color 0.2s ease, transform 0.1s ease;
+    border: 2px solid #d84295;
 }
 
 .tab-button:hover {
-    background-color:  #158571;
+    background-color:  #ff2ea1;
     transform: translateY(-1px);
 }
 
@@ -116,3 +117,6 @@ html, body, #root {
     text-align: center;
 }
 
+.tab-content-container ul {
+    padding-right: 0;
+}

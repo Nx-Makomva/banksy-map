@@ -45,13 +45,32 @@
 
 .filter-group {
     margin-bottom: 25px;
+    border: none;
 }
 
-.filter-group label {
+.filter-group .group-title {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: black; 
+    font-family: 'Permanent Marker', cursive;
+    text-align: center;
+}
+
+.filter-group .radio-label {
     display: block;
     margin-bottom: 8px;
     font-weight: 600;
-    color: black; /* White text */
+    color: black;
+    font-family: 'Permanent Marker', cursive;
+    text-align: center;
+}
+
+.filter-group .checkbox-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: black; 
     font-family: 'Permanent Marker', cursive;
     text-align: center;
 }
@@ -255,7 +274,7 @@
 }
 
 .clear-location-button:hover {
-    background-color: #f8028a;
+    background-color: #ff2ea1;
     transform: translateY(-1px);
 }
 
@@ -276,7 +295,7 @@
 }
 
 .clear-all-filters-button:hover {
-    background-color: #f8028a;
+    background-color: #ff2ea1;
     transform: translateY(-1px);
 }
 

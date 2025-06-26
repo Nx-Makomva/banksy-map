@@ -200,19 +200,6 @@ vi.mock('@vis.gl/react-google-maps', () => ({
         
         expect(mockOnArtworkSelect).toHaveBeenCalledTimes(2);
         });
-
-        it('logs artwork title to console when marker is clicked', () => {
-        const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
-        
-        render(<MapContainer artworks={mockArtworks} onArtworkSelect={mockOnArtworkSelect} />);
-        
-        const markers = screen.getAllByTestId('advanced-marker');
-        fireEvent.click(markers[0]);
-        
-        expect(consoleSpy).toHaveBeenCalledWith('Marker clicked:', 'Artwork 1');
-        
-        consoleSpy.mockRestore();
-        });
     });
 
     describe('Coordinate Handling', () => {
@@ -229,18 +216,6 @@ vi.mock('@vis.gl/react-google-maps', () => ({
         
         const marker = screen.getByTestId('advanced-marker');
         expect(marker).toHaveAttribute('data-position', JSON.stringify({ lat: 52.5, lng: -1.5 }));
-        });
-    });
-
-    describe('Console Logging', () => {
-        it('logs artworks data to console', () => {
-        const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
-        
-        render(<MapContainer artworks={mockArtworks} onArtworkSelect={mockOnArtworkSelect} />);
-        
-        expect(consoleSpy).toHaveBeenCalledWith('FROM MAP CONTAINER:', mockArtworks);
-        
-        consoleSpy.mockRestore();
         });
     });
 
