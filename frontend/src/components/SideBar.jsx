@@ -15,7 +15,7 @@ const Sidebar = ({
     refreshTrigger
 }) =>  {
     return (
-        <div className="sidebar">
+        <div className="sidebar" data-testid="sidebar" role="complementary" aria-label="Sidebar">
             {activeView === 'map' && <MapSideBar 
                     artworks={artworks}
                     filters={filters}

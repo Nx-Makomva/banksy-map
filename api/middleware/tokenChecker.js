@@ -7,7 +7,6 @@ function tokenChecker(req, res, next) {
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     // Only log error if it's not the /users/current endpoint
     if (req.path !== '/current' && process.env.NODE_ENV !== 'test') {
-      console.log("Auth Error: No token provided");
     }
     return next(); // Let it continue to getCurrentUser which handles no user_id
   }

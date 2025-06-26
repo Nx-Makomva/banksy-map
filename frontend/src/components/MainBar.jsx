@@ -35,10 +35,12 @@ const MainBar = ({
       };
 
       fetchStatus();
+    // the below line stops eslint from complaining about the dependency array
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, artworkId]);
 
     return (
-        <div className="main-content" style={{ position: 'relative' }}>
+        <div className="main-content" style={{ position: 'relative' }} data-testid="mainbar">
         {activeView === 'map' && (
           <>
             <MapContainer 

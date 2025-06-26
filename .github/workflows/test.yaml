@@ -1,0 +1,59 @@
+name: Run API & Frontend Tests
+
+on: [pull_request]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    services:
+      mongodb:
+        image: mongo:6.0
+        ports:
+          - 27017:27017
+    strategy:
+      matrix:
+        node-version: [24]
+    
+    steps:
+      - name: 🏁 Checkout repo
+        uses: actions/checkout@v4
+      
+      - name: 🧪 Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      
+      - name: 📦 Install backend dependencies
+        working-directory: api
+        run: npm ci
+      
+      - name: 🧑‍🔬 Run backend tests
+        working-directory: api
+        env:
+          MONGODB_URL: mongodb://localhost:27017/test
+          NODE_ENV: ${{ secrets.NODE_ENV }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+        run: |
+          echo "MongoDB URL is set: $([[ -n "$MONGODB_URL" ]] && echo "YES" || echo "NO")"
+          npm test
+      
+      - name: 📦 Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+      
+      - name: 👨‍🎨 Run frontend tests
+        working-directory: frontend
+        env:
+          VITE_BACKEND_URL: ${{ secrets.VITE_BACKEND_URL }}
+          VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
+          VITE_GOOGLE_GEOCODE_API_KEY: ${{ secrets.VITE_GOOGLE_GEOCODE_API_KEY }}
+        run: npm test
+      
+      - name: 🧹 Run frontend linter
+        working-directory: frontend
+        run: npm run lint

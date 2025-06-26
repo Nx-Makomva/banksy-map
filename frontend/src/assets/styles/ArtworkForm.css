@@ -39,6 +39,7 @@
     margin-bottom: 1rem;
     margin-top: 0;
     color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
 }
 
 .artwork-modal form {
@@ -79,7 +80,7 @@
 .artwork-modal button[type="submit"] {
     padding: 0.75rem;
     font-size: 1rem;
-    background-color: #12d479;
+    background-color: #1fd9b7;
     color: white;
     border: none;
     border-radius: 8px;
@@ -91,7 +92,7 @@
 }
 
 .artwork-modal button[type="submit"]:hover {
-    background-color: #2fb962;
+    background-color: #158571;
     transform: translateY(-1px);
 }
 
@@ -129,7 +130,7 @@
 }
 
 .file-upload-icon:hover {
-    color: #12d479;
+    color: #29c2a6;
 }
 
 .file-upload-icon span {

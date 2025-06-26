@@ -1,10 +1,11 @@
+
 .artwork-mini-popup {
     position: absolute !important;
     top: 50% !important;
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
     background: white;
-    border: 3px solid #1FD9B7;
+    border: 3px solid #1fd9b7;
     padding: 20px;
     z-index: 999999 !important;
     border-radius: 12px;
@@ -15,9 +16,9 @@
     transition: all 0.3s ease;
 }
 
-/* Authenticated Banksy artwork - Subtle green success treatment */
+/* Authenticated Banksy artwork - Subtle green */
 .artwork-mini-popup.authenticated {
-    border: 3px solid #10B981;
+    border: 3px solid #1fd9b7;;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
 }
 
@@ -34,22 +35,13 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
 }
 
-/* Authentication badge/indicator possibly? */
-.artwork-mini-popup::after {
-    content: '';
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    z-index: 1;
-}
+/* REMOVED: Authentication dot indicator */
+/* .artwork-mini-popup::after - This has been removed */
 
 .artwork-mini-popup .auth-badge {
     position: absolute;
     top: -8px;
-    right: -8px;
+    left: -8px; /* Changed from right: -8px to left: -8px */
     padding: 4px 8px;
     border-radius: 12px;
     font-size: 11px;
@@ -64,7 +56,7 @@
 }
 
 .artwork-mini-popup.authenticated .auth-badge {
-    background: #10B981;
+    background: #1fd9b7;
     color: white;
 }
 
@@ -73,11 +65,13 @@
     font-weight: bold;
 }
 
+/* Not used currently as there are no authenticated statuses with a 'pending' value */
 .artwork-mini-popup.pending .auth-badge {
     background: #F59E0B;
     color: white;
 }
 
+/* Not used currently as there are no authenticated statuses with a 'pending' value */
 .artwork-mini-popup.pending .auth-badge::before {
     content: "⏳";
 }
@@ -91,18 +85,7 @@
     content: "⚠";
 }
 
-.artwork-mini-popup.authenticated::after {
-    background: #10B981;
-}
-
-.artwork-mini-popup.pending::after {
-    background: #F59E0B;
-    animation: pendingPulse 2s ease-in-out infinite;
-}
-
-.artwork-mini-popup.unverified::after {
-    background: #EF4444;
-}
+/* REMOVED: All ::after pseudo-elements for the dots */
 
 @keyframes pendingPulse {
     0%, 100% { opacity: 1; }
@@ -115,6 +98,7 @@
     left: 16px;
     display: flex;
     gap: 10px;
+    color: #000000;
 }
 
 .artwork-mini-popup .close-btn {
