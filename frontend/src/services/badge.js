@@ -17,7 +17,7 @@ export async function getBadgeById(id) {
 
 export async function getBadgesByCriteria(type) {
     const res = await fetch(`${BASE_URL}/badges/criteria/${type}`);
-    if (!res.ok) throw new Error('Failed to fetch badges by criteria');
+    if (!res.ok) throw new Error('Failed to fetch badge by criteria');
     const data = await res.json();
     return data.badge;
 }
