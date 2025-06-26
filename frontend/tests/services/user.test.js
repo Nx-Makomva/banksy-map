@@ -1,9 +1,8 @@
 import { describe, expect, test, beforeEach, vi } from 'vitest';
-import { createUser, getUserById, addBookmarkedArtwork, addVisitedArtwork, addBadgeToUser, getMe  } from '../../src/services/user';
+import { createUser, getUserById, addBadgeToUser, getMe  } from '../../src/services/user';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-
-
+console.log(BACKEND_URL)
 describe('User Service', () => {
   beforeEach(() => {
     global.fetch = vi.fn();
@@ -51,7 +50,6 @@ describe('User Service', () => {
     });
   });
 });
-
 
 describe('Artwork Service', () => {
   beforeEach(() => {
