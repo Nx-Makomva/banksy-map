@@ -197,4 +197,4 @@ describe('badge service', () => {
             await expect(deleteBadge('missing')).rejects.toThrow('Failed to delete badge');
         });
     });
-});
+})

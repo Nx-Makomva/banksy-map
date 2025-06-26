@@ -180,7 +180,7 @@ describe('getMe', () => {
     }
   });
 
- test('handles non-JSON error responses', async () => {
+  test('handles non-JSON error responses', async () => {
   fetch.mockResolvedValueOnce({
     ok: false,
     status: 500,
