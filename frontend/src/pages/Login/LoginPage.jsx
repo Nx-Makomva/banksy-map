@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
 import { login } from "../../services/authentication";
 import { Link } from "react-router-dom";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/NavBar";
 import "../../assets/styles/LoginPage.css"
 
 export function LoginPage() {
