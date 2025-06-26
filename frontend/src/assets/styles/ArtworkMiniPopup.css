@@ -70,6 +70,7 @@
     left: 16px;
     display: flex;
     gap: 10px;
+    color: #000000;
 }
 
 .artwork-mini-popup .close-btn {

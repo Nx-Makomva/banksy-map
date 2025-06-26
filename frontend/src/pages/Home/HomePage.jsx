@@ -41,7 +41,7 @@ export function HomePage() {
         visited: false
     });
 
-    
+    const { refreshUser } = useUser()
     const [refreshTrigger, setRefreshTrigger] = useState(0);
 
     // Fetch ALL artworks on component mount - with no filters
@@ -216,6 +216,7 @@ export function HomePage() {
     const handleClosePopup = () => {
         setSelectedArtwork(null);
         setShowFullPopup(false);
+        refreshUser()
     };
 
     return (

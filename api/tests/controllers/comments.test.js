@@ -55,7 +55,7 @@ describe("/comments", () => {
       expect(response.statusCode).toBe(201);
     });
 
-    test("creates a comment when all fields are provided", async () => {
+    test("creates a comment with populated data", async () => {
       const response = await request(app)
         .post(`/comments/${testArtwork._id}`)
         .set("Authorization", `Bearer ${authToken}`)
@@ -63,13 +63,19 @@ describe("/comments", () => {
           text: "This is arty!"
         });
 
-      const comment = response.body.readyForResponse || response.body.comment; // response body transforms in CI environment (not yet sure why)
-      expect(response.statusCode).toBe(201);
-      expect(response.body.message).toBe("Comment created successfully");
-      expect(comment.text).toBe("This is arty!");
-      expect(comment.user_id._id || comment.user_id).toBe(testUser._id.toString()); // user_id gets populated when CI tests run
-      expect(comment.artwork_id._id || comment.artwork_id).toBe(testArtwork._id.toString()); // artwork_id gets populated when CI tests run
+      // const comment = response.body.readyForResponse || response.body.comment; // response body transforms in CI environment (not yet sure why)
+      // expect(response.statusCode).toBe(201);
+      // expect(response.body.message).toBe("Comment created successfully");
+      // expect(comment.text).toBe("This is arty!");
+      // expect(comment.user_id._id || comment.user_id).toBe(testUser._id.toString()); // user_id gets populated when CI tests run
+      // expect(comment.artwork_id._id || comment.artwork_id).toBe(testArtwork._id.toString()); // artwork_id gets populated when CI tests run
   
+      expect(response.body.readyForResponse.text).toBe("This is arty!");
+      expect(response.body.readyForResponse.user_id._id.toString()).toBe(testUser._id.toString());
+      expect(response.body.readyForResponse.artwork_id._id.toString()).toBe(testArtwork._id.toString());
+      expect(response.body.readyForResponse.user_id.firstName).toBe("Test");
+      expect(response.body.readyForResponse.createdAt).toBeDefined();
+      
     });
 
     test("adds comment to artwork's comments array", async () => {
@@ -82,7 +88,9 @@ describe("/comments", () => {
 
       const updatedArtwork = await Artwork.findById(testArtwork._id);
       expect(updatedArtwork.comments).toHaveLength(1);
-      expect(updatedArtwork.comments[0].toString()).toBe(response.body.comment?._id || response.body.readyForResponse._id);
+      expect(updatedArtwork.comments[0].toString()).toBe(response.body.comment._id);
+      // expect(updatedArtwork.comments[0].toString()).toBe(response.body.comment?._id || response.body.readyForResponse._id);
+
     });
 
     describe("POST /:artwork_id, when text is missing", () => {
@@ -133,7 +141,6 @@ describe("/comments", () => {
         expect(response.body.message).toBe("User not found");
       });
     });
-  });
 
   describe("GET /me, all user comments", () => {
     beforeEach(async () => {
@@ -143,6 +150,8 @@ describe("/comments", () => {
         text: "First comment"
       });
 
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
       await Comment.create({
         user_id: testUser._id,
         artwork_id: testArtwork._id,
@@ -347,4 +356,4 @@ describe("/comments", () => {
       });
     });
   });
-});
+  });

@@ -52,11 +52,10 @@ const VisitedArtworksList = ({ setIsVisited, onArtworkSelect }) => {
         <ul>
             {visitedArtworks.map((artwork) => (
             <li key={artwork._id}>
-                <div className="artwork-header"
+                <div className="artwork-header">
+                    <div className="artwork-text"
                     style={{ cursor: 'pointer' }} 
-                    onClick={() => onArtworkSelect(artwork)}
-                    >
-                    <div className="artwork-text">
+                    onClick={() => onArtworkSelect(artwork)}>
                         <h3>{artwork.title}</h3>
                         <p>{artwork.description}</p>
                     </div>
