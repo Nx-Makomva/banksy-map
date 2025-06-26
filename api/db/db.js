@@ -19,6 +19,8 @@ async function connectToDatabase() {
     console.log("Connected to:", mongoose.connection.name);
 
   }
+
+  console.log(`Running in ${process.env.NODE_ENV} mode, connecting to ${mongoDbUrl}`);
 }
 
 module.exports = { connectToDatabase };
