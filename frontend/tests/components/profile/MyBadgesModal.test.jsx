@@ -46,5 +46,14 @@ test('renders modal title and loads badges', async () => {
     render(<MyBadgesModal earnedBadgeIds={[]} onClose={vi.fn()} />);
     expect(screen.getByText('My Badges')).toBeInTheDocument();
 
-    
+    const badgeCards = await screen.findAllByTestId('badge-card');
+    expect(badgeCards.length).toBe(2);
+});
+
+test('marks earned badges correctly', async () => {
+    getAllBadges.mockResolvedValueOnce(mockBadges);
+
+    render(<MyBadgesModal earnedBadgeIds={['1']} onClose={vi.fn()} />);
+
+    const badge
 })
