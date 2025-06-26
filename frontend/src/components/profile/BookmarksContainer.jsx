@@ -29,7 +29,7 @@ const BookmarkedArtworksList = ({ setIsBookmarked, onArtworkSelect }) => {
         fetchBookmarks();
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [user]);
 
     const handleBookmarkToggle = (newBookmarkState, artworkId) => {
         console.log('handleBookmarkToggle called with:', { newBookmarkState, artworkId });
