@@ -13,6 +13,19 @@
   animation: fullPopupSlideIn 0.3s ease-out;
 }
 
+/* Authentication styling for full popup */
+.artwork-full-popup.authenticated .full-popup-header {
+    background: #10B981;
+}
+
+.artwork-full-popup.pending .full-popup-header {
+    background: #F59E0B;
+}
+
+.artwork-full-popup.unverified .full-popup-header {
+    background: #EF4444;
+}
+
 .artwork-full-popup .full-popup-header {
     padding: 20px 25px;
     border-bottom: 1px solid #eee;
@@ -21,11 +34,41 @@
     justify-content: flex-start;
     align-items: center;
     background: #ff51b0;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
     z-index: 999999;
     flex-shrink: 0;
     font-family: 'Permanent Marker', cursive;
     gap: 12px;
+    position: relative;
+}
+
+/* Auth badge for full popup */
+.artwork-full-popup .auth-badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.artwork-full-popup.authenticated .auth-badge::before {
+    content: "✓";
+    font-weight: bold;
+}
+
+.artwork-full-popup.pending .auth-badge::before {
+    content: "⏳";
+}
+
+.artwork-full-popup.unverified .auth-badge::before {
+    content: "⚠";
 }
 
 .artwork-full-popup .header-left {
@@ -58,7 +101,6 @@
     font-family: 'Permanent Marker';
     order: 3;
 }
-
 
 .artwork-full-popup .close-btn:hover {
   color: #000;
@@ -168,13 +210,13 @@
 /* Add to your existing CSS */
 .comments-section {
   margin-top: 2rem;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #333;
   padding-top: 1rem;
 }
 
 .comment {
   padding: 1rem 0;
-  border-bottom: 1px solid #f5f5f5;
+  border-bottom: 1px solid #333;
 }
 
 .comment-header {
@@ -186,15 +228,23 @@
 
 .comment-author {
   font-weight: 600;
+  color: white;
 }
 
 .comment-time {
-  color: #333;
+  color: #ccc;
 }
 
 .comment-text {
   margin: 0;
   white-space: pre-wrap;
+  color: white;
+}
+
+.loading-comments, .comments-error, .no-comments {
+  color: #ccc;
+  text-align: center;
+  padding: 1rem;
 }
 
 .error-message {
