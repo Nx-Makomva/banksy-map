@@ -41,7 +41,7 @@ export function HomePage() {
         visited: false
     });
 
-    
+    const { refreshUser } = useUser()
     const [refreshTrigger, setRefreshTrigger] = useState(0);
 
 
@@ -217,6 +217,7 @@ export function HomePage() {
     const handleClosePopup = () => {
         setSelectedArtwork(null);
         setShowFullPopup(false);
+        refreshUser()
     };
 
     return (

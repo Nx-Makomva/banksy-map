@@ -274,7 +274,7 @@
 }
 
 .clear-location-button:hover {
-    background-color: #f8028a;
+    background-color: #ff2ea1;
     transform: translateY(-1px);
 }
 
@@ -295,7 +295,7 @@
 }
 
 .clear-all-filters-button:hover {
-    background-color: #f8028a;
+    background-color: #ff2ea1;
     transform: translateY(-1px);
 }
 

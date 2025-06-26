@@ -1,0 +1,270 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.modal-content2 {
+    background: #ffffff;
+    border-radius: 16px;
+    width: 90vw;          /* Changed to be responsive */
+    max-width: 900px;     /* Max width for large screens */
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    font-family: 'Permanent Marker', cursive;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid #ff51b0;
+}
+
+.modal-content2:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
+}
+
+/* Modal Header */
+.modal-header {
+    position: relative;
+    border-bottom: 1px solid #e8e8e8;
+    margin-bottom: 20px;
+}
+
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    background: #ffffff;
+    color: #666;
+    border: 2px solid #e8e8e8;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-button:hover {
+    background: #ff51b0;
+    color: #ffffff;
+    border-color: #ff51b0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 81, 176, 0.3);
+}
+
+.close-button span {
+    display: block;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+}
+
+.close-button:hover span {
+    transform: rotate(90deg);
+}
+
+/* Title Section */
+.badges-title-container {
+    text-align: center;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.badges-title {
+    font-size: 36px;
+    font-weight: 400;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin: 0;
+    position: relative;
+    display: inline-block;
+}
+
+.title-underline {
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #ff51b0, #ff7ac7);
+    margin: 15px auto 0;
+    border-radius: 2px;
+    position: relative;
+}
+
+.title-underline::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: -2px;
+    width: 8px;
+    height: 8px;
+    background: #ff51b0;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(255, 81, 176, 0.3);
+}
+
+/* Badges Grid */
+.badges-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(140px, 1fr)); /* 3 columns */
+    gap: 40px 20px; /* vertical 40px, horizontal 20px */
+    padding: 0 40px;  /* reduced padding */
+    justify-items: center;
+    margin-bottom: 30px;
+}
+
+.badges-grid > * {
+    width: 100%;        /* fills the grid column */
+    max-width: 180px;   /* max width constraint */
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 16px 12px 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.badges-grid > *:hover {
+    transform: translateY(-4px);
+    background: #ff51b100;
+    color: #ffffff;
+    box-shadow: 0 8px 24px rgba(255, 81, 176, 0.3);
+}
+
+/* Modal Footer */
+.modal-footer {
+    border-top: 1px solid #e8e8e8;
+    padding: 25px 40px;
+    text-align: center;
+    background: rgba(248, 249, 250, 0.8);
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+
+.graffiti-signature {
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.graffiti-signature:hover {
+    background: #ff51b0;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 81, 176, 0.3);
+}
+
+/* Scrollbar Styling */
+.modal-content2::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content2::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.modal-content2::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.modal-content2::-webkit-scrollbar-thumb:hover {
+    background: #ff51b0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .modal-overlay {
+        padding: 15px;
+    }
+    
+    .modal-content2 {
+        max-width: 100%;
+        border-radius: 12px;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+    }
+    
+    .modal-header {
+        padding: 25px 30px 15px;
+    }
+    
+    .badges-title {
+        font-size: 36px;
+        letter-spacing: 3px;
+    }
+    
+    .badges-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 30px 15px;   /* slightly smaller gaps on smaller screens */
+        padding: 0 30px;
+    }
+    
+    .modal-footer {
+        padding: 20px 30px;
+    }
+    
+    .graffiti-signature {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+    
+    .close-button {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+        top: 15px;
+        right: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-overlay {
+        padding: 10px;
+    }
+    
+    .modal-header {
+        padding: 20px 25px 15px;
+    }
+    
+    .badges-title {
+        font-size: 28px;
+        letter-spacing: 2px;
+    }
+    
+    .badges-grid {
+        grid-template-columns: 1fr;  /* 1 column on small screens */
+        gap: 20px;
+        padding: 0 25px;
+    }
+    
+    .modal-footer {
+        padding: 20px 25px;
+    }
+}

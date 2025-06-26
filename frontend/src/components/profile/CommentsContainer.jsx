@@ -12,10 +12,9 @@ const UserCommentsList = ({ onArtworkSelect }) => {
         const fetchComments = async () => {
         try {
             const data = await getAllUserComments();
-            console.log(localStorage);
             const withImages = data.comments.map(comment => ({
             ...comment,
-            imageUrl: getImageUrl(comment.artwork_id?.photos?.[0]),
+            imageUrl: getImageUrl(comment.artwork_id?.photos[0]),
             }));
             setUserComments(withImages);
         } catch (err) {
@@ -38,7 +37,12 @@ const UserCommentsList = ({ onArtworkSelect }) => {
             <li key={_id} style={{ marginBottom: '24px' }}>
                 <div
                 className="artwork-header"
-                onClick={() => onArtworkSelect(artwork_id)}
+                onClick={() =>
+                onArtworkSelect({
+                ...artwork_id,
+                imageUrl: getImageUrl(artwork_id.photos[0]),
+                })
+                }
                 style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '16px' }}
                 >
                 {imageUrl && (
