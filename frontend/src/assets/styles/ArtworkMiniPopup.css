@@ -17,7 +17,7 @@
 
 /* Authenticated Banksy artwork - Subtle green success treatment */
 .artwork-mini-popup.authenticated {
-    border: 3px solid #10B981;
+    border: 3px solid #B6F6EA;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
 }
 
@@ -47,7 +47,7 @@
 }
 
 .artwork-mini-popup.authenticated::after {
-    background: #10B981;
+    background: #1fd9b7;
 }
 
 .artwork-mini-popup.pending::after {

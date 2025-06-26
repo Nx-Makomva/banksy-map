@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import BadgeCard from "./BadgeCard";
 import { getAllBadges } from "../services/badge"; // ← NEW IMPORT
-import './MyBadgesModal2.css';
+import '../assets/styles/MyBadgesModal2.css';
 
 function MyBadgesModal({ onClose, earnedBadgeIds = [] }) {
     const [badges, setBadges] = useState([]);
@@ -32,7 +32,7 @@ function MyBadgesModal({ onClose, earnedBadgeIds = [] }) {
             <div className='modal-content2'>
                 <div className='modal-header'>
                     <button className='close-button' onClick={onClose}>
-                        <span>✖</span>
+                        <span>x</span>
                     </button>
                     <div className='spray-accent'></div>
                 </div>

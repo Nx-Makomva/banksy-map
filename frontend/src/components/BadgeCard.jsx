@@ -1,4 +1,4 @@
-import './BadgeCard2.css';
+import '../assets/styles/BadgeCard2.css';
 
 function BadgeCard({ name, description, icon, isEarned, style = 'classic', sprayColor = '#ff1744' }) {
     return (

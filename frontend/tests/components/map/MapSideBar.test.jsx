@@ -178,9 +178,6 @@ describe('Theme Tags Filter', () => {
         
         const select = screen.getByLabelText('Tags:');
         
-        // Simulate selecting multiple options by setting their selected property
-        
-        
         // Create mock selectedOptions that behaves like a real HTMLCollection
         const mockSelectedOptions = {
             length: 2,
