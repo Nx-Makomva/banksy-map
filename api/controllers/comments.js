@@ -36,17 +36,6 @@ async function addComment(req, res) {
       timestamp: comment.createdAt,
     });
 
-    const responseData = {
-      comment,
-      username: user.firstName,
-      message: "Comment created successfully",
-      timestamp: comment.createdAt,
-    };
-
-    if (process.env.NODE_ENV === 'test') {
-      console.log("Controller sending response:", JSON.stringify(responseData, null, 2));
-    }
-
   } catch (error) {
     if (process.env.NODE_ENV !== 'test') {
       console.error("Error creating comment");

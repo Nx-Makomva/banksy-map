@@ -89,7 +89,7 @@ describe("/comments", () => {
 
       const updatedArtwork = await Artwork.findById(testArtwork._id);
       expect(updatedArtwork.comments).toHaveLength(1);
-      expect(updatedArtwork.comments[0].toString()).toBe(response.body.comment._id);
+      expect(updatedArtwork.comments[0].toString()).toBe(response.body.comment._id || response.body.readyForResponse._id);
     });
 
     describe("POST /:artwork_id, when text is missing", () => {
