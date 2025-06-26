@@ -80,7 +80,7 @@
   margin-right: 24px;
   font-size: 30px;
   font-weight: 600;
-  color: white;
+  color: rgb(255, 255, 255);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

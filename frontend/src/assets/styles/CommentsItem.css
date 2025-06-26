@@ -9,13 +9,6 @@
   transition: all 0.3s ease;
 }
 
-.comment:hover {
-  background: rgba(255, 81, 176, 0.08); /* Pink tint on hover */
-  border-color: rgba(255, 81, 176, 0.2); /* Pink border on hover */
-  transform: translateY(-1px);
-  box-shadow: 0 8px 25px rgba(255, 81, 176, 0.15); /* Pink shadow */
-}
-
 .comment .comment-author {
   color: #ff51b0;
   font-weight: 600;
@@ -55,11 +48,9 @@
   display: flex;
   gap: 0.5rem;
   margin-left: auto;
-  opacity: 1; /* Changed from 0 to 1 - always visible */
+  opacity: 1;
   transition: opacity 0.2s ease;
 }
-
-/* Removed hover state for opacity since buttons are always visible */
 
 .comment-actions button {
   padding: 0.4rem 0.8rem;
@@ -74,55 +65,55 @@
 }
 
 .edit-btn {
-  background: rgba(255, 81, 176, 0.2); /* Pink background */
-  color: #ff51b0; /* Pink text */
-  border: 1px solid rgba(255, 81, 176, 0.3); /* Pink border */
+  background: #fef4f983; 
+  color: #f6f6fc; 
+  border: 1px solid rgba(255, 81, 176, 0.3);
 }
 
 .edit-btn:hover {
-  background: rgba(255, 81, 176, 0.3); /* Darker pink on hover */
-  color: #ff8cc8; /* Lighter pink text on hover */
+  background: #fcf6f9; 
+  color: rgba(255, 81, 176, 0.9);
   transform: translateY(-1px);
 }
 
 .delete-btn {
-  background: rgba(255, 81, 176, 0.15); /* Lighter pink for delete */
-  color: #ff51b0; /* Pink text */
-  border: 1px solid rgba(255, 81, 176, 0.25); /* Pink border */
+  background: rgba(255, 81, 176, 0.15); 
+  color: #ff8cc8; 
+  border: 1px solid rgba(255, 81, 176, 0.25); 
 }
 
 .delete-btn:hover {
-  background: rgba(255, 81, 176, 0.25); /* Darker pink on hover */
-  color: #ff8cc8; /* Lighter pink text on hover */
+  background: rgba(255, 81, 176, 0.25); 
+  color: #ff8cc8;
   transform: translateY(-1px);
 }
 
 .save-btn {
-  background: rgba(255, 81, 176, 0.2); /* Pink background */
-  color: #ff51b0; /* Pink text */
-  border: 1px solid rgba(255, 81, 176, 0.3); /* Pink border */
+  background: #fcf6f9; 
+  color: rgba(255, 81, 176, 0.9);
+  border: 1px solid rgba(255, 81, 176, 0.3);
 }
 
 .save-btn:hover {
-  background: rgba(255, 81, 176, 0.3); /* Darker pink on hover */
-  color: #ff8cc8; /* Lighter pink text on hover */
+  background: rgba(255, 81, 176, 0.9); 
+  color: #fcf6f9;
   transform: translateY(-1px);
 }
 
 .cancel-btn {
-  background: rgba(255, 81, 176, 0.1); /* Light pink for cancel */
-  color: rgba(255, 81, 176, 0.8); /* Muted pink text */
-  border: 1px solid rgba(255, 81, 176, 0.2); /* Pink border */
+  background: rgba(255, 81, 176, 0.1); 
+  color: rgba(255, 81, 176, 0.8); 
+  border: 1px solid rgba(255, 81, 176, 0.2); 
 }
 
 .cancel-btn:hover {
-  background: rgba(255, 81, 176, 0.2); /* Darker pink on hover */
-  color: #ff51b0; /* Full pink text on hover */
+  background: rgba(255, 81, 176, 0.2);
+  color: #ff51b0; 
   transform: translateY(-1px);
 }
 
 .comment-edit-input {
-  width: 100%;
+  width: calc(100% - 2rem); 
   min-height: 100px;
   padding: 1rem;
   background: rgba(0, 0, 0, 0.3);
@@ -148,12 +139,12 @@
 }
 
 .comment-error {
-  color: #ff51b0; /* Pink error text */
+  color: #ff51b0;
   font-size: 0.85rem;
   margin-top: 0.75rem;
   padding: 0.5rem;
-  background: rgba(255, 81, 176, 0.1); /* Pink error background */
-  border: 1px solid rgba(255, 81, 176, 0.2); /* Pink error border */
+  background: rgba(255, 81, 176, 0.1);
+  border: 1px solid rgba(255, 81, 176, 0.2);
   border-radius: 6px;
 }
 
@@ -186,9 +177,9 @@
 .comments-error {
   text-align: center;
   padding: 2rem;
-  color: #ff51b0; /* Pink error text */
-  background: rgba(255, 81, 176, 0.1); /* Pink error background */
-  border: 1px solid rgba(255, 81, 176, 0.2); /* Pink error border */
+  color: #ff51b0; 
+  background: rgba(255, 81, 176, 0.1);
+  border: 1px solid rgba(255, 81, 176, 0.2);
   border-radius: 8px;
   margin-bottom: 1rem;
 }
@@ -223,7 +214,7 @@
   }
   
   .comment-actions {
-    opacity: 1; /* Always show on mobile */
+    opacity: 1;
     margin-left: 0;
     margin-top: 0.5rem;
   }
