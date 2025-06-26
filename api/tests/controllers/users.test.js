@@ -40,7 +40,6 @@ describe("GET /users/current with JWT", () => {
       .get("/users/current")
       .set("Authorization", `Bearer ${token}`);
 
-    
     const updatedUserRaw = await User.findById(newUser._id).lean(); 
     // can't compare badges with raw initialisation of user. sign-up badge gets added after creation so it exists in the response but not prior
     // so first necessary to finduser in db then do comparison with response body
@@ -55,7 +54,7 @@ describe("GET /users/current with JWT", () => {
     delete updatedUser.__v; // removing this and password as password is not returned when fetching user and doc versioning not necessary for comparison
 
     expect(response.body).toEqual(updatedUser);
-  });
+    });
 
   it("returns anonymous if token is valid but user not found", async () => {
     const fakeUserId = new User()._id;
@@ -70,16 +69,19 @@ describe("GET /users/current with JWT", () => {
     });
   });
 
-//   it("returns 401 if token is invalid", async () => {
-//     const response = await request(app)
-//       .get("/users/current")
-//       .set("Authorization", `Bearer notavalidtoken`);
+// Below test needs a check. It returns { _id: null } and not a message with "auth error". 
+// Is this expected behaviour? user returns anonymous object so it might not actually be an auth error. The status return is 200, not 401
 
-//     expect(response.statusCode).toBe(401);
-//     expect(response.body).toEqual({ message: "auth error" });
-//   });
-// });
+  // it("returns 401 if token is invalid", async () => {
+  //   const response = await request(app)
+  //     .get("/users/current")
+  //     .set("Authorization", `Bearer notavalidtoken`);
 
+  //   console.log("This is what is actually on response body", response.body)
+  //   expect(response.statusCode).toBe(401);
+  //   expect(response.body).toEqual({ message: "auth error" });
+  // });
+});
 
 describe("POST /users", () => {
   beforeEach(async () => {
@@ -158,6 +160,7 @@ describe("GET /users/:id", () => {
   });
 });
 
+// The 2 PATCH tests below need fixing. They are commented out because they fail github actions workflow check
 
 // describe("PATCH /users/:id/bookmark/:artworkId", () => {
 //   let user;
@@ -339,7 +342,6 @@ describe("GET /users/:id", () => {
 // });
 
 
-
 describe("PATCH /users/:id/badges/:badgeId", () => {
   let user;
 
@@ -417,5 +419,3 @@ describe("PATCH /users/:id/badges/:badgeId", () => {
     expect(response.body.message).toBe("User not found");
   });
 });
-
-}) // to be removed when the 2 commented out patch tests are fixed
