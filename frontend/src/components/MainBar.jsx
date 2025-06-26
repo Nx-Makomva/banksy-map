@@ -40,7 +40,7 @@ const MainBar = ({
     }, [userId, artworkId]);
 
     return (
-        <div className="main-content" style={{ position: 'relative' }}>
+        <div className="main-content" style={{ position: 'relative' }} data-testid="mainbar">
         {activeView === 'map' && (
           <>
             <MapContainer 

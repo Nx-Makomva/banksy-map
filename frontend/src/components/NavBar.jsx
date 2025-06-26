@@ -13,11 +13,11 @@ function Navbar({ loggedIn, onLogOut, onMapClick, onAccountClick }) {
 
     return (
         <header>
-        <div className="navbar-container">
+        <div className="navbar-container" data-testid="navbar">
             <a className="logo">
             <img src="/banksymap.png" alt="Logo" />
             </a>
-            <nav className="navbar">
+            <nav className="navbar" role="navigation" aria-label="Main Navigation"> 
             <a href={isHomePage ? "#" : "/"}  onClick={onMapClick} title="Map"><FaMapMarkedAlt /></a>
 
             {loggedIn ? (
