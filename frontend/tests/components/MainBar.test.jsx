@@ -7,7 +7,7 @@ vi.mock('../../src/components/map/MapContainer', () => ({
     default: () => <div data-testid="mock-map-container">MapContainer</div>,
 }));
 vi.mock('../../src/components/profile/ProfileMainContainer', () => ({
-    ProfileMainContainer: (props) => <div data-testid="mock-profile-main-container">ProfileMainContainer</div>,
+    ProfileMainContainer: () => <div data-testid="mock-profile-main-container">ProfileMainContainer</div>,
 }));
 vi.mock('../../src/components/map/ArtworkMiniPopup', () => ({
     default: () => <div data-testid="mock-artwork-mini-popup">ArtworkMiniPopup</div>,
