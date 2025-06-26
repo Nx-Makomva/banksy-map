@@ -29,7 +29,8 @@ const MapContainer = ({artworks, onArtworkSelect}) => {
             {Array.isArray(artworks) && artworks?.map(artwork => {
                 try {
                     const [lng, lat] = artwork.location.coordinates;
-                    console.log("FROM MAP CONTAINER:", artworks)
+                    // console.log("FROM MAP CONTAINER:", artwork)
+                    console.log("Marker clicked:", artwork.title)
                     return (
                     <AdvancedMarker
                         key={artwork._id}

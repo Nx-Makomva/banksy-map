@@ -1,4 +1,4 @@
-import '../assets/styles/Navbar.css';
+import "../assets/styles/NavBar.css"
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { MdAccountBox } from "react-icons/md";
 import { PiSignOutBold } from "react-icons/pi";
@@ -11,14 +11,13 @@ function Navbar({ loggedIn, onLogOut, onMapClick, onAccountClick }) {
     const location = useLocation();
     const isHomePage = location.pathname === '/';
 
-
     return (
         <header>
-        <div className="navbar-container">
+        <div className="navbar-container" data-testid="navbar">
             <a className="logo">
             <img src="/banksymap.png" alt="Logo" />
             </a>
-            <nav className="navbar">
+            <nav className="navbar" role="navigation" aria-label="Main Navigation"> 
             <a href={isHomePage ? "#" : "/"}  onClick={onMapClick} title="Map"><FaMapMarkedAlt /></a>
 
             {loggedIn ? (

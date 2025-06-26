@@ -92,9 +92,7 @@ export async function updateComment(commentId, updates) {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          text: updates
-        })
+        body: JSON.stringify(updates)
       }
     );
 

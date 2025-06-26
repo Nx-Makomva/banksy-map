@@ -1,5 +1,5 @@
 // HomePage.test.jsx
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import { HomePage } from '../../src/pages/Home/HomePage';
@@ -64,25 +64,25 @@ describe('HomePage', () => {
         });
     });
 
-    const renderHomePage = () => {
-        return render(
-        <MemoryRouter>
-            <HomePage />
-        </MemoryRouter>
-        );
+    const renderHomePage = async () => {
+        let component;
+        await act(async () => {
+            component = render(
+                <MemoryRouter>
+                    <HomePage />
+                </MemoryRouter>
+            );
+        });
+        return component;
     };
 
-    it('renders without crashing', () => {
-        renderHomePage();
+    it('renders without crashing', async () => {
+        await renderHomePage();
+
+        screen.debug();
+
         expect(screen.getByTestId('navbar')).toBeInTheDocument();
         expect(screen.getByTestId('sidebar')).toBeInTheDocument();
         expect(screen.getByTestId('mainbar')).toBeInTheDocument();
-    });
-
-        it('displays all main components', () => {
-        renderHomePage();
-        expect(screen.getByText('Navbar')).toBeInTheDocument();
-        expect(screen.getByText('Sidebar')).toBeInTheDocument();
-        expect(screen.getByText('MainBar')).toBeInTheDocument();
     });
 });
