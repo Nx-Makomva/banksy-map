@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import Sidebar from '../../src/components/Sidebar';
+import Sidebar from '../../src/components/SideBar';
 
 // Mock the child components to keep tests focused
 vi.mock('../../src/components/map/MapSideBar', () => ({
