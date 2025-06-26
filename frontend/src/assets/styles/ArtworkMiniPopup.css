@@ -49,6 +49,8 @@
     gap: 4px;
     z-index: 2;
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    margin-top: 10px;
+    margin-left: 5px;
 }
 
 .artwork-mini-popup.authenticated .auth-badge {
@@ -127,7 +129,7 @@
 }
 
 .artwork-mini-popup .mini-content {
-    padding: 15px;
+    padding: 40px 15px 15px;
     cursor: pointer;
     display: flex;
     gap: 12px;
