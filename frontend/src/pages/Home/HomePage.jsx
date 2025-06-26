@@ -44,7 +44,6 @@ export function HomePage() {
     
     const [refreshTrigger, setRefreshTrigger] = useState(0);
 
-
     // Fetch ALL artworks on component mount - with no filters
     // for getting dropdowns
     useEffect(() => {
