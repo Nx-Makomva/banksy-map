@@ -12,18 +12,6 @@
   animation: fullPopupSlideIn 0.3s ease-out;
 }
 
-.artwork-full-popup.authenticated .full-popup-header {
-    background: #1fd9b7;;
-}
-
-.artwork-full-popup.pending .full-popup-header {
-    background: #F59E0B;
-}
-
-.artwork-full-popup.unverified .full-popup-header {
-    background: #EF4444;
-}
-
 .artwork-full-popup .full-popup-header {
     padding: 20px 25px;
     border-bottom: 1px solid #eee;
@@ -32,6 +20,7 @@
     justify-content: flex-start;
     align-items: center;
     background: #ff51b0;
+    color: rgb(255, 255, 255);
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
     z-index: 999999;
     flex-shrink: 0;
@@ -169,7 +158,6 @@
   }
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .artwork-mini-popup {
     max-width: 280px;
