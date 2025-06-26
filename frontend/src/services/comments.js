@@ -21,12 +21,7 @@ export async function addComment(artworkId, text) {
     }
 
     const data = await response.json();
-    return {
-      comment: data.comment,
-      username: data.username,
-      message: data.message,
-      timestamp: data.timestamp
-    };
+    return data.readyForResponse;
   } catch (error) {
     console.error('Error adding comment:', error);
     throw error; 
@@ -69,6 +64,7 @@ export async function getCommentsByArtworkId(artworkId) {
       }
     });
 
+
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       const error = new Error(errorData.message || 'Failed to fetch comments');
@@ -76,8 +72,8 @@ export async function getCommentsByArtworkId(artworkId) {
       error.cause = errorData.error;
       throw error;
     }
-
-    return await response.json();
+    const data = await response.json();
+    return data
   } catch (error) {
     console.error('Error fetching comments:', error);
     throw error; // Re-throw for handling in components
@@ -96,7 +92,9 @@ export async function updateComment(commentId, updates) {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(updates),
+        body: JSON.stringify({
+          text: updates
+        })
       }
     );
 
@@ -106,8 +104,8 @@ export async function updateComment(commentId, updates) {
       err.cause = errorData.error || errorData.message;
       throw err;
     }
-
-    return await response.json();
+    const data = await response.json()
+    return data.updatedComment;
   } catch (error) {
     console.error('Error updating comment:', error);
     throw error;
