@@ -6,7 +6,7 @@ const artworks = [
     location: { type: "Point", coordinates: [ -0.116773, 51.506950 ] },
     description: "Three children saluting a Tesco flag—critique of mass consumerism.",
     themeTags: ["consumerism","children","corporate critique"],
-    photos: ["tesco-flag.avif"],
+    photos: ["very-little-helps.jpg"],
     isAuthenticated: true
     },
     {

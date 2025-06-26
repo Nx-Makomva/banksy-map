@@ -83,6 +83,7 @@ export async function getCommentsByArtworkId(artworkId) {
 
 export async function updateComment(commentId, updates) {
   try {
+    console.log(commentId)
     const token = localStorage.getItem('token');
     const response = await fetch(
       `${BACKEND_URL}/comments/${commentId}`,
@@ -92,9 +93,10 @@ export async function updateComment(commentId, updates) {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(updates)
+        body: JSON.stringify({text: updates})
       }
     );
+    
 
     if (!response.ok) {
       const errorData = await response.json();

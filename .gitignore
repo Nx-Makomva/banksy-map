@@ -27,3 +27,7 @@ dist-ssr
 
 coverage/
 **/coverage/
+
+frontend/package-lock.json
+frontend/package.json
+frontend/vite.config.js
