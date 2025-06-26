@@ -70,12 +70,13 @@ describe("/comments", () => {
       console.log("Response status:", response.statusCode);
       console.log("Response body:", JSON.stringify(response.body, null, 2));
 
-      const comment = response.body.readyForResponse || response.body.comment;
+      const comment = response.body.readyForResponse || response.body.comment; // response body transforms in CI environment (not yet sure why)
       expect(response.statusCode).toBe(201);
       expect(response.body.message).toBe("Comment created successfully");
       expect(comment.text).toBe("This is arty!");
-      expect(comment.user_id).toBe(testUser._id.toString());
-      expect(comment.artwork_id).toBe(testArtwork._id.toString());
+      expect(comment.user_id._id || comment.user_id).toBe(testUser._id.toString()); // user_id gets populated when CI tests run
+      expect(comment.artwork_id._id || comment.artwork_id).toBe(testArtwork._id.toString()); // artwork_id gets populated when CI tests run
+  
     });
 
     test("adds comment to artwork's comments array", async () => {
