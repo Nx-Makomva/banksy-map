@@ -1,4 +1,4 @@
-import '../assets/styles/Navbar.css';
+import "../assets/styles/NavBar.css"
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { MdAccountBox } from "react-icons/md";
 import { PiSignOutBold } from "react-icons/pi";
