@@ -11,7 +11,6 @@ function Navbar({ loggedIn, onLogOut, onMapClick, onAccountClick }) {
     const location = useLocation();
     const isHomePage = location.pathname === '/';
 
-
     return (
         <header>
         <div className="navbar-container">
