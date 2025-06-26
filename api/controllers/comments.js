@@ -78,7 +78,7 @@ async function getAllUserComments(req, res) {
 
     const userComments = await Comment.find({ user_id })
       .populate("user_id", "firstName lastName")
-      .populate("artwork_id", "title photos")
+      .populate("artwork_id", "title photos isAuthenticated")
       .sort({ createdAt: -1 });
 
     res.status(200).json({
