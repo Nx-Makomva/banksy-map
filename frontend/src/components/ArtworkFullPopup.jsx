@@ -112,9 +112,9 @@ const ArtworkFullPopup = ({ artwork, onClose, isBookmarked, setIsBookmarked, isV
                     ) : commentsError ? (
                         <div className="comments-error">Error loading comments: {commentsError}</div>
                     ) : comments.length > 0 ? (
-                        comments.map((comment, idx) => (
+                        comments.map((comment) => (
                             <CommentItem
-                                key={idx}
+                                key={comment._id}
                                 comment={{ 
                                 ...comment,
                                 isOwner: comment.user_id?._id === user._id // Add ownership flag
