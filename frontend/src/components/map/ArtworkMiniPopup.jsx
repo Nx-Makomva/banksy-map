@@ -8,23 +8,26 @@ const ArtworkMiniPopup = ({ artwork, onClose, onArtworkSelect, isBookmarked, set
     const { user } = useUser();
 
     // Determine authentication class
-    const getAuthClass = () => {
-        if (artwork.isAuthenticated === true) {
-            return 'authenticated';
-        } else if (artwork.isAuthenticated === false) {
-            return 'unverified';
-        } else if (artwork.isAuthenticated === null || artwork.isAuthenticated === undefined) {
-            return 'pending';
-        }
-        return ''; // fallback
+    const getAuthInfo = () => {
+    if (artwork.isAuthenticated === true) {
+        return { class: 'authenticated', badge: 'Verified' };
+    } else if (artwork.isAuthenticated === false) {
+        return { class: 'unverified', badge: 'Unverified' };
+    } else if (artwork.isAuthenticated === null || artwork.isAuthenticated === undefined) {
+        return { class: 'pending', badge: 'Pending' };
+    }
+    return { class: '', badge: '' };
     };
+
+    const authInfo = getAuthInfo();
 
     return (
         <div 
-            className={`artwork-mini-popup ${getAuthClass()}`}
+            className={`artwork-mini-popup ${authInfo.class}`}
             onClick={(e) => e.stopPropagation()}
         >
             <button className="close-btn" onClick={onClose}>×</button>
+            <div className="auth-badge">{authInfo.badge}</div>
             <div className="mini-content">
                 {artwork.photos && artwork.photos.length > 0 && (
                     <img 

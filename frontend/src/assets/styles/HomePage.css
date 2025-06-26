@@ -24,6 +24,8 @@ html, body, #root {
     /* margin-top: 62px; */
     display: flex;
     height: calc(100vh - 62px);
+    max-height: calc(100vh - 62px);
+    min-height: 500px;
     padding: 1rem;
     gap: 1rem;
     box-sizing: border-box;
@@ -38,6 +40,7 @@ html, body, #root {
     color: black;
     overflow-y: auto;
     box-sizing: border-box;
+    min-height: 0;
 }
 
 /* Main content styling */
@@ -102,7 +105,7 @@ html, body, #root {
 
 
 .tab-content-container {
-    padding: 14px;
+    padding: 14px 14px 0 14px;
     font-size: 1rem;
     background-color: #ffffff00;
     height: calc(100% - 6px);
@@ -117,6 +120,7 @@ html, body, #root {
 
 .tab-content-container ul {
     padding-right: 0;
+    padding-bottom: 16px;
 }
 
 .tab-content-container h2 {
