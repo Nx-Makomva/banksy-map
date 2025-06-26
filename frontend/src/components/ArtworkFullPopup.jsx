@@ -47,11 +47,26 @@ const ArtworkFullPopup = ({ artwork, onClose, isBookmarked, setIsBookmarked, isV
     ));
     };
 
+    const getAuthInfo = () => {
+    if (artwork.isAuthenticated === true) {
+        return { class: 'authenticated', badge: 'Verified' };
+    } else if (artwork.isAuthenticated === false) {
+        return { class: 'unverified', badge: 'Unverified' };
+    } else if (artwork.isAuthenticated === null || artwork.isAuthenticated === undefined) {
+        return { class: 'pending', badge: 'Pending' };
+    }
+    return { class: '', badge: '' };
+    };
+
+    const authInfo = getAuthInfo();
+
+
     return (
-        <div className="artwork-full-popup artwork-popup">
+        <div className={`artwork-full-popup artwork-popup ${authInfo.class}`}>
             <div className="full-popup-header">
                 <div className='header-left'>
                     <h2>{artwork.title}</h2>
+                    <div className="auth-badge">{authInfo.badge}</div>
                     {user._id && (
                         <>
                             <BookmarkButton

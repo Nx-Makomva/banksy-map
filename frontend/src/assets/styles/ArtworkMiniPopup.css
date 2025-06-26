@@ -4,7 +4,7 @@
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
     background: white;
-    border: 3px solid #1FD9B7;
+    border: 3px solid #1fd9b7;
     padding: 20px;
     z-index: 999999 !important;
     border-radius: 12px;
@@ -15,7 +15,7 @@
     transition: all 0.3s ease;
 }
 
-/* Authenticated Banksy artwork - Subtle green success treatment */
+/* Authenticated Banksy artwork - Subtle green */
 .artwork-mini-popup.authenticated {
     border: 3px solid #B6F6EA;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
@@ -28,35 +28,57 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
 }
 
-/* Not authenticated/unverified - Subtle red treatment */
+/* Not authenticated/unverified - Subtle red */
 .artwork-mini-popup.unverified {
     border: 3px solid #EF4444;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
 }
 
-/* Authentication badge/indicator possibly? */
-.artwork-mini-popup::after {
-    content: '';
+.artwork-mini-popup .auth-badge {
     position: absolute;
     top: 8px;
     left: 8px;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    z-index: 1;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
-.artwork-mini-popup.authenticated::after {
+.artwork-mini-popup.authenticated .auth-badge {
     background: #1fd9b7;
+    color: white;
 }
 
-.artwork-mini-popup.pending::after {
+.artwork-mini-popup.authenticated .auth-badge::before {
+    content: "✓";
+    font-weight: bold;
+}
+
+/* Not used currently as there are no authenticated statuses with a 'pending' value */
+.artwork-mini-popup.pending .auth-badge {
     background: #F59E0B;
-    animation: pendingPulse 2s ease-in-out infinite;
+    color: white;
 }
 
-.artwork-mini-popup.unverified::after {
+/* Not used currently as there are no authenticated statuses with a 'pending' value */
+.artwork-mini-popup.pending .auth-badge::before {
+    content: "⏳";
+}
+
+.artwork-mini-popup.unverified .auth-badge {
     background: #EF4444;
+    color: white;
+}
+
+.artwork-mini-popup.unverified .auth-badge::before {
+    content: "⚠";
 }
 
 @keyframes pendingPulse {
@@ -152,3 +174,4 @@
         transform: translate(-50%, -50%) scale(1);
     }
 }
+
