@@ -28,7 +28,7 @@ vi.mock('../../src/services/authentication', () => ({
   login: mockLogin
 }));
 
-vi.mock('../../src/components/Navbar', () => ({
+vi.mock('../../src/components/NavBar', () => ({
     default: () => {
         mockNavbar();
         return <nav data-testid="navbar">Navbar</nav>;
