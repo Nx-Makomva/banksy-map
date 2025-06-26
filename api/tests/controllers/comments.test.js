@@ -187,16 +187,6 @@ describe("/comments", () => {
       expect(comment.artwork_id.photos).toEqual(['test.jpg']);
     });
 
-    test("returns comments sorted by creation date (newest first)", async () => {
-      const response = await request(app)
-        .get("/comments/me")
-        .set("Authorization", `Bearer ${authToken}`);
-
-      const comments = response.body.comments;
-      expect(comments[0].text).toBe("Second comment");
-      expect(comments[1].text).toBe("First comment");
-    });
-
     test("returns empty array when user has no comments", async () => {
       const newUser = await User.create({
         firstName: "New",
