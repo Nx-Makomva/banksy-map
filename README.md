@@ -4,6 +4,23 @@
 
 An interactive map showcasing Banksy's graffiti artworks in London. Discover, explore, and track your visits to these iconic street art pieces with custom pins, filtering options, and achievement badges.
 
+## CI/CD Pipeline 🚦
+
+We have a GitHub Actions workflow (`test.yaml`) that runs **API & Frontend tests** on every pull request to keep the code error-free.
+
+Here’s an overview on what it does:
+
+- 🏁 Checks out the repo to grab all the latest code  
+- 🧪 Sets up Node.js v24 environment  
+- 📦 Installs backend dependencies in the `api` folder  
+- 🧑‍🔬 Runs backend tests with a MongoDB service spinning up for a test database  
+- 📦 Installs frontend dependencies in the `frontend` folder  
+- 👨‍🎨 Runs frontend tests with environment secrets for API keys and URLs  
+- 🧹 Runs the frontend linter to keep the code clean and consistent  
+
+You can check the live status and logs here:  
+[![CI/CD Pipeline](https://github.com/nicmakomva/banksymap/actions/workflows/test.yaml/badge.svg)](https://github.com/nicmakomva/banksymap/actions/workflows/test.yaml)
+
 ## Features
 
 - 🗺️ Interactive Google Maps implementation with custom artwork pins
