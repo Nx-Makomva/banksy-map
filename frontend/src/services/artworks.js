@@ -30,16 +30,14 @@ export async function createArtwork(formData) {
   }
 }
 
-
-// get all artworks
 export async function getAllArtworks(queryParams = {}) {
   const token = localStorage.getItem("token");
 
   const requestOptions = {
       method: "GET",
-      headers: { 
-          "Authorization": `Bearer ${token}`
-      },
+      ...token && ( { headers: {"Authorization": `Bearer ${token}` } } ) 
+      // token only necessary when user logged in and filtering according to their visited or bookmarked artworks
+      // otherwise headers should be empty
   };
   try {
     // Build query string from parameters - so if a query is present it appends it to url
@@ -68,8 +66,7 @@ export async function getAllArtworks(queryParams = {}) {
     
     const data = await response.json();
     
-    // Add image URLs to all artworks -??? I'm not sure if we only have a single image on artworks?
-    // just adding new key for imageurl to be used on frontend. I think it exists as a filepath on artworks? not 100% 
+    // adds image urls to artwork
     if (data.allArtworks) {
       data.allArtworks = data.allArtworks.map(artwork => ({
         ...artwork,
@@ -96,7 +93,6 @@ export async function getSingleArtwork(id) {
     
     const data = await response.json();
     
-    // Add image URL to artwork
     if (data.artwork?.photos?.[0]) {
       data.artwork.imageUrl = getImageUrl(data.artwork.photos[0]);
     }
@@ -127,8 +123,7 @@ export async function updateArtwork(id, updateData) {
     }
     
     const data = await response.json();
-    
-    // Add image URL to updated artwork if present
+
     if (data.updatedArtwork?.photos?.[0]) {
       data.updatedArtwork.imageUrl = getImageUrl(data.updatedArtwork.photos[0]);
     }

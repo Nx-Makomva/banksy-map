@@ -1,21 +1,23 @@
 const app = require("../../app");
 const supertest = require("supertest");
-require("../mongodb_helper");
 const User = require("../../models/user");
+const bcrypt = require('bcrypt'); 
+require("../mongodb_helper");
 jest.mock('../../middleware/upload', () => require('../mocks/multer-s3'));
 
 describe("/tokens", () => {
     beforeAll(async () => {
+        const hashedPassword = await bcrypt.hash("12345678", 10)
         const user = new User({
             firstName: 'Jane', 
             lastName: 'Doe',
             email: "auth-test@test.com",
-            password: "12345678",
+            password: hashedPassword,
         });
 
     // We need to use `await` so that the "beforeAll" setup function waits for
     // the asynchronous user.save() to be done before exiting.
-    // Otherwise, the tests belowc ould run without the user actyakkt being
+    // Otherwise, the tests below could run without the user actually being
     // saved, causing tests to fail inconsistently.
     await user.save();
     });
