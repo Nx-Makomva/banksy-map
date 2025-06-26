@@ -200,7 +200,7 @@ describe('updateComment', () => {
           'Authorization': `Bearer ${testToken}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(testUpdates),
+        body: JSON.stringify({text: testUpdates}),
       }
     );
 
