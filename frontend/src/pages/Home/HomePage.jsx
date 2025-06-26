@@ -2,7 +2,7 @@ import { useUser } from "../../contexts/UserContext";
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 import {APIProvider} from '@vis.gl/react-google-maps';
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/NavBar";
 import Sidebar from "../../components/Sidebar";
 import MainBar from "../../components/MainBar";
 import "../../assets/styles/HomePage.css";
