@@ -112,7 +112,7 @@ const ArtworkFullPopup = ({ artwork, onClose, isBookmarked, setIsBookmarked, isV
                     ) : commentsError ? (
                         <div className="comments-error">Error loading comments: {commentsError}</div>
                     ) : comments.length > 0 ? (
-                        comments.map((comment, idx) => (
+                        comments.map((comment) => (
                             <CommentItem
                                 key={comment._id}
                                 comment={{ 
