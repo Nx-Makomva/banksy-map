@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:watch": "vitest watch",
-    "test:ui": "vitest --ui"
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui --coverage.enabled --coverage.all --coverage.src='./src'"
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.8",
@@ -29,6 +30,7 @@
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",
+    "@vitest/coverage-v8": "^3.2.4",
     "@vitest/ui": "^3.2.4",
     "eslint": "^9.25.0",
     "eslint-plugin-react-hooks": "^5.2.0",

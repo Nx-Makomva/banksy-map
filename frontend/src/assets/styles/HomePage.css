@@ -38,7 +38,6 @@ html, body, #root {
     color: black;
     overflow-y: auto;
     box-sizing: border-box;
-    border: 2px solid #3c3c3c;
 }
 
 /* Main content styling */
@@ -51,7 +50,6 @@ html, body, #root {
     border-radius: 16px;
     box-sizing: border-box;
     overflow: hidden;
-    border: 2px solid #3c3c3c;
 }
 
 /* Map container inside main content */
@@ -71,7 +69,7 @@ html, body, #root {
 
 .tab-bar {
     display: flex;
-    margin: 13px;
+    margin: 14px;
 }
 
 .tab-button {
@@ -104,7 +102,7 @@ html, body, #root {
 
 
 .tab-content-container {
-    padding: 0.75rem;
+    padding: 14px;
     font-size: 1rem;
     background-color: #ffffff00;
     height: calc(100% - 6px);
@@ -119,4 +117,9 @@ html, body, #root {
 
 .tab-content-container ul {
     padding-right: 0;
+}
+
+.tab-content-container h2 {
+    margin-top: 0;
+    margin-bottom: 34px;
 }
