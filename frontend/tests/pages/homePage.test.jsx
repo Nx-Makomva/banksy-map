@@ -85,11 +85,4 @@ describe('HomePage', () => {
         expect(screen.getByTestId('sidebar')).toBeInTheDocument();
         expect(screen.getByTestId('mainbar')).toBeInTheDocument();
     });
-
-    //     it('displays all main components', async () => {
-    //     await renderHomePage();
-    //     // expect(screen.getByRole('navigation')).toBeInTheDocument();
-    //     expect(screen.getByRole('complementary', { name: /sidebar/i })).toBeInTheDocument();
-    //     expect(screen.getByText('MainBar')).toBeInTheDocument();
-    // });
 });
