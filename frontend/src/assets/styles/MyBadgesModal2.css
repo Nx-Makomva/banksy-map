@@ -45,17 +45,13 @@
     position: absolute;
     top: 20px;
     right: 25px;
-    background: #ffffff;
     color: #666;
-    border: 2px solid #e8e8e8;
-    border-radius: 50%;
     width: 40px;
     height: 40px;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 40px;
     font-weight: bold;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     z-index: 10;
     display: flex;
     align-items: center;
@@ -63,11 +59,9 @@
 }
 
 .close-button:hover {
-    background: #ff51b0;
-    color: #ffffff;
-    border-color: #ff51b0;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 81, 176, 0.3);
+    background: white;
+    color: #000000;
+    transform: scale(1.05);
 }
 
 .close-button span {
@@ -77,7 +71,7 @@
 }
 
 .close-button:hover span {
-    transform: rotate(90deg);
+    transform: scale(1.05);
 }
 
 /* Title Section */
@@ -157,7 +151,7 @@
 }
 
 .graffiti-signature {
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Permanent Marker', cursive;
     font-size: 16px;
     font-weight: 600;
     color: #666;

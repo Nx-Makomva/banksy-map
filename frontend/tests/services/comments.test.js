@@ -48,15 +48,18 @@ describe("comments service", () => {
 
     test("returns comment data on success", async () => {
       const mockResponse = {
+        readyForResponse: {
         comment: { id: "1", text: testText },
         username: "testUser",
         message: "Comment created",
         timestamp: "2023-01-01",
+        }
       };
       fetch.mockResponseOnce(JSON.stringify(mockResponse), { status: 201 });
 
       const result = await addComment(testArtworkId, testText);
-      expect(result).toEqual(mockResponse);
+
+      expect(result).toEqual(mockResponse.readyForResponse);
     });
 
     test("throws an error when the response is not successful", async () => {
@@ -201,7 +204,7 @@ describe('updateComment', () => {
       }
     );
 
-    expect(result).toEqual(mockResponse);
+    expect(result.text).toEqual(mockResponse.updatedComment.text);
   });
 
   test('throws error when comment not found', async () => {

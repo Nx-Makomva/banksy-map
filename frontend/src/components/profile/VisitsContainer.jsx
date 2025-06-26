@@ -27,6 +27,7 @@ const VisitedArtworksList = ({ setIsVisited, onArtworkSelect }) => {
         if (userId) {
         fetchVisits();
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
     const handleVisitToggle = (newVisitState, artworkId) => {

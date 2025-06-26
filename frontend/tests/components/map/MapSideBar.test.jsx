@@ -178,20 +178,17 @@ describe('Theme Tags Filter', () => {
         
         const select = screen.getByLabelText('Tags:');
         
-        // Simulate selecting multiple options by setting their selected property
-        const politicalOption = screen.getByRole('option', { name: 'political' });
-        const humorOption = screen.getByRole('option', { name: 'humor' });
-        
         // Create mock selectedOptions that behaves like a real HTMLCollection
         const mockSelectedOptions = {
             length: 2,
             0: { value: 'political' },
             1: { value: 'humor' },
             [Symbol.iterator]: function* () {
-            yield this[0];
-            yield this[1];
+                yield this[0];
+                yield this[1];
             }
         };
+        
         
         // Mock the change event with proper selectedOptions
         Object.defineProperty(select, 'selectedOptions', {

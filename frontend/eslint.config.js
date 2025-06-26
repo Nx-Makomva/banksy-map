@@ -5,6 +5,30 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 
 export default [
   { ignores: ['dist'] },
+
+  {
+    files: ['**/*.test.js', '**/*.test.jsx'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        ecmaFeatures: { jsx: true },
+        sourceType: 'module',
+      },
+      globals: {
+        ...globals.node,
+        ...globals.browser,
+        vi: true,
+        describe: true,
+        test: true,
+        expect: true,
+        beforeEach: true,
+        afterEach: true,
+        global: true, // stops error in test files to say 'global' is undefined
+      },
+    },
+  },
+
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {

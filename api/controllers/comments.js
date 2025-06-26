@@ -37,6 +37,7 @@ async function addComment(req, res) {
       readyForResponse,
       message: "Comment created successfully",
     });
+
   } catch (error) {
     if (process.env.NODE_ENV !== 'test') {
       console.error("Error creating comment");
