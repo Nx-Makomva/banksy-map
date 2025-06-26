@@ -40,15 +40,21 @@ describe("GET /users/current with JWT", () => {
       .get("/users/current")
       .set("Authorization", `Bearer ${token}`);
 
-    expect(response.body).toEqual({
-      _id: newUser._id.toString(),
-      email: newUser.email,
-      firstName: newUser.firstName,
-      lastName: newUser.lastName,
-      bookmarkedArtworks: newUser.bookmarkedArtworks,
-      visitedArtworks: newUser.visitedArtworks,
-      badges: newUser.badges
-    });
+    
+    const updatedUserRaw = await User.findById(newUser._id).lean(); 
+    // can't compare badges with raw initialisation of user. sign-up badge gets added after creation so it exists in the response but not prior
+    // so first necessary to finduser in db then do comparison with response body
+    delete response.body.__v;
+
+    const updatedUser = {
+      ...updatedUserRaw,
+      _id: updatedUserRaw._id.toString()
+    }
+
+    delete updatedUser.password;
+    delete updatedUser.__v; // removing this and password as password is not returned when fetching user and doc versioning not necessary for comparison
+
+    expect(response.body).toEqual(updatedUser);
   });
 
   it("returns anonymous if token is valid but user not found", async () => {

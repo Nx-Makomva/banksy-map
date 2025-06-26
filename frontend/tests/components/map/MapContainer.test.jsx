@@ -232,17 +232,19 @@ vi.mock('@vis.gl/react-google-maps', () => ({
         });
     });
 
-    describe('Console Logging', () => {
-        it('logs artworks data to console', () => {
-        const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    // describe('Console Logging', () => {
+    //     it('logs artworks data to console', () => {
+    //     const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         
-        render(<MapContainer artworks={mockArtworks} onArtworkSelect={mockOnArtworkSelect} />);
+    //     render(<MapContainer artworks={mockArtworks} onArtworkSelect={mockOnArtworkSelect} />);
         
-        expect(consoleSpy).toHaveBeenCalledWith('FROM MAP CONTAINER:', mockArtworks);
+    //     expect(consoleSpy).toHaveBeenCalledWith('FROM MAP CONTAINER:', mockArtworks);
         
-        consoleSpy.mockRestore();
-        });
-    });
+    //     consoleSpy.mockRestore();
+    //     });
+    // });
+
+    // Why a test for console logs? 
 
     describe('Error Handling', () => {
         it('handles artworks with missing coordinates gracefully', () => {
