@@ -41,10 +41,6 @@ describe("/comments", () => {
 
     authToken = generateToken(testUser._id);
 
-    console.log("Test user ID:", testUser._id);
-    console.log("Test artwork ID:", testArtwork._id);
-    console.log("Auth token:", authToken ? "Present" : "Missing");
-
   });
 
   describe("POST /:artwork_id, when all fields are provided", () => {
@@ -67,9 +63,6 @@ describe("/comments", () => {
           text: "This is arty!"
         });
 
-      console.log("Response status:", response.statusCode);
-      console.log("Response body:", JSON.stringify(response.body, null, 2));
-
       const comment = response.body.readyForResponse || response.body.comment; // response body transforms in CI environment (not yet sure why)
       expect(response.statusCode).toBe(201);
       expect(response.body.message).toBe("Comment created successfully");
@@ -89,7 +82,7 @@ describe("/comments", () => {
 
       const updatedArtwork = await Artwork.findById(testArtwork._id);
       expect(updatedArtwork.comments).toHaveLength(1);
-      expect(updatedArtwork.comments[0].toString()).toBe(response.body.comment._id || response.body.readyForResponse._id);
+      expect(updatedArtwork.comments[0].toString()).toBe(response.body.comment?._id || response.body.readyForResponse._id);
     });
 
     describe("POST /:artwork_id, when text is missing", () => {
