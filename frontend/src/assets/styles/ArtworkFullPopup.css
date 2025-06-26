@@ -5,7 +5,7 @@
   left: 0 !important;
   right: 0 !important;
   bottom: 0 !important;
-  background: #ffd5ec;
+  background: #181818;
   z-index: 999000;
   overflow: hidden;
   display: flex;
@@ -20,7 +20,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    background: #1fd9b7;
+    background: #ff51b0;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);;
     z-index: 999999;
     flex-shrink: 0;
@@ -85,15 +85,15 @@
   max-width: 800px;
 }
 
-.artwork-full-popup .artwork-details p {
+.artwork-full-popup .artwork-full-details p {
   margin: 0 0 15px 0;
   font-size: 16px;
   line-height: 1.6;
-  color: #444;
+  color: white;
 }
 
 .artwork-full-popup .artwork-details p strong {
-  color: #333;
+  color: white;
   font-weight: 600;
 }
 
@@ -189,7 +189,7 @@
 }
 
 .comment-time {
-  color: #666;
+  color: #333;
 }
 
 .comment-text {

@@ -102,7 +102,7 @@ export function HomePage() {
         };
         fetchFilteredArtworks();
 
-  }, [filters, refreshTrigger]);
+    }, [filters, refreshTrigger]); // DO NOT ADD artworks HERE!!!
 
 
 

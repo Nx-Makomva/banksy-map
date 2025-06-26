@@ -26,7 +26,7 @@ const ArtworkMiniPopup = ({ artwork, onClose, onArtworkSelect, isBookmarked, set
         >
             <button className="close-btn" onClick={onClose}>×</button>
             <div className="mini-content">
-                {artwork.photos && (
+                {artwork.photos && artwork.photos.length > 0 && (
                     <img 
                     key={artwork.id}
                     src={artwork.imageUrl} // grabs the name of the first file
