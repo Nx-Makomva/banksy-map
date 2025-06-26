@@ -40,6 +40,11 @@ describe("/comments", () => {
     });
 
     authToken = generateToken(testUser._id);
+
+    console.log("Test user ID:", testUser._id);
+    console.log("Test artwork ID:", testArtwork._id);
+    console.log("Auth token:", authToken ? "Present" : "Missing");
+    
   });
 
   describe("POST /:artwork_id, when all fields are provided", () => {
@@ -62,6 +67,10 @@ describe("/comments", () => {
           text: "This is arty!"
         });
 
+      console.log("Response status:", response.statusCode);
+      console.log("Response body:", JSON.stringify(response.body, null, 2));
+
+      expect(response.statusCode).toBe(201);
       expect(response.body.message).toBe("Comment created successfully");
       expect(response.body.comment.text).toBe("This is arty!");
       expect(response.body.comment.user_id).toBe(testUser._id.toString());
