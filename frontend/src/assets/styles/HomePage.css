@@ -19,9 +19,7 @@ html, body, #root {
     box-sizing: border-box;
 }
 
-/* Main page layout container */
 .pageColumnsContainer {
-    /* margin-top: 62px; */
     display: flex;
     height: calc(100vh - 62px);
     max-height: calc(100vh - 62px);
@@ -31,10 +29,9 @@ html, body, #root {
     box-sizing: border-box;
 }
 
-/* Sidebar styling */
 .sidebar {
     flex: 0 0 25%;
-    background-color: rgba(218, 214, 214, 0.628); /* semi-transparent black */
+    background-color: rgba(218, 214, 214, 0.628); 
     border-radius: 16px;
     padding: 1rem;
     color: black;
@@ -43,7 +40,6 @@ html, body, #root {
     min-height: 0;
 }
 
-/* Main content styling */
 .main-content {
     flex: 1;
     display: flex;
@@ -55,7 +51,6 @@ html, body, #root {
     overflow: hidden;
 }
 
-/* Map container inside main content */
 .map-container {
     flex: 1;
     border-radius: 12px;
@@ -101,8 +96,6 @@ html, body, #root {
     transform: translateY(0);
     color: rgb(141, 138, 138);
 }
-
-
 
 .tab-content-container {
     padding: 14px 14px 0 14px;

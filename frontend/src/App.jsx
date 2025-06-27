@@ -51,10 +51,9 @@ function App() {
     }
   };
 
-  // Check for existing session on app load
+  // Check for existing user session on app load
   useEffect(() => {
     getCurrentUser();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Function to refresh user data (can be called after login from other components)

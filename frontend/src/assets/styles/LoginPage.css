@@ -2,7 +2,7 @@
 
 .login-form {
     max-width: 420px;
-    margin: 120px auto; /* spacing from top */
+    margin: 120px auto; 
     padding: 2rem;
     background: transparent;
     border: 1px solid #e0e0e0;
@@ -30,12 +30,12 @@
     background-color: #fff;
     color: #000;
     transition: border-color 0.2s, box-shadow 0.2s;
-    text-align: center; /* center user input */
+    text-align: center; 
 }
 
 .login-form input[type="text"]::placeholder,
 .login-form input[type="password"]::placeholder {
-    text-align: center; /* center placeholder text */
+    text-align: center; 
     color: #888;
 }
 
