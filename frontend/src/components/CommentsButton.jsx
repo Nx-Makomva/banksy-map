@@ -36,13 +36,9 @@ const CommentForm = ({ artworkId, onClose, onCommentPosted }) => {
 
   const handleSubmit = async (e) => {
   e.preventDefault();
-  
-  // Debug: Log current state
-  console.log('Submitting with text:', text);
-  console.log('Module being used:', require.resolve('../services/comments'));
+
 
   if (!text.trim()) {
-    console.log('Empty text prevented submission');
     setError('Please enter a comment');
     return;
   }
@@ -51,9 +47,7 @@ const CommentForm = ({ artworkId, onClose, onCommentPosted }) => {
   setError(null); // Clear previous errors
 
   try {
-    console.log('Calling addComment with:', artworkId, text);
     const newComment = await addComment(artworkId, text);
-    console.log('Received response:', newComment);
     
     onClose();
     onCommentPosted({
