@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
 import { login } from "../../services/authentication";
 import { Link } from "react-router-dom";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/NavBar";
 import "../../assets/styles/LoginPage.css"
 
 export function LoginPage() {
@@ -41,7 +41,7 @@ export function LoginPage() {
     return (
         <>
         <Navbar />
-            <form className="login-form" onSubmit={handleSubmit}>
+            <form className="login-form" onSubmit={handleSubmit} aria-label="Login form">
                 <label htmlFor="email">Email:</label>
                 <input
                 id="email"
@@ -58,7 +58,7 @@ export function LoginPage() {
                 value={password}
                 onChange={handlePasswordChange}
                 />
-                <input role="submit-button" id="submit" type="submit" value="Submit" />
+                <input id="submit" type="submit" value="Submit" aria-label="Submit login form"/>
                 <p className="signup-link">
                 Need an account? <Link to="/signup">Sign Up!</Link>
                 </p>

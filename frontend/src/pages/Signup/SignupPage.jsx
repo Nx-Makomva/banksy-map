@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/NavBar";
 import { signup } from "../../services/authentication";
 import "../../assets/styles/SignupPage.css"
 
@@ -26,7 +26,7 @@ export function SignupPage() {
     return (
         <>
         <Navbar />
-            <form onSubmit={handleSubmit} className="signup-form">
+            <form onSubmit={handleSubmit} className="signup-form" aria-label="Submit form">
                 <label htmlFor="firstname">First Name:</label>
                 <input
                 placeholder="Enter your first name..."
@@ -59,7 +59,7 @@ export function SignupPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 />
-                <input role="submit-button" id="submit" type="submit" value="Submit" />
+                <input id="submit" type="submit" value="Submit" aria-label="Submit signup form"/>
                 <p className="signup-link">
                 Already have an account? <Link to="/login">Log In!</Link>
                 </p>

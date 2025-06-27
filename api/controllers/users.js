@@ -5,9 +5,12 @@ const saltRounds = 10;
 
 const Badge = require("../models/badge");
 
+
+// getCurrentUser returns user from userContext - if no logged in user the:
+// returns anonymous object 
 async function getCurrentUser(req, res) {
     const anonymousResponse = { _id: null };
-
+    
     try {
         if (!req.user_id) {
             return res.json(anonymousResponse);

@@ -18,17 +18,17 @@ function Navbar({ loggedIn, onLogOut, onMapClick, onAccountClick }) {
             <img src="/banksymap.png" alt="Logo" />
             </a>
             <nav className="navbar" role="navigation" aria-label="Main Navigation"> 
-            <a href={isHomePage ? "#" : "/"}  onClick={onMapClick} title="Map"><FaMapMarkedAlt /></a>
+            <a href={isHomePage ? "#" : "/"}  onClick={onMapClick} title="Map" data-testid="map-button"><FaMapMarkedAlt /></a>
 
             {loggedIn ? (
                 <>
-                <a href="#"  onClick={onAccountClick} title="My Account"><MdAccountBox /></a>
-                <a href="/" onClick={onLogOut} title="Logout"><PiSignOutBold /></a>
+                <a href="#"  onClick={onAccountClick} title="My Account" data-testid="account-button"><MdAccountBox /></a>
+                <a href="/" onClick={onLogOut} title="Logout" data-testid="logout-button"><PiSignOutBold /></a>
                 </>
             ) : (
                 <>
-                <Link to="/login" title="Login"><FiLogIn /></Link>
-                <Link to="/signup" title="Sign Up"><SiGnuprivacyguard /></Link>
+                <Link to="/login" title="Login" data-testid="login-button"><FiLogIn /></Link>
+                <Link to="/signup" title="Sign Up" data-testid="signup-button"><SiGnuprivacyguard /></Link>
                 </>
             )}
             </nav>

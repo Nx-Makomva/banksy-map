@@ -21,7 +21,7 @@
 .sidebar-section {
     margin-bottom: 30px;
     padding-bottom: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Subtle white border */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     width: 100%;
     align-items: center;
 }
@@ -37,7 +37,7 @@
 
 .filters-section h3 {
     margin: 0 0 20px 0;
-    color: black; /* Match your white text theme */
+    color: black; 
     font-size: 18px;
     text-align: center;
     font-family: 'Permanent Marker', cursive;
@@ -110,7 +110,7 @@
     font-family: 'Permanent Marker', cursive;
 }
 
-/* Radio Button Group */
+/* Authentication Radio Buttons */
 .radio-group {
     display: flex;
     flex-direction: column;
@@ -153,7 +153,7 @@
     margin-right: 8px;
 }
 
-/* Address Input */
+/* Address bar */
 .location-input-group {
     position: relative;
     margin-bottom: 10px;
@@ -227,11 +227,11 @@
     transform: none;
 }
 
-/* Distance Control */
+/* Distance Sliderrrr */
 .distance-control {
     margin-top: 15px;
     padding: 15px;
-    background: rgba(255, 255, 255, 0.1); /* Subtle transparent background */
+    background: rgba(255, 255, 255, 0.1); 
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
 }
@@ -303,7 +303,7 @@
     transform: translateY(0);
 }
 
-/* Responsive adjustments */
+/* media queryy */
 @media (max-width: 768px) {
     .map-sidebar {
         width: 100%;
