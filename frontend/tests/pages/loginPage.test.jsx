@@ -1,6 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { LoginPage } from '../../src/pages/Login/LoginPage';
+
 
 // Create mocks using vi.hoisted to ensure they're available during module loading
 const mockUseUser = vi.hoisted(() => vi.fn());
@@ -50,8 +52,6 @@ Object.defineProperty(window, 'localStorage', {
 
 // Mock window.alert
 window.alert = vi.fn();
-
-import { LoginPage } from '../../src/pages/Login/LoginPage';
 
 // Helper component to wrap LoginPage with Router
 const LoginPageWithRouter = () => (

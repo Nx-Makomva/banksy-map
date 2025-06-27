@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { SignupPage } from '../../src/pages/Signup/SignupPage';
 
 // Create mocks using vi.hoisted to ensure they're available during module loading
 const mockUseNavigate = vi.hoisted(() => vi.fn());
@@ -31,8 +32,6 @@ vi.mock('../../src/components/NavBar', () => ({
 }));
 
 vi.mock('../../src/assets/styles/SignupPage.css', () => ({}));
-
-import { SignupPage } from '../../src/pages/Signup/SignupPage';
 
 // Helper component to wrap SignupPage with Router
 const SignupPageWithRouter = () => (

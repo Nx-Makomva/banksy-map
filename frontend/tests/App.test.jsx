@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { act } from '@testing-library/react';
+import App from '../src/App';
 
 // Create mocks using vi.hoisted to ensure they're available during module loading
 const mockGetMe = vi.hoisted(() => vi.fn());
@@ -69,7 +70,7 @@ vi.mock('react-router-dom', async () => {
     };
 });
 
-import App from '../src/App';
+
 
 describe('App', () => {
     const mockUser = {
