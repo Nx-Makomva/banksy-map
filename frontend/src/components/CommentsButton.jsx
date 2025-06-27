@@ -14,7 +14,7 @@ const [isOpen, setIsOpen] = useState(false);
       <button
       className='comments-button'
       onClick={() => setIsOpen(true)}>
-        <FaRegComment/>
+        <FaRegComment  data-testid="comment-icon"/>
       </button>
       
       {isOpen && (
@@ -35,37 +35,43 @@ const CommentForm = ({ artworkId, onClose, onCommentPosted }) => {
   const { user } = useUser(); 
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!text.trim()) return;
-    
-    setIsSubmitting(true);
-    setError(null);
+  e.preventDefault();
 
-    try {
-      const newComment = await addComment(artworkId, text);
-      onClose();
-      onCommentPosted({
-        ...newComment,
-        user: {
-          _id: user._id,
-          firstName: user.firstName,
-          lastName: user.lastName
-        },
-        createdAt: new Date().toISOString()
-      });
-      
-    } catch (err) {
-      setError(err.message || 'Failed to post comment');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+
+  if (!text.trim()) {
+    setError('Please enter a comment');
+    return;
+  }
+
+  setIsSubmitting(true);
+  setError(null); // Clear previous errors
+
+  try {
+    const newComment = await addComment(artworkId, text);
+    
+    onClose();
+    onCommentPosted({
+      ...newComment,
+      user: {
+        _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName
+      },
+      createdAt: new Date().toISOString()
+    });
+  } catch (err) {
+    console.error('Submission error:', err);
+    setError('Failed to add comment');
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <ModalPortal>
       <div className="modal-overlay">
         <div className="modal-content">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} data-testid="comment-form">
             <textarea
               value={text}
               onChange={(e) => setText(e.target.value)}
