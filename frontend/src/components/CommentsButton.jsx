@@ -14,7 +14,7 @@ const [isOpen, setIsOpen] = useState(false);
       <button
       className='comments-button'
       onClick={() => setIsOpen(true)}>
-        <FaRegComment/>
+        <FaRegComment  data-testid="comment-icon"/>
       </button>
       
       {isOpen && (
@@ -35,37 +35,49 @@ const CommentForm = ({ artworkId, onClose, onCommentPosted }) => {
   const { user } = useUser(); 
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!text.trim()) return;
-    
-    setIsSubmitting(true);
-    setError(null);
+  e.preventDefault();
+  
+  // Debug: Log current state
+  console.log('Submitting with text:', text);
+  console.log('Module being used:', require.resolve('../services/comments'));
 
-    try {
-      const newComment = await addComment(artworkId, text);
-      onClose();
-      onCommentPosted({
-        ...newComment,
-        user: {
-          _id: user._id,
-          firstName: user.firstName,
-          lastName: user.lastName
-        },
-        createdAt: new Date().toISOString()
-      });
-      
-    } catch (err) {
-      setError(err.message || 'Failed to post comment');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  if (!text.trim()) {
+    console.log('Empty text prevented submission');
+    setError('Please enter a comment');
+    return;
+  }
+
+  setIsSubmitting(true);
+  setError(null); // Clear previous errors
+
+  try {
+    console.log('Calling addComment with:', artworkId, text);
+    const newComment = await addComment(artworkId, text);
+    console.log('Received response:', newComment);
+    
+    onClose();
+    onCommentPosted({
+      ...newComment,
+      user: {
+        _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName
+      },
+      createdAt: new Date().toISOString()
+    });
+  } catch (err) {
+    console.error('Submission error:', err);
+    setError('Failed to add comment');
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <ModalPortal>
       <div className="modal-overlay">
         <div className="modal-content">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} data-testid="comment-form">
             <textarea
               value={text}
               onChange={(e) => setText(e.target.value)}
