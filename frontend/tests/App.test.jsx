@@ -42,8 +42,6 @@ vi.mock('../src/components/BadgeCard', () => ({
     }
 }));
 
-vi.mock('../src/assets/styles/App.css', () => ({}));
-
 // Mock localStorage
 const mockLocalStorage = {
     getItem: vi.fn(),

@@ -5,8 +5,6 @@ import { LoginPage } from "./pages/Login/LoginPage";
 import { SignupPage } from "./pages/Signup/SignupPage";
 import { getMe } from "./services/user";
 import { UserContext } from './contexts/UserContext';
-import '../src/assets/styles/App.css'
-import BadgeCard from './components/BadgeCard';
 
 
 
